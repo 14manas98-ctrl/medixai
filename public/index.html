@@ -298,13 +298,9 @@ STATUS LOCALIS:
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ prompt })
-} const data = await response.json();
-const text = data.text;
-      }
-    );
-
-    const data = await response.json();
-    const text = data.candidates[0].content.parts[0].text;
+        });
+        const data = await response.json();
+        const text = data.text;
     const sections = text.split('\n\n');
 
     const fieldNames = lang === 'kaz'
