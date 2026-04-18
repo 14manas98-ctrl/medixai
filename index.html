@@ -9,7 +9,11 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, sans-serif; background: #F5F5F0; min-height: 100vh; transition: all 0.3s; }
 body.night { background: #1A1F2E; }
-.header { padding: 16px; display: flex; justify-content: space-between; align-items: center; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* HEADER */
+.header { padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
 .logo { font-size: 20px; font-weight: 600; color: #1A1A1A; }
 body.night .logo { color: #F0F0F0; }
 .logo span { font-size: 11px; color: #888; display: block; font-weight: 400; }
@@ -17,11 +21,12 @@ body.night .logo span { color: #7A8AAA; }
 .controls { display: flex; gap: 8px; align-items: center; }
 .lang-btn { font-size: 11px; border: 1px solid #ddd; padding: 4px 10px; border-radius: 20px; background: white; cursor: pointer; color: #555; }
 body.night .lang-btn { background: #242B3E; border-color: #3D4A6A; color: #A0B8D8; }
-.lang-btn span { opacity: 0.4; }
-.lang-btn span.active { opacity: 1; font-weight: 600; }
+.lang-active { font-weight: 700; }
 .theme-btn { font-size: 18px; cursor: pointer; background: none; border: none; }
 .greeting { padding: 0 16px 20px; font-size: 14px; color: #888; }
 body.night .greeting { color: #7A8AAA; }
+
+/* GRID */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px; }
 .card { background: white; border-radius: 16px; padding: 16px; border: 1px solid #E8E8E2; cursor: pointer; transition: all 0.2s; }
 body.night .card { background: #242B3E; border-color: #2E3A54; }
@@ -36,42 +41,150 @@ body.night .card-title { color: #F0F0F0; }
 .card-sub { font-size: 11px; color: #999; }
 body.night .card-sub { color: #7A8AAA; }
 .footer { text-align: center; padding: 24px; font-size: 11px; color: #bbb; }
+
+/* KARTA SCREEN */
+.karta-screen { padding: 14px 16px; display: flex; flex-direction: column; height: 100vh; }
+.back-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.back-btn { font-size: 12px; padding: 5px 12px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer; color: #555; }
+body.night .back-btn { background: #242B3E; border-color: #3D4A6A; color: #A0B8D8; }
+.page-title { font-size: 15px; font-weight: 600; color: #1A1A1A; }
+body.night .page-title { color: #F0F0F0; }
+
+.karta-body { display: flex; gap: 10px; flex: 1; min-height: 0; }
+
+/* ARCHIVE */
+.archive { width: 75px; background: white; border-radius: 12px; border: 1px solid #E8E8E2; display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+body.night .archive { background: #242B3E; border-color: #2E3A54; }
+.archive-hdr { font-size: 9px; font-weight: 600; padding: 7px 6px; text-align: center; border-bottom: 1px solid #E8E8E2; color: #888; background: #F9F9F6; }
+body.night .archive-hdr { background: #1E2438; border-color: #2E3A54; color: #7A8AAA; }
+.archive-list { overflow-y: auto; flex: 1; padding: 5px; display: flex; flex-direction: column; gap: 5px; }
+.arc-item { border-radius: 8px; padding: 6px 5px; border: 1px solid #E8E8E2; cursor: pointer; background: #F5F5F0; }
+body.night .arc-item { background: #1E2438; border-color: #2E3A54; }
+.arc-date { font-size: 8px; color: #aaa; margin-bottom: 2px; }
+.arc-name { font-size: 9px; font-weight: 600; color: #1A1A1A; line-height: 1.2; }
+body.night .arc-name { color: #E8E8E8; }
+.arc-diag { font-size: 8px; color: #888; margin-top: 1px; }
+
+/* CENTER */
+.karta-center { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.input-box-wrap { background: white; border-radius: 12px; border: 1px solid #E8E8E2; padding: 10px; flex-shrink: 0; }
+body.night .input-box-wrap { background: #242B3E; border-color: #2E3A54; }
+.input-box { width: 100%; border: 1px solid #E8E8E2; border-radius: 8px; padding: 8px; font-size: 12px; min-height: 55px; resize: none; font-family: -apple-system, sans-serif; background: #F9F9F6; color: #1A1A1A; }
+body.night .input-box { background: #1A1F2E; border-color: #2E3A54; color: #E8E8E8; }
+.input-actions { display: flex; gap: 6px; margin-top: 8px; }
+.btn-mic { flex: 1; border-radius: 8px; border: 1px solid #ddd; padding: 8px; font-size: 11px; font-weight: 600; cursor: pointer; background: #F0F0EA; color: #444; text-align: center; }
+body.night .btn-mic { background: #2E3650; border-color: #3D4A6A; color: #B0C0E0; }
+.btn-send { border-radius: 8px; border: none; padding: 8px 16px; font-size: 11px; font-weight: 600; cursor: pointer; background: #2D7DD2; color: white; }
+
+/* RESULT */
+.result-wrap { background: white; border-radius: 12px; border: 1px solid #E8E8E2; flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 7px; }
+body.night .result-wrap { background: #242B3E; border-color: #2E3A54; }
+.result-label { font-size: 10px; color: #aaa; font-weight: 500; }
+.field { border-radius: 8px; border: 1px solid #E8E8E2; padding: 7px 8px; background: #F9F9F6; }
+body.night .field { background: #1E2438; border-color: #2E3A54; }
+.field-label { font-size: 9px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 3px; }
+.field-value { font-size: 11px; color: #1A1A1A; line-height: 1.5; }
+body.night .field-value { color: #E8E8E8; }
+.field-base { font-size: 11px; color: #aaa; line-height: 1.5; font-style: italic; }
+body.night .field-base { color: #5A6A8A; }
+.diag-field { border-radius: 8px; padding: 7px 8px; background: #E8F3FF; border: 1px solid #B5D4F4; }
+body.night .diag-field { background: #1C2A45; border-color: #2E4A7A; }
+.diag-field .field-label { color: #2D6BBF; }
+.diag-field .field-value { color: #1A3A6A; font-weight: 600; }
+body.night .diag-field .field-value { color: #B0D4F8; }
+.instr-wrap { border-radius: 8px; padding: 7px 8px; background: #F0FAF5; border: 1px solid #B5E0CC; }
+body.night .instr-wrap { background: #1A2E28; border-color: #2A5040; }
+.instr-wrap .field-label { color: #2D8A4E; }
+.instr-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.instr-tag { font-size: 9px; padding: 2px 8px; border-radius: 10px; border: 1px solid #B5E0CC; background: white; color: #2D8A4E; }
+body.night .instr-tag { background: #1E2E2A; border-color: #2A5040; color: #4ECDC4; }
+.empty-state { text-align: center; padding: 30px 10px; color: #bbb; font-size: 12px; }
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="logo">Medix AI <span id="subtitle">Жедел жәрдем көмекшісі</span></div>
-  <div class="controls">
-    <button class="lang-btn" onclick="toggleLang()">
-    <span id="kaz" class="active">ҚАЗ</span> | <span id="rus">РУС</span>
+
+<!-- ГЛАВНЫЙ ЭКРАН -->
+<div id="home" class="screen active">
+  <div class="header">
+    <div class="logo">Medix AI <span id="subtitle">Жедел жәрдем көмекшісі</span></div>
+    <div class="controls">
+      <button class="lang-btn" onclick="toggleLang()">
+        <span id="kaz" class="lang-active">ҚАЗ</span> | <span id="rus">РУС</span>
+      </button>
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️</button>
     </div>
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️</button>
+  </div>
+  <div class="greeting" id="greeting">Сәлем! Не көмектесе аламын?</div>
+  <div class="grid">
+    <div class="card" onclick="showKarta()">
+      <div class="icon red">🚨</div>
+      <div class="card-title" id="t1">Шақыру картасы</div>
+      <div class="card-sub" id="s1">Дауыс / мәтін</div>
+    </div>
+    <div class="card" onclick="alert(texts[lang].soon)">
+      <div class="icon blue">💊</div>
+      <div class="card-title" id="t2">Кіріс / Шығыс</div>
+      <div class="card-sub" id="s2">Дәрі · Мед. бұйым</div>
+    </div>
+    <div class="card" onclick="alert(texts[lang].soon)">
+      <div class="icon green">📋</div>
+      <div class="card-title" id="t3">Хаттамалар</div>
+      <div class="card-sub" id="s3">ҚР МДМ · Офлайн</div>
+    </div>
+    <div class="card" onclick="alert(texts[lang].soon)">
+      <div class="icon amber">🧮</div>
+      <div class="card-title" id="t4">Дозировка</div>
+      <div class="card-sub" id="s4">ЖИ іздеу</div>
+    </div>
+  </div>
+  <div class="footer">Medix AI · v1.0</div>
+</div>
+
+<!-- ЭКРАН КАРТА ВЫЗОВА -->
+<div id="karta" class="screen">
+  <div class="karta-screen">
+    <div class="back-header">
+      <button class="back-btn" onclick="showHome()">← Артқа</button>
+      <div class="page-title" id="karta-title">Шақыру картасы</div>
+      <div style="width:60px;"></div>
+    </div>
+    <div class="karta-body">
+      <div class="archive">
+        <div class="archive-hdr">Архив</div>
+        <div class="archive-list" id="archiveList">
+          <div class="arc-item">
+            <div class="arc-date">16.04 · 08:12</div>
+            <div class="arc-name">Ер, 54 жас</div>
+            <div class="arc-diag">Инфаркт</div>
+          </div>
+          <div class="arc-item">
+            <div class="arc-date">15.04 · 22:45</div>
+            <div class="arc-name">Әйел, 32</div>
+            <div class="arc-diag">Травма</div>
+          </div>
+          <div class="arc-item">
+            <div class="arc-date">15.04 · 14:30</div>
+            <div class="arc-name">Бала, 5 жас</div>
+            <div class="arc-diag">Қызба</div>
+          </div>
+        </div>
+      </div>
+      <div class="karta-center">
+        <div class="input-box-wrap">
+          <textarea class="input-box" id="kartaInput" placeholder="Мәтін енгізіңіз..."></textarea>
+          <div class="input-actions">
+            <div class="btn-mic" onclick="startVoice()">🎙 Дауыс</div>
+            <button class="btn-send" onclick="sendKarta()">Жіберу →</button>
+          </div>
+        </div>
+        <div class="result-wrap" id="kartaResult">
+          <div class="empty-state">Жазып жіберіңіз — ЖИ толтырады</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<div class="greeting" id="greeting">Сәлем! Не көмектесе аламын?</div>
-<div class="grid">
-  <div class="card" onclick="alert(texts[lang].soon)">
-    <div class="icon red">🚨</div>
-    <div class="card-title" id="t1">Шақыру картасы</div>
-    <div class="card-sub" id="s1">Дауыс / мәтін</div>
-  </div>
-  <div class="card" onclick="alert(texts[lang].soon)">
-    <div class="icon blue">💊</div>
-    <div class="card-title" id="t2">Кіріс / Шығыс</div>
-    <div class="card-sub" id="s2">Дәрі · Мед. бұйым</div>
-  </div>
-  <div class="card" onclick="alert(texts[lang].soon)">
-    <div class="icon green">📋</div>
-    <div class="card-title" id="t3">Хаттамалар</div>
-    <div class="card-sub" id="s3">ҚР МДМ · Офлайн</div>
-  </div>
-  <div class="card" onclick="alert(texts[lang].soon)">
-    <div class="icon amber">🧮</div>
-    <div class="card-title" id="t4">Дозировка</div>
-    <div class="card-sub" id="s4">ЖИ іздеу</div>
-  </div>
-</div>
-<div class="footer">Medix AI · v1.0</div>
+
 <script>
 window.Telegram.WebApp.ready();
 let lang = 'kaz';
@@ -98,10 +211,20 @@ const texts = {
   }
 };
 
+function showHome() {
+  document.getElementById('home').classList.add('active');
+  document.getElementById('karta').classList.remove('active');
+}
+
+function showKarta() {
+  document.getElementById('home').classList.remove('active');
+  document.getElementById('karta').classList.add('active');
+}
+
 function toggleLang() {
   lang = lang === 'kaz' ? 'rus' : 'kaz';
-  document.getElementById('kaz').className = lang === 'kaz' ? 'active' : '';
-  document.getElementById('rus').className = lang === 'rus' ? 'active' : '';
+  document.getElementById('kaz').className = lang === 'kaz' ? 'lang-active' : '';
+  document.getElementById('rus').className = lang === 'rus' ? 'lang-active' : '';
   const t = texts[lang];
   document.getElementById('subtitle').textContent = t.subtitle;
   document.getElementById('greeting').textContent = t.greeting;
@@ -113,12 +236,78 @@ function toggleLang() {
   document.getElementById('s3').textContent = t.s3;
   document.getElementById('t4').textContent = t.t4;
   document.getElementById('s4').textContent = t.s4;
+  document.getElementById('kartaInput').placeholder = lang === 'kaz' ? 'Мәтін енгізіңіз...' : 'Введите текст...';
 }
 
 function toggleTheme() {
   night = !night;
   document.body.classList.toggle('night');
   document.getElementById('themeBtn').textContent = night ? '🌙' : '☀️';
+}
+
+function startVoice() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert(lang === 'kaz' ? 'Браузер дауысты қолдамайды' : 'Браузер не поддерживает голос');
+    return;
+  }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SR();
+  recognition.lang = lang === 'kaz' ? 'kk-KZ' : 'ru-RU';
+  recognition.onresult = (e) => {
+    document.getElementById('kartaInput').value = e.results[0][0].transcript;
+  };
+  recognition.start();
+}
+
+function sendKarta() {
+  const input = document.getElementById('kartaInput').value.trim();
+  if (!input) {
+    alert(lang === 'kaz' ? 'Мәтін енгізіңіз!' : 'Введите текст!');
+    return;
+  }
+  const result = document.getElementById('kartaResult');
+  result.innerHTML = '<div class="empty-state">⏳ ЖИ өңдеуде...</div>';
+  
+  setTimeout(() => {
+    result.innerHTML = `
+      <div class="result-label">ЖИ толтырды · өңдеуге болады</div>
+      <div class="field">
+        <div class="field-label">${lang === 'kaz' ? 'Шағымдар' : 'Жалобы'}</div>
+        <div class="field-value">${input}</div>
+      </div>
+      <div class="field">
+        <div class="field-label">${lang === 'kaz' ? 'Ауру анамнезі' : 'Анамнез заболевания'}</div>
+        <div class="field-value">${lang === 'kaz' ? 'Симптомдар кенеттен басталған' : 'Симптомы начались внезапно'}</div>
+      </div>
+      <div class="field">
+        <div class="field-label">${lang === 'kaz' ? 'Өмір анамнезі' : 'Анамнез жизни'}</div>
+        <div class="field-base">${lang === 'kaz' ? 'Созылмалы аурулар жоқ. Туберкулёз, гепатит жоқ. Аллергия жоқ. Эпид. анамнез: қалада, контакт жоқ.' : 'Хронические заболевания отрицает. Туберкулёз, гепатит отрицает. Аллергии нет. Эпид. анамнез: в городе, контактов нет.'}</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Status localis</div>
+        <div class="field-base">${lang === 'kaz' ? 'Сана сақ, бағдарланған. Тері физиол. түсте. Аускульт: везикулярлы. Іш жұмсақ. FAST (-)' : 'Сознание ясное, ориентирован. Кожные покровы физиол. окраски. Аускульт: везикулярное. Живот мягкий. FAST (-)'}</div>
+      </div>
+      <div class="instr-wrap">
+        <div class="field-label">${lang === 'kaz' ? 'Мед. құралдар' : 'Мед. инструменты'}</div>
+        <div class="instr-tags">
+          <div class="instr-tag">Пульсоксиметрия</div>
+          <div class="instr-tag">АД</div>
+          <div class="instr-tag">ЧСС</div>
+          <div class="instr-tag">ЧДД</div>
+          <div class="instr-tag">ЭКГ</div>
+          <div class="instr-tag">Аускультация</div>
+        </div>
+      </div>
+      <div class="diag-field">
+        <div class="field-label">${lang === 'kaz' ? 'Алдын ала диагноз' : 'Предварительный диагноз'}</div>
+        <div class="field-value">${lang === 'kaz' ? 'Диагноз нақтылануда...' : 'Диагноз уточняется...'}</div>
+      </div>
+      <div class="field">
+        <div class="field-label">${lang === 'kaz' ? 'Көрсетілген көмек' : 'Оказанная помощь'}</div>
+        <div class="field-value">${lang === 'kaz' ? 'Көмек көрсетілуде...' : 'Помощь оказывается...'}</div>
+      </div>
+    `;
+  }, 1000);
 }
 </script>
 </body>
