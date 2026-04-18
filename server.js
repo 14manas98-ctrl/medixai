@@ -30,7 +30,8 @@ app.post('/api/karta', async (req, res) => {
     const data = await response.json();
     res.json({ text: data.candidates[0].content.parts[0].text });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error('Gemini error:', e.message);
+res.status(500).json({ error: e.message });
   }
 });
 
