@@ -27,8 +27,12 @@ app.post('/api/karta', async (req, res) => {
         })
       }
     );
-    const data = await response.json();
-    res.json({ text: data.candidates[0].content.parts[0].text });
+   const data = await response.json();
+console.log('Gemini response:', JSON.stringify(data));
+if (!data.candidates || !data.candidates[0]) {
+  return res.status(500).json({ error: 'Gemini error: ' + JSON.stringify(data) });
+}
+res.json({ text: data.candidates[0].content.parts[0].text });
   } catch (e) {
     console.error('Gemini error:', e.message);
 res.status(500).json({ error: e.message });
