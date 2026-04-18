@@ -9,7 +9,7 @@ bot.onText(/\/start/, function(msg) {
   bot.sendMessage(chatId, 'Салем ' + name + '! Мен Medix AI!', {
     reply_markup: {
       inline_keyboard: [[
-        {text: 'Medix AI ашу', web_app: {url: 'https://google.com'}}
+        {text: 'Medix AI ашу', web_app: {url: 'https://14manas98-ctrl.github.io/medixai'}}
       ]]
     }
   });

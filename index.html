@@ -7,61 +7,118 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, sans-serif; background: #F5F5F0; min-height: 100vh; }
+body { font-family: -apple-system, sans-serif; background: #F5F5F0; min-height: 100vh; transition: all 0.3s; }
+body.night { background: #1A1F2E; }
 .header { padding: 16px; display: flex; justify-content: space-between; align-items: center; }
 .logo { font-size: 20px; font-weight: 600; color: #1A1A1A; }
+body.night .logo { color: #F0F0F0; }
 .logo span { font-size: 11px; color: #888; display: block; font-weight: 400; }
-.lang { font-size: 12px; color: #888; border: 1px solid #ddd; padding: 4px 10px; border-radius: 20px; background: white; }
-.theme { font-size: 18px; cursor: pointer; background: none; border: none; }
+body.night .logo span { color: #7A8AAA; }
+.controls { display: flex; gap: 8px; align-items: center; }
+.lang-btn { font-size: 11px; border: 1px solid #ddd; padding: 4px 10px; border-radius: 20px; background: white; cursor: pointer; color: #555; }
+body.night .lang-btn { background: #242B3E; border-color: #3D4A6A; color: #A0B8D8; }
+.lang-btn span { opacity: 0.4; }
+.lang-btn span.active { opacity: 1; font-weight: 600; }
+.theme-btn { font-size: 18px; cursor: pointer; background: none; border: none; }
 .greeting { padding: 0 16px 20px; font-size: 14px; color: #888; }
+body.night .greeting { color: #7A8AAA; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px; }
-.card { background: white; border-radius: 16px; padding: 16px; border: 1px solid #E8E8E2; cursor: pointer; }
+.card { background: white; border-radius: 16px; padding: 16px; border: 1px solid #E8E8E2; cursor: pointer; transition: all 0.2s; }
+body.night .card { background: #242B3E; border-color: #2E3A54; }
+.card:active { transform: scale(0.97); }
 .icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 10px; }
 .icon.red { background: #FDECEA; }
 .icon.blue { background: #E8F0FB; }
 .icon.green { background: #E8F5EC; }
 .icon.amber { background: #FDF3E3; }
 .card-title { font-size: 13px; font-weight: 600; color: #1A1A1A; margin-bottom: 4px; }
+body.night .card-title { color: #F0F0F0; }
 .card-sub { font-size: 11px; color: #999; }
+body.night .card-sub { color: #7A8AAA; }
 .footer { text-align: center; padding: 24px; font-size: 11px; color: #bbb; }
 </style>
 </head>
 <body>
 <div class="header">
-  <div class="logo">Medix AI <span>Жедел жәрдем көмекшісі</span></div>
-  <div style="display:flex;gap:8px;align-items:center;">
-    <div class="lang">ҚАЗ | РУС</div>
-    <button class="theme" onclick="toggleTheme()">☀️</button>
+  <div class="logo">Medix AI <span id="subtitle">Жедел жәрдем көмекшісі</span></div>
+  <div class="controls">
+    <div class="lang-btn" onclick="toggleLang()">
+      <span id="kaz" class="active">ҚАЗ</span> | <span id="rus">РУС</span>
+    </div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️</button>
   </div>
 </div>
-<div class="greeting">Сәлем! Не көмектесе аламын?</div>
+<div class="greeting" id="greeting">Сәлем! Не көмектесе аламын?</div>
 <div class="grid">
-  <div class="card" onclick="alert('Карта вызова — скоро!')">
+  <div class="card" onclick="alert(texts[lang].soon)">
     <div class="icon red">🚨</div>
-    <div class="card-title">Шақыру картасы</div>
-    <div class="card-sub">Дауыс / мәтін</div>
+    <div class="card-title" id="t1">Шақыру картасы</div>
+    <div class="card-sub" id="s1">Дауыс / мәтін</div>
   </div>
-  <div class="card" onclick="alert('Приход/Расход — скоро!')">
+  <div class="card" onclick="alert(texts[lang].soon)">
     <div class="icon blue">💊</div>
-    <div class="card-title">Кіріс / Шығыс</div>
-    <div class="card-sub">Дәрі · Мед. бұйым</div>
+    <div class="card-title" id="t2">Кіріс / Шығыс</div>
+    <div class="card-sub" id="s2">Дәрі · Мед. бұйым</div>
   </div>
-  <div class="card" onclick="alert('Протоколы — скоро!')">
+  <div class="card" onclick="alert(texts[lang].soon)">
     <div class="icon green">📋</div>
-    <div class="card-title">Хаттамалар</div>
-    <div class="card-sub">ҚР МДМ · Офлайн</div>
+    <div class="card-title" id="t3">Хаттамалар</div>
+    <div class="card-sub" id="s3">ҚР МДМ · Офлайн</div>
   </div>
-  <div class="card" onclick="alert('Калькулятор — скоро!')">
+  <div class="card" onclick="alert(texts[lang].soon)">
     <div class="icon amber">🧮</div>
-    <div class="card-title">Дозировка</div>
-    <div class="card-sub">ЖИ іздеу</div>
+    <div class="card-title" id="t4">Дозировка</div>
+    <div class="card-sub" id="s4">ЖИ іздеу</div>
   </div>
 </div>
 <div class="footer">Medix AI · v1.0</div>
 <script>
 window.Telegram.WebApp.ready();
+let lang = 'kaz';
+let night = false;
+
+const texts = {
+  kaz: {
+    subtitle: 'Жедел жәрдем көмекшісі',
+    greeting: 'Сәлем! Не көмектесе аламын?',
+    t1: 'Шақыру картасы', s1: 'Дауыс / мәтін',
+    t2: 'Кіріс / Шығыс', s2: 'Дәрі · Мед. бұйым',
+    t3: 'Хаттамалар', s3: 'ҚР МДМ · Офлайн',
+    t4: 'Дозировка', s4: 'ЖИ іздеу',
+    soon: 'Жақында!'
+  },
+  rus: {
+    subtitle: 'Помощник скорой помощи',
+    greeting: 'Привет! Чем могу помочь?',
+    t1: 'Карта вызова', s1: 'Голос / текст',
+    t2: 'Приход / Расход', s2: 'Лекарства · Изделия',
+    t3: 'Протоколы', s3: 'МЗ РК · Офлайн',
+    t4: 'Дозировка', s4: 'ИИ поиск',
+    soon: 'Скоро!'
+  }
+};
+
+function toggleLang() {
+  lang = lang === 'kaz' ? 'rus' : 'kaz';
+  document.getElementById('kaz').className = lang === 'kaz' ? 'active' : '';
+  document.getElementById('rus').className = lang === 'rus' ? 'active' : '';
+  const t = texts[lang];
+  document.getElementById('subtitle').textContent = t.subtitle;
+  document.getElementById('greeting').textContent = t.greeting;
+  document.getElementById('t1').textContent = t.t1;
+  document.getElementById('s1').textContent = t.s1;
+  document.getElementById('t2').textContent = t.t2;
+  document.getElementById('s2').textContent = t.s2;
+  document.getElementById('t3').textContent = t.t3;
+  document.getElementById('s3').textContent = t.s3;
+  document.getElementById('t4').textContent = t.t4;
+  document.getElementById('s4').textContent = t.s4;
+}
+
 function toggleTheme() {
-  document.body.style.background = document.body.style.background === 'rgb(26, 31, 46)' ? '#F5F5F0' : '#1A1F2E';
+  night = !night;
+  document.body.classList.toggle('night');
+  document.getElementById('themeBtn').textContent = night ? '🌙' : '☀️';
 }
 </script>
 </body>
