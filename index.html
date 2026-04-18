@@ -72,8 +72,6 @@ body.night .field { background: #1E2438; border-color: #2E3A54; }
 .field-lbl { font-size: 9px; font-weight: 600; color: #2D7DD2; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 4px; }
 .field-val { font-size: 11px; color: #1A1A1A; line-height: 1.6; }
 body.night .field-val { color: #E8E8E8; }
-.field-base { font-size: 11px; color: #aaa; line-height: 1.5; font-style: italic; }
-body.night .field-base { color: #5A6A8A; }
 .diag-field { border-radius: 8px; padding: 7px 8px; background: #E8F3FF; border: 1px solid #B5D4F4; }
 body.night .diag-field { background: #1C2A45; border-color: #2E4A7A; }
 .diag-lbl { font-size: 9px; font-weight: 600; color: #2D6BBF; text-transform: uppercase; margin-bottom: 4px; }
@@ -131,7 +129,7 @@ body.night .instr-tag { background: #1E2E2A; border-color: #2A5040; color: #4ECD
   <div class="karta-screen">
     <div class="back-header">
       <button class="back-btn" onclick="showHome()">← Артқа</button>
-      <div class="page-title" id="karta-title">Шақыру картасы</div>
+      <div class="page-title">Шақыру картасы</div>
       <div style="width:60px;"></div>
     </div>
     <div class="karta-body">
@@ -161,9 +159,6 @@ body.night .instr-tag { background: #1E2E2A; border-color: #2A5040; color: #4ECD
 
 <script>
 window.Telegram.WebApp.ready();
-
-const GEMINI_KEY = 'AIzaSyBV6JpOPoLawimT-PWF9PeoqJWtrAO_7ns';
-
 let lang = 'kaz';
 let night = false;
 
@@ -213,7 +208,6 @@ function toggleLang() {
   document.getElementById('s3').textContent = t.s3;
   document.getElementById('t4').textContent = t.t4;
   document.getElementById('s4').textContent = t.s4;
-  document.getElementById('kartaInput').placeholder = lang === 'kaz' ? 'Мәтін енгізіңіз...' : 'Введите текст...';
 }
 
 function toggleTheme() {
@@ -224,7 +218,7 @@ function toggleTheme() {
 
 function startVoice() {
   if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    alert(lang === 'kaz' ? 'Браузер дауысты қолдамайды' : 'Браузер не поддерживает голос');
+    alert('Браузер дауысты қолдамайды');
     return;
   }
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -233,116 +227,50 @@ function startVoice() {
   recognition.onresult = (e) => {
     document.getElementById('kartaInput').value = e.results[0][0].transcript;
   };
-  recognition.onerror = () => {
-    alert(lang === 'kaz' ? 'Дауыс танылмады' : 'Голос не распознан');
-  };
   recognition.start();
 }
 
 async function sendKarta() {
   const input = document.getElementById('kartaInput').value.trim();
-  if (!input) {
-    alert(lang === 'kaz' ? 'Мәтін енгізіңіз!' : 'Введите текст!');
-    return;
-  }
+  if (!input) { alert('Мәтін енгізіңіз!'); return; }
 
   const result = document.getElementById('kartaResult');
-  result.innerHTML = '<div class="loading">⏳ ' + (lang === 'kaz' ? 'ЖИ өңдеуде...' : 'ИИ обрабатывает...') + '</div>';
+  result.innerHTML = '<div class="loading">⏳ ЖИ өңдеуде...</div>';
 
   const prompt = lang === 'kaz'
-    ? `Сен жедел жәрдем дәрігерінің көмекшісісің. Мына жағдай бойынша толық кәсіби медициналық карта жаз: "${input}".
-
-Мына форматта жаз (әр бөлімді жаңа жолдан баста):
-ШАҒЫМДАР:
-[толық шағымдар мәтіні]
-
-АУРУ АНАМНЕЗІ:
-[ауру басталуы, ұзақтығы, динамикасы]
-
-ӨМІР АНАМНЕЗІ:
-Науқастың сөзіне қарағанда созылмалы аурулар жоқ. Туберкулёз, вирусты гепатит, ВБИ жоқ. Аллергиялық реакциялар жоқ. Эпидемиологиялық анамнез: соңғы айда қаладан шықпаған. Жұқпалы науқастармен контакт болмаған.
-
-STATUS LOCALIS:
-[толық объективті статус: сана, тері, тыныс алу, жүрек, іш, FAST-тест]
-
-АЛДЫН АЛА ДИАГНОЗ:
-[нақты диагноз]
-
-КӨРСЕТІЛГЕН КӨМЕК:
-[препараттар, дозалары, манипуляциялар]`
-    : `Ты помощник врача скорой помощи Казахстана. По следующей ситуации напиши полную профессиональную медицинскую карту вызова: "${input}".
-
-Пиши в формате (каждый раздел с новой строки):
-ЖАЛОБЫ:
-[полный текст жалоб]
-
-АНАМНЕЗ ЗАБОЛЕВАНИЯ:
-[начало, длительность, динамика]
-
-АНАМНЕЗ ЖИЗНИ:
-Со слов пациента хронические заболевания отрицает. Туберкулёз, вирусный гепатит, ВБИ отрицает. Аллергические реакции отрицает. Эпидемиологический анамнез: за пределы города не выезжал. Контактов с инфекционными больными не было.
-
-STATUS LOCALIS:
-[полный объективный статус: сознание, кожные покровы, дыхание, сердце, живот, FAST-тест]
-
-ПРЕДВАРИТЕЛЬНЫЙ ДИАГНОЗ:
-[конкретный диагноз]
-
-ОКАЗАННАЯ ПОМОЩЬ:
-[препараты, дозы, манипуляции]`;
+    ? `Сен жедел жәрдем дәрігерінің көмекшісісің. Мына жағдай бойынша толық кәсіби медициналық карта жаз: "${input}". Мына форматта жаз:\n\nШАҒЫМДАР:\n[толық шағымдар]\n\nАУРУ АНАМНЕЗІ:\n[ауру басталуы]\n\nӨМІР АНАМНЕЗІ:\nНауқастың сөзіне қарағанда созылмалы аурулар жоқ. Туберкулёз, вирусты гепатит, ВБИ жоқ. Аллергиялық реакциялар жоқ. Эпидемиологиялық анамнез: соңғы айда қаладан шықпаған. Жұқпалы науқастармен контакт болмаған.\n\nSTATUS LOCALIS:\n[толық объективті статус]\n\nАЛДЫН АЛА ДИАГНОЗ:\n[нақты диагноз]\n\nКӨРСЕТІЛГЕН КӨМЕК:\n[препараттар, дозалары]`
+    : `Ты помощник врача скорой помощи Казахстана. По следующей ситуации напиши полную профессиональную медицинскую карту вызова: "${input}". Пиши в формате:\n\nЖАЛОБЫ:\n[полный текст жалоб]\n\nАНАМНЕЗ ЗАБОЛЕВАНИЯ:\n[начало, длительность]\n\nАНАМНЕЗ ЖИЗНИ:\nСо слов пациента хронические заболевания отрицает. Туберкулёз, вирусный гепатит, ВБИ отрицает. Аллергические реакции отрицает. Эпидемиологический анамнез: за пределы города не выезжал. Контактов с инфекционными больными не было.\n\nSTATUS LOCALIS:\n[полный объективный статус]\n\nПРЕДВАРИТЕЛЬНЫЙ ДИАГНОЗ:\n[конкретный диагноз]\n\nОКАЗАННАЯ ПОМОЩЬ:\n[препараты, дозы]`;
 
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
-      }
-    );
-
+    const response = await fetch('/api/karta', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
     const data = await response.json();
-    const text = data.candidates[0].content.parts[0].text;
+    const text = data.text;
     const sections = text.split('\n\n');
 
-    const fieldNames = lang === 'kaz'
-      ? ['ШАҒЫМДАР', 'АУРУ АНАМНЕЗІ', 'ӨМІР АНАМНЕЗІ', 'STATUS LOCALIS', 'АЛДЫН АЛА ДИАГНОЗ', 'КӨРСЕТІЛГЕН КӨМЕК']
-      : ['ЖАЛОБЫ', 'АНАМНЕЗ ЗАБОЛЕВАНИЯ', 'АНАМНЕЗ ЖИЗНИ', 'STATUS LOCALIS', 'ПРЕДВАРИТЕЛЬНЫЙ ДИАГНОЗ', 'ОКАЗАННАЯ ПОМОЩЬ'];
-
+    const diagKey = lang === 'kaz' ? 'АЛДЫН АЛА ДИАГНОЗ' : 'ПРЕДВАРИТЕЛЬНЫЙ ДИАГНОЗ';
     let html = '<div class="result-label">ЖИ толтырды · өңдеуге болады</div>';
 
     sections.forEach(section => {
       const lines = section.split('\n');
-      const title = lines[0].replace(':', '').trim();
+      const title = lines[0].replace(':', '').replace('**', '').trim();
       const content = lines.slice(1).join('\n').trim();
       if (!content) return;
-
-      if (title === (lang === 'kaz' ? 'АЛДЫН АЛА ДИАГНОЗ' : 'ПРЕДВАРИТЕЛЬНЫЙ ДИАГНОЗ')) {
+      if (title === diagKey) {
         html += `<div class="diag-field"><div class="diag-lbl">${title}</div><div class="diag-val">${content}</div></div>`;
-      } else if (fieldNames.includes(title)) {
+      } else {
         html += `<div class="field"><div class="field-lbl">${title}</div><div class="field-val">${content}</div></div>`;
       }
     });
 
-    html += `<div class="instr-wrap">
-      <div class="instr-lbl">${lang === 'kaz' ? 'МЕД. ҚҰРАЛДАР' : 'МЕД. ИНСТРУМЕНТЫ'}</div>
-      <div class="instr-tags">
-        <div class="instr-tag">Пульсоксиметрия</div>
-        <div class="instr-tag">АД</div>
-        <div class="instr-tag">ЧСС</div>
-        <div class="instr-tag">ЧДД</div>
-        <div class="instr-tag">ЭКГ</div>
-        <div class="instr-tag">Аускультация</div>
-        <div class="instr-tag">Пальпация</div>
-      </div>
-    </div>`;
+    html += `<div class="instr-wrap"><div class="instr-lbl">${lang === 'kaz' ? 'МЕД. ҚҰРАЛДАР' : 'МЕД. ИНСТРУМЕНТЫ'}</div><div class="instr-tags"><div class="instr-tag">Пульсоксиметрия</div><div class="instr-tag">АД</div><div class="instr-tag">ЧСС</div><div class="instr-tag">ЧДД</div><div class="instr-tag">ЭКГ</div><div class="instr-tag">Аускультация</div><div class="instr-tag">Пальпация</div></div></div>`;
 
     result.innerHTML = html;
-
   } catch(e) {
-    result.innerHTML = '<div class="empty-state">❌ ' + (lang === 'kaz' ? 'Қате шықты. Қайталап көріңіз.' : 'Ошибка. Попробуйте снова.') + '</div>';
+    result.innerHTML = '<div class="empty-state">❌ Қате шықты. Қайталап көріңіз.</div>';
   }
 }
 </script>
