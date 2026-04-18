@@ -15,7 +15,9 @@ app.use(express.static('public'));
 app.post('/api/karta', async (req, res) => {
   const { prompt } = req.body;
   const GEMINI_KEY = process.env.GEMINI_KEY;
-
+  
+  console.log('Request received, key exists:', !!GEMINI_KEY);
+  
   try {
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
@@ -27,15 +29,20 @@ app.post('/api/karta', async (req, res) => {
         })
       }
     );
-   const data = await response.json();
-console.log('Gemini response:', JSON.stringify(data));
-if (!data.candidates || !data.candidates[0]) {
-  return res.status(500).json({ error: 'Gemini error: ' + JSON.stringify(data) });
-}
-res.json({ text: data.candidates[0].content.parts[0].text });
+    
+    const data = await response.json();
+    console.log('Gemini status:', response.status);
+    console.log('Gemini data:', JSON.stringify(data).substring(0, 200));
+    
+    if (data.error) {
+      console.error('Gemini error:', data.error.message);
+      return res.status(500).json({ error: data.error.message });
+    }
+    
+    res.json({ text: data.candidates[0].content.parts[0].text });
   } catch (e) {
-    console.error('Gemini error:', e.message);
-res.status(500).json({ error: e.message });
+    console.error('Server error:', e.message);
+    res.status(500).json({ error: e.message });
   }
 });
 
