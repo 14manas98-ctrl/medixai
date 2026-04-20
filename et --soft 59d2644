@@ -1,0 +1,20 @@
+[33mf778c60[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m Switch to Anthropic API
+[33m59d2644[m[33m ([m[1;31morigin/master[m[33m)[m Fix Gemini model name
+[33m8bdaa68[m Fix server with full logging
+[33mb5b4cd8[m Debug Gemini response
+[33m3e4079f[m Add error logging
+[33m027c757[m Fix sendKarta function
+[33m9e04713[m Fix Railway URL
+[33m00124d3[m Update API URL
+[33mfa34e86[m Add Procfile
+[33m99e99f9[m Move to Railway server
+[33m12d4933[m New Gemini key
+[33m999262c[m New key
+[33maf87fe4[m Fix model
+[33m9b83273[m Update key
+[33me5ad98f[m Add Gemini AI real
+[33m1387683[m Add karta screen
+[33m7a07e6d[m Fix lang button
+[33m6e3e31d[m Fix lang button
+[33mf390536[m Fix language and theme
+[33m4fbb99d[m first commit

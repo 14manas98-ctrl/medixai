@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+ 
 app.use(express.json());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -9,42 +9,45 @@ app.use((req, res, next) => {
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
-
+ 
 app.use(express.static('public'));
-
+ 
 app.post('/api/karta', async (req, res) => {
   const { prompt } = req.body;
-  const GEMINI_KEY = process.env.GEMINI_KEY;
-  
-  console.log('Request received, key exists:', !!GEMINI_KEY);
-  
+  const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
+ 
+  console.log('Request received, key exists:', !!ANTHROPIC_KEY);
+ 
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
-      }
-    );
-    
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+ 
     const data = await response.json();
-    console.log('Gemini status:', response.status);
-    console.log('Gemini data:', JSON.stringify(data).substring(0, 200));
-    
+    console.log('Anthropic status:', response.status);
+ 
     if (data.error) {
-      console.error('Gemini error:', data.error.message);
+      console.error('Anthropic error:', data.error.message);
       return res.status(500).json({ error: data.error.message });
     }
-    
-    res.json({ text: data.candidates[0].content.parts[0].text });
+ 
+    res.json({ text: data.content[0].text });
   } catch (e) {
     console.error('Server error:', e.message);
     res.status(500).json({ error: e.message });
   }
 });
-
+ 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Medix AI сервер запущен на порту ${PORT}`));
+ 
