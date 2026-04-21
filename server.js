@@ -1,9 +1,12 @@
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const app = express();
 
 app.use(express.json());
 
+// ─────────────────────────────────────────
 // CORS
+// ─────────────────────────────────────────
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -12,7 +15,43 @@ app.use((req, res, next) => {
   next();
 });
 
-// Статика — отдаём файлы из папки public/
+// ─────────────────────────────────────────
+// RATE LIMITING — защита от злоупотреблений
+// ─────────────────────────────────────────
+
+// Общий лимит: 100 запросов за 15 минут с одного IP
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { error: 'Слишком много запросов. Подождите 15 минут.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Лимит для AI запросов: 20 запросов в минуту
+const aiLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  message: { error: 'Слишком много AI запросов. Подождите 1 минуту.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Лимит для карты вызова: 10 запросов в минуту
+const kartaLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  message: { error: 'Слишком много запросов карты. Подождите 1 минуту.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Применяем общий лимит ко всем /api маршрутам
+app.use('/api', generalLimiter);
+
+// ─────────────────────────────────────────
+// Статика
+// ─────────────────────────────────────────
 app.use(express.static('public'));
 
 // ─────────────────────────────────────────
@@ -20,6 +59,9 @@ app.use(express.static('public'));
 // ─────────────────────────────────────────
 async function callAnthropic(body) {
   const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
+  if (!ANTHROPIC_KEY) {
+    throw new Error('ANTHROPIC_KEY не настроен на сервере');
+  }
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -35,11 +77,10 @@ async function callAnthropic(body) {
 // ─────────────────────────────────────────
 // /api/karta — Карта вызова
 // ─────────────────────────────────────────
-app.post('/api/karta', async (req, res) => {
+app.post('/api/karta', kartaLimiter, async (req, res) => {
   const { prompt, system, messages } = req.body;
-  console.log('Request /api/karta');
+  console.log('Request /api/karta from:', req.ip);
   try {
-    // Поддержка старого формата (prompt) и нового (system + messages)
     let body;
     if (messages) {
       body = {
@@ -64,11 +105,11 @@ app.post('/api/karta', async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// /api/ai — Медицинский AI чат (с web_search)
+// /api/ai — Медицинский AI чат
 // ─────────────────────────────────────────
-app.post('/api/ai', async (req, res) => {
+app.post('/api/ai', aiLimiter, async (req, res) => {
   const { system, messages, max_tokens } = req.body;
-  console.log('Request /api/ai');
+  console.log('Request /api/ai from:', req.ip);
   try {
     const data = await callAnthropic({
       model: 'claude-sonnet-4-5',
@@ -85,11 +126,11 @@ app.post('/api/ai', async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// /api/calc — Калькулятор доз (с web_search)
+// /api/calc — Калькулятор доз
 // ─────────────────────────────────────────
-app.post('/api/calc', async (req, res) => {
+app.post('/api/calc', aiLimiter, async (req, res) => {
   const { system, messages, max_tokens, tools } = req.body;
-  console.log('Request /api/calc');
+  console.log('Request /api/calc from:', req.ip);
   try {
     const body = {
       model: 'claude-sonnet-4-5',
@@ -97,7 +138,6 @@ app.post('/api/calc', async (req, res) => {
       system: system,
       messages: messages
     };
-    // Передаём tools если есть (web_search)
     if (tools) body.tools = tools;
     const data = await callAnthropic(body);
     res.json(data);
@@ -107,13 +147,6 @@ app.post('/api/calc', async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────
-// Запуск сервера
-// ─────────────────────────────────────────
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`MedixAI server running on port ${PORT}`);
-});
 // ─────────────────────────────────────────
 // TELEGRAM BOT
 // ─────────────────────────────────────────
@@ -146,3 +179,13 @@ if (BOT_TOKEN) {
 } else {
   console.log('BOT_TOKEN not found, bot not started');
 }
+
+// ─────────────────────────────────────────
+// Запуск сервера
+// ─────────────────────────────────────────
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`MedixAI server running on port ${PORT}`);
+  console.log('Rate limiting: ENABLED');
+  console.log('Security: ACTIVE');
+});
