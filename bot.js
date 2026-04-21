@@ -1,7 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 
-const TOKEN = '8684002127:AAHewwmYW0y4NOa5hn2yrnfqM-mGlBhMJkU';
-const bot = new TelegramBot(TOKEN, {polling: true});
+const TOKEN = process.env.BOT_TOKEN;
+const bot = new TelegramBot(TOKEN, { polling: true });
 
 bot.onText(/\/start/, function(msg) {
   const chatId = msg.chat.id;
@@ -9,7 +9,10 @@ bot.onText(/\/start/, function(msg) {
   bot.sendMessage(chatId, 'Салем ' + name + '! Мен Medix AI!', {
     reply_markup: {
       inline_keyboard: [[
-        {text: 'Medix AI ашу', web_app: {url: 'https://14manas98-ctrl.github.io/medixai'}}
+        {
+          text: 'Medix AI ашу',
+          web_app: { url: 'https://medixai-production.up.railway.app/medix_final.html' }
+        }
       ]]
     }
   });
