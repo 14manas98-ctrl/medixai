@@ -43,14 +43,14 @@ app.post('/api/karta', async (req, res) => {
     let body;
     if (messages) {
       body = {
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-5',
         max_tokens: 2000,
         system: system,
         messages: messages
       };
     } else {
       body = {
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-5',
         max_tokens: 2000,
         messages: [{ role: 'user', content: prompt }]
       };
@@ -71,7 +71,7 @@ app.post('/api/ai', async (req, res) => {
   console.log('Request /api/ai');
   try {
     const data = await callAnthropic({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-5',
       max_tokens: max_tokens || 1500,
       system: system,
       messages: messages,
@@ -92,7 +92,7 @@ app.post('/api/calc', async (req, res) => {
   console.log('Request /api/calc');
   try {
     const body = {
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-5',
       max_tokens: max_tokens || 2000,
       system: system,
       messages: messages
