@@ -569,6 +569,7 @@ const T = {
     kExLabel:'МЫСАЛДАР',
     kChips:[{i:'❤️',t:'ЖІМ, кеуде ауырсынуы 40 мин, тер басты, ЭКГ — ST жоғарылады'},{i:'🧠',t:'Инсульт, сол жақ парез, сөйлеу бұзылды, 1 сағат бұрын'},{i:'💉',t:'Анафилаксия, естен танды, АД 60/40, тері бөртпесі'}],
 kChipsPreg:[{i:'🤰',t:'Жиырылу 10 минут сайын, мерзімі 38 апта, бірінші туу'},{i:'🩸',t:'Жыныс жолдарынан қан кету, мерзімі 32 апта, ауырсыну жоқ'},{i:'💊',t:'АД 160/100, аяқ ісінуі, бас ауыруы, мерзімі 36 апта'}],
+kChipsChild:[{i:'🌡️',t:'Бала 4 жас, температура 39.5, 2 минут тырысу, бірінші рет'},{i:'😮‍💨',t:'Бала 6 жас, демікпе ұстамасы, ысқырықты тыныс, бронхиалды демікпе'},{i:'💉',t:'Бала 2 жас, антибиотикке аллергия, бөртпе, ерін ісінуі'}],
     kPh:'Шақыру сипаттамасын жазыңыз...',ptA:'👤 Ересек',ptC:'👶 Бала',ptP:'🤰 Жүкті',
     sComplaints:'Шағымдар',sMorbi:'Аурудың анамнезі',sVitae:'Өмірінің анамнезі',
     sStatus:'Status Localis',sInstr:'Инструментальды',sDiag:'Диагноз ЖМЖ',
@@ -604,6 +605,7 @@ kChipsPreg:[{i:'🤰',t:'Жиырылу 10 минут сайын, мерзімі
     kExLabel:'ПРИМЕРЫ',
     kChips:[{i:'❤️',t:'ОКС, боль в груди 40 мин, потливость, ЭКГ — подъём ST'},{i:'🧠',t:'Инсульт, левосторонний парез, нарушение речи, 1 час назад'},{i:'💉',t:'Анафилаксия, потеря сознания, АД 60/40, сыпь'}],
 kChipsPreg:[{i:'🤰',t:'Схватки каждые 10 минут, срок 38 недель, первые роды'},{i:'🩸',t:'Кровотечение из половых путей, срок 32 недели, боли нет'},{i:'💊',t:'АД 160/100, отёки ног, головная боль, срок 36 недель'}],
+kChipsChild:[{i:'🌡️',t:'Ребёнок 4 года, температура 39.5, судороги 2 минуты, впервые'},{i:'😮‍💨',t:'Ребёнок 6 лет, приступ удушья, свистящее дыхание, бронхиальная астма'},{i:'💉',t:'Ребёнок 2 года, аллергия на антибиотик, сыпь, отёк губ'}],
     kPh:'Опишите вызов...',ptA:'👤 Взрослый',ptC:'👶 Ребёнок',ptP:'🤰 Беременная',
     sComplaints:'Жалобы',sMorbi:'Анамнез заболевания',sVitae:'Анамнез жизни',
     sStatus:'Status Localis',sInstr:'Инструментальные',sDiag:'Диагноз СМП',
@@ -670,7 +672,7 @@ function renderAll(){
   setText('k-ex-label',t('kExLabel'));
   setText('pt-adult',t('ptA'));setText('pt-child',t('ptC'));setText('pt-preg',t('ptP'));
   setAttr('k-inp','placeholder',t('kPh'));
-  renderChipsFor('k-chips',t('kChips'),'setEx("k-inp",this)');
+  renderKartaChips();
   // MEDS
   setText('m-title',t('mTitle'));setText('m-sub',t('mSub'));
   setText('mt-rashod',t('tabRashod'));setText('mt-prihod',t('tabPrihod'));
@@ -733,8 +735,21 @@ function setPtype(pt){
   document.getElementById('pt-adult').classList.toggle('on',pt==='adult');
   document.getElementById('pt-child').classList.toggle('on',pt==='child');
   document.getElementById('pt-preg').classList.toggle('on',pt==='preg');
-  const chips = pt==='preg' ? t('kChipsPreg') : t('kChips');
-  renderChipsFor('k-chips', chips, 'setEx("k-inp",this)');
+  renderKartaChips();
+}
+function renderKartaChips(){
+  let chips;
+  if(ptype==='preg') chips=t('kChipsPreg');
+  else if(ptype==='child') chips=t('kChipsChild');
+  else chips=t('kChips');
+  const cont=document.getElementById('k-chips');
+  if(!cont||!chips) return;
+  cont.innerHTML=chips.map(c=>`<div class="chip" onclick="setKartaEx(this)"><span class="chip-icon">${c.i}</span><span>${c.t}</span></div>`).join('');
+}
+function setKartaEx(chipEl){
+  const txt=chipEl.querySelector('span:last-child').textContent;
+  const inp=document.getElementById('k-inp');
+  inp.value=txt;ar(inp);inp.focus();
 }
 
 function kartaSystemPrompt(){
