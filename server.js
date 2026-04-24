@@ -1,8 +1,16 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const app = express();
 
 app.use(express.json());
+
+// ─────────────────────────────────────────
+// SECURITY — helmet
+// ─────────────────────────────────────────
+app.use(helmet({
+  contentSecurityPolicy: false, // отключаем CSP чтобы не ломать Telegram Mini App
+}));
 
 // ─────────────────────────────────────────
 // CORS
