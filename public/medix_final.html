@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -235,7 +235,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 .hfoot{text-align:center;padding:20px;font-size:9.5px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:var(--foot);flex-shrink:0;}
 
 /* ============================================================
-   SCREEN KARTA — patient type toggle
+   SCREEN KARTA вЂ” patient type toggle
 ============================================================ */
 .ptype{display:flex;gap:8px;padding:10px 14px 0;flex-shrink:0;position:relative;z-index:1;}
 .ptype-btn{flex:1;padding:9px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.25s;text-align:center;font-family:'Inter',sans-serif;}
@@ -351,7 +351,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 @keyframes dotP{0%,80%,100%{opacity:0.2;transform:scale(0.8)}40%{opacity:1;transform:scale(1)}}
 
 /* ============================================================
-   SCREEN CALC — drug result rows
+   SCREEN CALC вЂ” drug result rows
 ============================================================ */
 .params-row{display:flex;gap:10px;}
 .param-box{flex:1;padding:10px 12px;border-radius:10px;background:var(--chip-bg);border:1px solid var(--border);}
@@ -383,11 +383,11 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
   <div class="inner">
     <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 20px 14px;position:relative;z-index:2;flex-shrink:0;">
       <div class="lseg">
-        <button class="lb on" id="h-kz" onclick="setLang('kz')">ҚАЗ</button>
-        <button class="lb" id="h-ru" onclick="setLang('ru')">РУС</button>
+        <button class="lb on" id="h-kz" onclick="setLang('kz')">ТљРђР—</button>
+        <button class="lb" id="h-ru" onclick="setLang('ru')">Р РЈРЎ</button>
       </div>
       <div class="tog" onclick="toggleTheme()">
-        <div class="tt"><div class="ti"><span>🌙</span><span>☀️</span></div><div class="tk" id="h-tk"></div></div>
+        <div class="tt"><div class="ti"><span>рџЊ™</span><span>вЂпёЏ</span></div><div class="tk" id="h-tk"></div></div>
       </div>
     </div>
     <div class="hero">
@@ -399,10 +399,10 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
     <div class="dv"></div>
     <div class="slbl" id="h-mod"></div>
     <div class="home-cards">
-      <div class="hcard" onclick="goTo('karta')"><div class="ci ci1">📋</div><div class="cinfo"><div class="ctit" id="h-t1"></div><div class="cdsc" id="h-d1"></div></div><div class="carr">›</div></div>
-      <div class="hcard" onclick="goTo('meds')"><div class="ci ci2">💊</div><div class="cinfo"><div class="ctit" id="h-t2"></div><div class="cdsc" id="h-d2"></div></div><div class="carr">›</div></div>
-      <div class="hcard" onclick="goTo('ai')"><div class="ci ci3">🤖</div><div class="cinfo"><div class="ctit" id="h-t3"></div><div class="cdsc" id="h-d3"></div></div><div class="carr">›</div></div>
-      <div class="hcard" onclick="goTo('calc')"><div class="ci ci4">🧮</div><div class="cinfo"><div class="ctit" id="h-t4"></div><div class="cdsc" id="h-d4"></div></div><div class="carr">›</div></div>
+      <div class="hcard" onclick="goTo('karta')"><div class="ci ci1">рџ“‹</div><div class="cinfo"><div class="ctit" id="h-t1"></div><div class="cdsc" id="h-d1"></div></div><div class="carr">вЂє</div></div>
+      <div class="hcard" onclick="goTo('meds')"><div class="ci ci2">рџ’Љ</div><div class="cinfo"><div class="ctit" id="h-t2"></div><div class="cdsc" id="h-d2"></div></div><div class="carr">вЂє</div></div>
+      <div class="hcard" onclick="goTo('ai')"><div class="ci ci3">рџ¤–</div><div class="cinfo"><div class="ctit" id="h-t3"></div><div class="cdsc" id="h-d3"></div></div><div class="carr">вЂє</div></div>
+      <div class="hcard" onclick="goTo('calc')"><div class="ci ci4">рџ§®</div><div class="cinfo"><div class="ctit" id="h-t4"></div><div class="cdsc" id="h-d4"></div></div><div class="carr">вЂє</div></div>
     </div>
     <div class="hfoot" id="h-foot"></div>
   </div>
@@ -415,11 +415,11 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
   <div class="blob b1"></div>
   <div class="inner">
     <div class="hdr">
-      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="back-btn" onclick="goTo('home')">в†ђ</div>
       <div class="hdr-info"><div class="hdr-title" id="k-title"></div><div class="hdr-sub" id="k-sub"></div></div>
       <div class="lseg" style="transform:scale(0.9);transform-origin:right;">
-        <button class="lb" id="k-kz" onclick="setLang('kz')">ҚАЗ</button>
-        <button class="lb on" id="k-ru" onclick="setLang('ru')">РУС</button>
+        <button class="lb" id="k-kz" onclick="setLang('kz')">ТљРђР—</button>
+        <button class="lb on" id="k-ru" onclick="setLang('ru')">Р РЈРЎ</button>
       </div>
     </div>
     <div class="ptype">
@@ -450,9 +450,9 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
   <div class="blob b1"></div>
   <div class="inner">
     <div class="hdr">
-      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="back-btn" onclick="goTo('home')">в†ђ</div>
       <div class="hdr-info"><div class="hdr-title" id="m-title"></div><div class="hdr-sub" id="m-sub"></div></div>
-      <div class="shift-badge"><div class="shift-dot"></div><div class="shift-time" id="shift-time">0 ч 0 мин</div></div>
+      <div class="shift-badge"><div class="shift-dot"></div><div class="shift-time" id="shift-time">0 С‡ 0 РјРёРЅ</div></div>
     </div>
     <div class="tabs-wrap">
       <div class="tabs">
@@ -464,24 +464,24 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
     <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
       <div class="pane active" id="pane-rashod">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="rashod-stabs"></div></div>
-        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="rashod-search" type="text" placeholder="Поиск..." oninput="filterList('rashod',this.value)"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">рџ”Ќ</span><input class="search-inp" id="rashod-search" type="text" placeholder="РџРѕРёСЃРє..." oninput="filterList('rashod',this.value)"></div></div>
         <div class="list-scroll" id="rashod-list"></div>
         <div class="journal-btn" onclick="openJournal('rashod')" id="m-jbtn-r"></div>
         <div class="reset-btn" onclick="confirmReset()" id="m-reset"></div>
       </div>
       <div class="pane" id="pane-prihod">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="prihod-stabs"></div></div>
-        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="prihod-search" type="text" placeholder="Поиск..." oninput="filterList('prihod',this.value)"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">рџ”Ќ</span><input class="search-inp" id="prihod-search" type="text" placeholder="РџРѕРёСЃРє..." oninput="filterList('prihod',this.value)"></div></div>
         <div class="list-scroll" id="prihod-list"></div>
         <div class="journal-btn" onclick="openJournal('prihod')" id="m-jbtn-p"></div>
-        <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0">🗑️ Очистить приход</div>
+        <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0">рџ—‘пёЏ РћС‡РёСЃС‚РёС‚СЊ РїСЂРёС…РѕРґ</div>
       </div>
       <div class="pane" id="pane-ostatki">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="ostatki-stabs"></div></div>
-        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="ostatki-search" type="text" placeholder="Поиск..." oninput="filterList('ostatki',this.value)"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">рџ”Ќ</span><input class="search-inp" id="ostatki-search" type="text" placeholder="РџРѕРёСЃРє..." oninput="filterList('ostatki',this.value)"></div></div>
         <div class="list-scroll" id="ostatki-list"></div>
-        <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o">📋 Журнал остатков</div>
-        <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o">🗑️ Очистить остатки</div>
+        <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o">рџ“‹ Р–СѓСЂРЅР°Р» РѕСЃС‚Р°С‚РєРѕРІ</div>
+        <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o">рџ—‘пёЏ РћС‡РёСЃС‚РёС‚СЊ РѕСЃС‚Р°С‚РєРё</div>
       </div>
     </div>
   </div>
@@ -494,11 +494,11 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
   <div class="blob b1"></div>
   <div class="inner">
     <div class="hdr">
-      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="back-btn" onclick="goTo('home')">в†ђ</div>
       <div class="hdr-info"><div class="hdr-title" id="ai-title"></div><div class="hdr-sub" id="ai-sub"></div></div>
       <div class="lseg" style="transform:scale(0.9);transform-origin:right;">
-        <button class="lb" id="ai-kz" onclick="setLang('kz')">ҚАЗ</button>
-        <button class="lb on" id="ai-ru" onclick="setLang('ru')">РУС</button>
+        <button class="lb" id="ai-kz" onclick="setLang('kz')">ТљРђР—</button>
+        <button class="lb on" id="ai-ru" onclick="setLang('ru')">Р РЈРЎ</button>
       </div>
     </div>
     <div class="mid" id="ai-mid">
@@ -524,21 +524,21 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
   <div class="blob b1"></div>
   <div class="inner">
     <div class="hdr">
-      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="back-btn" onclick="goTo('home')">в†ђ</div>
       <div class="hdr-info"><div class="hdr-title" id="c-title"></div><div class="hdr-sub" id="c-sub"></div></div>
       <div class="lseg" style="transform:scale(0.9);transform-origin:right;">
-        <button class="lb" id="c-kz" onclick="setLang('kz')">ҚАЗ</button>
-        <button class="lb on" id="c-ru" onclick="setLang('ru')">РУС</button>
+        <button class="lb" id="c-kz" onclick="setLang('kz')">ТљРђР—</button>
+        <button class="lb on" id="c-ru" onclick="setLang('ru')">Р РЈРЎ</button>
       </div>
     </div>
-    <!-- Вкладки калькулятора -->
+    <!-- Р’РєР»Р°РґРєРё РєР°Р»СЊРєСѓР»СЏС‚РѕСЂР° -->
     <div class="tabs-wrap" style="padding-top:10px;">
       <div class="tabs">
-        <div class="mtab on" id="ct-dose" onclick="switchCalcTab('dose')" id="ct-dose">💊 <span id="ct-dose-lbl"></span></div>
-        <div class="mtab" id="ct-shock" onclick="switchCalcTab('shock')">⚡ <span id="ct-shock-lbl"></span></div>
+        <div class="mtab on" id="ct-dose" onclick="switchCalcTab('dose')" id="ct-dose">рџ’Љ <span id="ct-dose-lbl"></span></div>
+        <div class="mtab" id="ct-shock" onclick="switchCalcTab('shock')">вљЎ <span id="ct-shock-lbl"></span></div>
       </div>
     </div>
-    <!-- Панель: Дозы детям -->
+    <!-- РџР°РЅРµР»СЊ: Р”РѕР·С‹ РґРµС‚СЏРј -->
     <div class="pane active" id="cpane-dose">
       <div class="mid" id="c-mid">
         <div class="welcome" id="c-welcome">
@@ -546,7 +546,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
           <div class="chips" id="c-chips"></div>
         </div>
         <div id="c-results"></div>
-<div id="c-back-btn" style="display:none;margin:0 14px 8px;padding:11px;border-radius:13px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;text-align:center;flex-shrink:0;" onclick="resetCalc()">← Назад к примерам</div>
+<div id="c-back-btn" style="display:none;margin:0 14px 8px;padding:11px;border-radius:13px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;text-align:center;flex-shrink:0;" onclick="resetCalc()">в†ђ РќР°Р·Р°Рґ Рє РїСЂРёРјРµСЂР°Рј</div>
       </div>
       <div class="bottom">
         <div class="inp-row">
@@ -555,7 +555,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         </div>
       </div>
     </div>
-    <!-- Панель: Шок-индекс -->
+    <!-- РџР°РЅРµР»СЊ: РЁРѕРє-РёРЅРґРµРєСЃ -->
     <div class="pane" id="cpane-shock">
       <div class="mid" id="sh-mid">
         <div class="welcome" id="sh-welcome">
@@ -567,8 +567,8 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div class="bottom">
         <div class="inp-row" style="gap:8px;">
           <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
-            <input class="inp" id="sh-hr" type="number" placeholder="ЧСС (уд/мин)" style="min-height:44px;padding:10px 14px;">
-            <input class="inp" id="sh-bp" type="number" placeholder="АД сист. (мм рт.ст.)" style="min-height:44px;padding:10px 14px;">
+            <input class="inp" id="sh-hr" type="number" placeholder="Р§РЎРЎ (СѓРґ/РјРёРЅ)" style="min-height:44px;padding:10px 14px;">
+            <input class="inp" id="sh-bp" type="number" placeholder="РђР” СЃРёСЃС‚. (РјРј СЂС‚.СЃС‚.)" style="min-height:44px;padding:10px 14px;">
           </div>
           <button class="send" onclick="calcShock()" style="height:96px;width:50px;align-self:stretch;"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
         </div>
@@ -584,7 +584,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
   <div class="modal">
     <div class="modal-hdr">
       <div class="modal-title" id="journal-title"></div>
-      <div class="modal-close" onclick="closeJournal()">✕</div>
+      <div class="modal-close" onclick="closeJournal()">вњ•</div>
     </div>
     <div class="modal-scroll" id="journal-content"></div>
   </div>
@@ -607,88 +607,88 @@ let medsOstatkiTab = 1;
 // ================================================================
 const T = {
   kz:{
-    hSub:'Цифрлық ассистент ЖМЖ бригадалары үшін',hSt:'Онлайн · Дайын',
-    hCap:'Жылдам көмек · Дәл нәтиже<br>Аз уақыт · Жоғары дәлдік',hMod:'МОДУЛЬДЕР',
-    t1:'Шақыру картасы',d1:'ЖМЖ картасын жылдам толтыру',
-    t2:'Дәрілер есебі',d2:'Кезеңдегі кіріс және шығыс',
-    t3:'Медициналық AI',d3:'ҚР ДСМ хаттамалары, сұрақтар',
-    t4:'Калькулятор',d4:'Балалар дозасы · Шок-индекс',
-    hFoot:'MEDIX AI · ЖМП Қазақстан',
-    kTitle:'Шақыру картасы',kSub:'Карта вызова ЖМЖ',
-    kExLabel:'МЫСАЛДАР',
-    kChips:[{i:'❤️',t:'ЖІМ, кеуде ауырсынуы 40 мин, тер басты, ЭКГ — ST жоғарылады'},{i:'🧠',t:'Инсульт, сол жақ парез, сөйлеу бұзылды, 1 сағат бұрын'},{i:'💉',t:'Анафилаксия, естен танды, АД 60/40, тері бөртпесі'}],
-kChipsPreg:[{i:'🤰',t:'Жиырылу 10 минут сайын, мерзімі 38 апта, бірінші туу'},{i:'🩸',t:'Жыныс жолдарынан қан кету, мерзімі 32 апта, ауырсыну жоқ'},{i:'💊',t:'АД 160/100, аяқ ісінуі, бас ауыруы, мерзімі 36 апта'}],
-kChipsChild:[{i:'🌡️',t:'Бала 4 жас, температура 39.5, 2 минут тырысу, бірінші рет'},{i:'😮‍💨',t:'Бала 6 жас, демікпе ұстамасы, ысқырықты тыныс, бронхиалды демікпе'},{i:'💉',t:'Бала 2 жас, антибиотикке аллергия, бөртпе, ерін ісінуі'}],
-    kPh:'Шақыру сипаттамасын жазыңыз...',ptA:'👤 Ересек',ptC:'👶 Бала',ptP:'🤰 Жүкті',
-    sComplaints:'Шағымдар',sMorbi:'Аурудың анамнезі',sVitae:'Өмірінің анамнезі',
-    sStatus:'Status Localis',sInstr:'Инструментальды',sDiag:'Диагноз ЖМЖ',
-    sMkb:'МКБ-10',sTreat:'Көрсетілген көмек',sTactics:'Тактика',
-    copy:'Көшіру',copied:'✓ Көшірілді',loading:'Карта жасалуда...',
-    mTitle:'Дәрілер есебі',mSub:'Кезеңдегі медикамент есебі',
-    tabRashod:'📤 Шығыс',tabPrihod:'📥 Кіріс',tabOstatki:'📦 Қалдық',
-    stab1:'💊 Таблетка',stab2:'💉 Ампула',stab3:'⭐ Қымбат',stab4:'🩹 Бұйымдар',
-    jBtnR:'📋 Шығыс журналы',jBtnP:'📋 Кіріс журналы',
-    resetBtn:'🔄 Кезеңді жабу',jUsed:'Жұмсалды',jInc:'Кіріс',
-    addCall:'+ шақыру қосу',
-    aiTitle:'Медициналық AI',aiSub:'ҚР ДСМ хаттамалары · Өзекті деректер',
-    aiExLabel:'СҰРАҚТАР МЫСАЛДАРЫ',
-    aiChips:[{i:'❤️',t:'ЖІМ кезіндегі көмек алгоритмі: дозалар мен реттілік ҚР ДСМ'},{i:'🤰',t:'Жүкті преэклампсия: АД 160/100, ем және ЖМЖ тактикасы'},{i:'👶',t:'3 жасар балада тырысу: диазепам, дозасы және енгізу'}],
-    aiPh:'Медициналық сұрақ жазыңыз...',aiLoad:'Өзекті деректер іздеуде...',
-    cTitle:'Доза калькуляторы',cSub:'Жас пен салмаққа қарай есептеу',
-    cExLabel:'СҰРАҚ МЫСАЛДАРЫ',
-    shockChips:[{i:'🩸',t:'ЧСС 110, АД 90 — гиповолемиялық шок (қан кету, диарея)'},{i:'🚗',t:'ЧСС 120, АД 80 — жарақаттық шок (ДТО, жарақат)'},{i:'🔥',t:'ЧСС 130, АД 70 — күйік шогы'}],
+    hSub:'Р¦РёС„СЂР»С‹Т› Р°СЃСЃРёСЃС‚РµРЅС‚ Р–РњР– Р±СЂРёРіР°РґР°Р»Р°СЂС‹ ТЇС€С–РЅ',hSt:'РћРЅР»Р°Р№РЅ В· Р”Р°Р№С‹РЅ',
+    hCap:'Р–С‹Р»РґР°Рј РєУ©РјРµРє В· Р”У™Р» РЅУ™С‚РёР¶Рµ<br>РђР· СѓР°Т›С‹С‚ В· Р–РѕТ“Р°СЂС‹ РґУ™Р»РґС–Рє',hMod:'РњРћР”РЈР›Р¬Р”Р•Р ',
+    t1:'РЁР°Т›С‹СЂСѓ РєР°СЂС‚Р°СЃС‹',d1:'Р–РњР– РєР°СЂС‚Р°СЃС‹РЅ Р¶С‹Р»РґР°Рј С‚РѕР»С‚С‹СЂСѓ',
+    t2:'Р”У™СЂС–Р»РµСЂ РµСЃРµР±С–',d2:'РљРµР·РµТЈРґРµРіС– РєС–СЂС–СЃ Р¶У™РЅРµ С€С‹Т“С‹СЃ',
+    t3:'РњРµРґРёС†РёРЅР°Р»С‹Т› AI',d3:'ТљР  Р”РЎРњ С…Р°С‚С‚Р°РјР°Р»Р°СЂС‹, СЃТ±СЂР°Т›С‚Р°СЂ',
+    t4:'РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ',d4:'Р‘Р°Р»Р°Р»Р°СЂ РґРѕР·Р°СЃС‹ В· РЁРѕРє-РёРЅРґРµРєСЃ',
+    hFoot:'MEDIX AI В· Р–РњРџ ТљР°Р·Р°Т›СЃС‚Р°РЅ',
+    kTitle:'РЁР°Т›С‹СЂСѓ РєР°СЂС‚Р°СЃС‹',kSub:'РљР°СЂС‚Р° РІС‹Р·РѕРІР° Р–РњР–',
+    kExLabel:'РњР«РЎРђР›Р”РђР ',
+    kChips:[{i:'вќ¤пёЏ',t:'Р–Р†Рњ, РєРµСѓРґРµ Р°СѓС‹СЂСЃС‹РЅСѓС‹ 40 РјРёРЅ, С‚РµСЂ Р±Р°СЃС‚С‹, Р­РљР“ вЂ” ST Р¶РѕТ“Р°СЂС‹Р»Р°РґС‹'},{i:'рџ§ ',t:'РРЅСЃСѓР»СЊС‚, СЃРѕР» Р¶Р°Т› РїР°СЂРµР·, СЃУ©Р№Р»РµСѓ Р±Т±Р·С‹Р»РґС‹, 1 СЃР°Т“Р°С‚ Р±Т±СЂС‹РЅ'},{i:'рџ’‰',t:'РђРЅР°С„РёР»Р°РєСЃРёСЏ, РµСЃС‚РµРЅ С‚Р°РЅРґС‹, РђР” 60/40, С‚РµСЂС– Р±У©СЂС‚РїРµСЃС–'}],
+kChipsPreg:[{i:'рџ¤°',t:'Р–РёС‹СЂС‹Р»Сѓ 10 РјРёРЅСѓС‚ СЃР°Р№С‹РЅ, РјРµСЂР·С–РјС– 38 Р°РїС‚Р°, Р±С–СЂС–РЅС€С– С‚СѓСѓ'},{i:'рџ©ё',t:'Р–С‹РЅС‹СЃ Р¶РѕР»РґР°СЂС‹РЅР°РЅ Т›Р°РЅ РєРµС‚Сѓ, РјРµСЂР·С–РјС– 32 Р°РїС‚Р°, Р°СѓС‹СЂСЃС‹РЅСѓ Р¶РѕТ›'},{i:'рџ’Љ',t:'РђР” 160/100, Р°СЏТ› С–СЃС–РЅСѓС–, Р±Р°СЃ Р°СѓС‹СЂСѓС‹, РјРµСЂР·С–РјС– 36 Р°РїС‚Р°'}],
+kChipsChild:[{i:'рџЊЎпёЏ',t:'Р‘Р°Р»Р° 4 Р¶Р°СЃ, С‚РµРјРїРµСЂР°С‚СѓСЂР° 39.5, 2 РјРёРЅСѓС‚ С‚С‹СЂС‹СЃСѓ, Р±С–СЂС–РЅС€С– СЂРµС‚'},{i:'рџ®вЂЌрџ’Ё',t:'Р‘Р°Р»Р° 6 Р¶Р°СЃ, РґРµРјС–РєРїРµ Т±СЃС‚Р°РјР°СЃС‹, С‹СЃТ›С‹СЂС‹Т›С‚С‹ С‚С‹РЅС‹СЃ, Р±СЂРѕРЅС…РёР°Р»РґС‹ РґРµРјС–РєРїРµ'},{i:'рџ’‰',t:'Р‘Р°Р»Р° 2 Р¶Р°СЃ, Р°РЅС‚РёР±РёРѕС‚РёРєРєРµ Р°Р»Р»РµСЂРіРёСЏ, Р±У©СЂС‚РїРµ, РµСЂС–РЅ С–СЃС–РЅСѓС–'}],
+    kPh:'РЁР°Т›С‹СЂСѓ СЃРёРїР°С‚С‚Р°РјР°СЃС‹РЅ Р¶Р°Р·С‹ТЈС‹Р·...',ptA:'рџ‘¤ Р•СЂРµСЃРµРє',ptC:'рџ‘¶ Р‘Р°Р»Р°',ptP:'рџ¤° Р–ТЇРєС‚С–',
+    sComplaints:'РЁР°Т“С‹РјРґР°СЂ',sMorbi:'РђСѓСЂСѓРґС‹ТЈ Р°РЅР°РјРЅРµР·С–',sVitae:'УЁРјС–СЂС–РЅС–ТЈ Р°РЅР°РјРЅРµР·С–',
+    sStatus:'Status Localis',sInstr:'РРЅСЃС‚СЂСѓРјРµРЅС‚Р°Р»СЊРґС‹',sDiag:'Р”РёР°РіРЅРѕР· Р–РњР–',
+    sMkb:'РњРљР‘-10',sTreat:'РљУ©СЂСЃРµС‚С–Р»РіРµРЅ РєУ©РјРµРє',sTactics:'РўР°РєС‚РёРєР°',
+    copy:'РљУ©С€С–СЂСѓ',copied:'вњ“ РљУ©С€С–СЂС–Р»РґС–',loading:'РљР°СЂС‚Р° Р¶Р°СЃР°Р»СѓРґР°...',
+    mTitle:'Р”У™СЂС–Р»РµСЂ РµСЃРµР±С–',mSub:'РљРµР·РµТЈРґРµРіС– РјРµРґРёРєР°РјРµРЅС‚ РµСЃРµР±С–',
+    tabRashod:'рџ“¤ РЁС‹Т“С‹СЃ',tabPrihod:'рџ“Ґ РљС–СЂС–СЃ',tabOstatki:'рџ“¦ ТљР°Р»РґС‹Т›',
+    stab1:'рџ’Љ РўР°Р±Р»РµС‚РєР°',stab2:'рџ’‰ РђРјРїСѓР»Р°',stab3:'в­ђ ТљС‹РјР±Р°С‚',stab4:'рџ©№ Р‘Т±Р№С‹РјРґР°СЂ',
+    jBtnR:'рџ“‹ РЁС‹Т“С‹СЃ Р¶СѓСЂРЅР°Р»С‹',jBtnP:'рџ“‹ РљС–СЂС–СЃ Р¶СѓСЂРЅР°Р»С‹',
+    resetBtn:'рџ”„ РљРµР·РµТЈРґС– Р¶Р°Р±Сѓ',jUsed:'Р–Т±РјСЃР°Р»РґС‹',jInc:'РљС–СЂС–СЃ',
+    addCall:'+ С€Р°Т›С‹СЂСѓ Т›РѕСЃСѓ',
+    aiTitle:'РњРµРґРёС†РёРЅР°Р»С‹Т› AI',aiSub:'ТљР  Р”РЎРњ С…Р°С‚С‚Р°РјР°Р»Р°СЂС‹ В· УЁР·РµРєС‚С– РґРµСЂРµРєС‚РµСЂ',
+    aiExLabel:'РЎТ°Р РђТљРўРђР  РњР«РЎРђР›Р”РђР Р«',
+    aiChips:[{i:'вќ¤пёЏ',t:'Р–Р†Рњ РєРµР·С–РЅРґРµРіС– РєУ©РјРµРє Р°Р»РіРѕСЂРёС‚РјС–: РґРѕР·Р°Р»Р°СЂ РјРµРЅ СЂРµС‚С‚С–Р»С–Рє ТљР  Р”РЎРњ'},{i:'рџ¤°',t:'Р–ТЇРєС‚С– РїСЂРµСЌРєР»Р°РјРїСЃРёСЏ: РђР” 160/100, РµРј Р¶У™РЅРµ Р–РњР– С‚Р°РєС‚РёРєР°СЃС‹'},{i:'рџ‘¶',t:'3 Р¶Р°СЃР°СЂ Р±Р°Р»Р°РґР° С‚С‹СЂС‹СЃСѓ: РґРёР°Р·РµРїР°Рј, РґРѕР·Р°СЃС‹ Р¶У™РЅРµ РµРЅРіС–Р·Сѓ'}],
+    aiPh:'РњРµРґРёС†РёРЅР°Р»С‹Т› СЃТ±СЂР°Т› Р¶Р°Р·С‹ТЈС‹Р·...',aiLoad:'УЁР·РµРєС‚С– РґРµСЂРµРєС‚РµСЂ С–Р·РґРµСѓРґРµ...',
+    cTitle:'Р”РѕР·Р° РєР°Р»СЊРєСѓР»СЏС‚РѕСЂС‹',cSub:'Р–Р°СЃ РїРµРЅ СЃР°Р»РјР°Т›Т›Р° Т›Р°СЂР°Р№ РµСЃРµРїС‚РµСѓ',
+    cExLabel:'РЎТ°Р РђТљ РњР«РЎРђР›Р”РђР Р«',
+    shockChips:[{i:'рџ©ё',t:'Р§РЎРЎ 110, РђР” 90 вЂ” РіРёРїРѕРІРѕР»РµРјРёСЏР»С‹Т› С€РѕРє (Т›Р°РЅ РєРµС‚Сѓ, РґРёР°СЂРµСЏ)'},{i:'рџљ—',t:'Р§РЎРЎ 120, РђР” 80 вЂ” Р¶Р°СЂР°Т›Р°С‚С‚С‹Т› С€РѕРє (Р”РўРћ, Р¶Р°СЂР°Т›Р°С‚)'},{i:'рџ”Ґ',t:'Р§РЎРЎ 130, РђР” 70 вЂ” РєТЇР№С–Рє С€РѕРіС‹'}],
     cChips:[
-      {i:'💉',t:'5 жасар бала — церукал в/м неше мл'},
-      {i:'👶',t:'3 жасар бала, 14 кг — анафилаксия, адреналин в/м'},
-      {i:'🌡️',t:'7 жасар бала — тырысу, диазепам в/в'},
-      {i:'😮‍💨',t:'6 жасар бала, 20 кг — бронхоспазм, эуфиллин в/в'}
+      {i:'рџ’‰',t:'5 Р¶Р°СЃР°СЂ Р±Р°Р»Р° вЂ” С†РµСЂСѓРєР°Р» РІ/Рј РЅРµС€Рµ РјР»'},
+      {i:'рџ‘¶',t:'3 Р¶Р°СЃР°СЂ Р±Р°Р»Р°, 14 РєРі вЂ” Р°РЅР°С„РёР»Р°РєСЃРёСЏ, Р°РґСЂРµРЅР°Р»РёРЅ РІ/Рј'},
+      {i:'рџЊЎпёЏ',t:'7 Р¶Р°СЃР°СЂ Р±Р°Р»Р° вЂ” С‚С‹СЂС‹СЃСѓ, РґРёР°Р·РµРїР°Рј РІ/РІ'},
+      {i:'рџ®вЂЌрџ’Ё',t:'6 Р¶Р°СЃР°СЂ Р±Р°Р»Р°, 20 РєРі вЂ” Р±СЂРѕРЅС…РѕСЃРїР°Р·Рј, СЌСѓС„РёР»Р»РёРЅ РІ/РІ'}
     ],
-    cPh:'Баланың жасы (және салмағы), препарат...',
-    cLoad1:'🔍 ҚР ДСМ хаттамаларын іздеуде...',cLoad2:'⚗️ Дозалар тексерілуде...',cLoad3:'🧮 Салмақ бойынша есептеуде...',
-    sParams:'Науқас параметрлері',sDoses:'Доза есебі',sWarn:'Маңызды',sRoute:'Енгізу жолдары',
-    wLabel:'САЛМАҚ',ageLabel:'ЖАС',sitLabel:'ЖАҒДАЙ',
+    cPh:'Р‘Р°Р»Р°РЅС‹ТЈ Р¶Р°СЃС‹ (Р¶У™РЅРµ СЃР°Р»РјР°Т“С‹), РїСЂРµРїР°СЂР°С‚...',
+    cLoad1:'рџ”Ќ ТљР  Р”РЎРњ С…Р°С‚С‚Р°РјР°Р»Р°СЂС‹РЅ С–Р·РґРµСѓРґРµ...',cLoad2:'вљ—пёЏ Р”РѕР·Р°Р»Р°СЂ С‚РµРєСЃРµСЂС–Р»СѓРґРµ...',cLoad3:'рџ§® РЎР°Р»РјР°Т› Р±РѕР№С‹РЅС€Р° РµСЃРµРїС‚РµСѓРґРµ...',
+    sParams:'РќР°СѓТ›Р°СЃ РїР°СЂР°РјРµС‚СЂР»РµСЂС–',sDoses:'Р”РѕР·Р° РµСЃРµР±С–',sWarn:'РњР°ТЈС‹Р·РґС‹',sRoute:'Р•РЅРіС–Р·Сѓ Р¶РѕР»РґР°СЂС‹',
+    wLabel:'РЎРђР›РњРђТљ',ageLabel:'Р–РђРЎ',sitLabel:'Р–РђТ’Р”РђР™',
   },
   ru:{
-    hSub:'Цифровой ассистент для бригад СМП',hSt:'Онлайн · Готов к работе',
-    hCap:'Быстрая помощь на смене<br>Меньше рутины · Больше точности',hMod:'МОДУЛИ',
-    t1:'Карта вызова',d1:'Быстрое заполнение карты СМП',
-    t2:'Учёт медикаментов',d2:'Контроль прихода и расхода за смену',
-    t3:'Медицинский AI',d3:'Протоколы МЗ РК и быстрые ответы',
-    t4:'Калькулятор',d4:'Дозы детям · Шок-индекс Альговера',
-    hFoot:'MEDIX AI · СМП Казахстан',
-    kTitle:'Карта вызова',kSub:'Карта вызова СМП',
-    kExLabel:'ПРИМЕРЫ',
-    kChips:[{i:'❤️',t:'ОКС, боль в груди 40 мин, потливость, ЭКГ — подъём ST'},{i:'🧠',t:'Инсульт, левосторонний парез, нарушение речи, 1 час назад'},{i:'💉',t:'Анафилаксия, потеря сознания, АД 60/40, сыпь'}],
-kChipsPreg:[{i:'🤰',t:'Схватки каждые 10 минут, срок 38 недель, первые роды'},{i:'🩸',t:'Кровотечение из половых путей, срок 32 недели, боли нет'},{i:'💊',t:'АД 160/100, отёки ног, головная боль, срок 36 недель'}],
-kChipsChild:[{i:'🌡️',t:'Ребёнок 4 года, температура 39.5, судороги 2 минуты, впервые'},{i:'😮‍💨',t:'Ребёнок 6 лет, приступ удушья, свистящее дыхание, бронхиальная астма'},{i:'💉',t:'Ребёнок 2 года, аллергия на антибиотик, сыпь, отёк губ'}],
-    kPh:'Опишите вызов...',ptA:'👤 Взрослый',ptC:'👶 Ребёнок',ptP:'🤰 Беременная',
-    sComplaints:'Жалобы',sMorbi:'Анамнез заболевания',sVitae:'Анамнез жизни',
-    sStatus:'Status Localis',sInstr:'Инструментальные',sDiag:'Диагноз СМП',
-    sMkb:'МКБ-10',sTreat:'Оказанная помощь',sTactics:'Тактика',
-    copy:'Копировать',copied:'✓ Скопировано',loading:'Составляем карту...',
-    mTitle:'Учёт медикаментов',mSub:'Расход и приход за смену',
-    tabRashod:'📤 Расход',tabPrihod:'📥 Приход',tabOstatki:'📦 Остатки',
-    stab1:'💊 Таблетки',stab2:'💉 Ампулы',stab3:'⭐ Дорог.',stab4:'🩹 Изделия',
-    jBtnR:'📋 Журнал расхода',jBtnP:'📋 Журнал прихода',
-    resetBtn:'🔄 Закрыть смену',jUsed:'Использовано',jInc:'Приход',
-    addCall:'+ добавить вызов',
-    aiTitle:'Медицинский AI',aiSub:'Протоколы МЗ РК · Актуальные данные',
-    aiExLabel:'ПРИМЕРЫ ВОПРОСОВ',
-    aiChips:[{i:'❤️',t:'Алгоритм помощи при ОКС: дозировки и последовательность по МЗ РК'},{i:'🤰',t:'Преэклампсия у беременной: АД 160/100, лечение и тактика СМП'},{i:'👶',t:'Судороги у ребёнка 3 лет: диазепам, дозировка и введение'}],
-    aiPh:'Задайте медицинский вопрос...',aiLoad:'Ищу актуальные данные...',
-    cTitle:'Калькулятор',cSub:'Дозы детям · Шок-индекс Альговера',cTabDose:'💊 Дозы детям',cTabShock:'⚡ Шок-индекс',
-    cExLabel:'ПРИМЕРЫ ЗАПРОСОВ',
-    shockChips:[{i:'🩸',t:'ЧСС 110, АД 90 — гиповолемический шок (кровопотеря, рвота, диарея)'},{i:'🚗',t:'ЧСС 120, АД 80 — травматический шок (ДТП, травмы)'},{i:'🔥',t:'ЧСС 130, АД 70 — ожоговый шок'}],
+    hSub:'Р¦РёС„СЂРѕРІРѕР№ Р°СЃСЃРёСЃС‚РµРЅС‚ РґР»СЏ Р±СЂРёРіР°Рґ РЎРњРџ',hSt:'РћРЅР»Р°Р№РЅ В· Р“РѕС‚РѕРІ Рє СЂР°Р±РѕС‚Рµ',
+    hCap:'Р‘С‹СЃС‚СЂР°СЏ РїРѕРјРѕС‰СЊ РЅР° СЃРјРµРЅРµ<br>РњРµРЅСЊС€Рµ СЂСѓС‚РёРЅС‹ В· Р‘РѕР»СЊС€Рµ С‚РѕС‡РЅРѕСЃС‚Рё',hMod:'РњРћР”РЈР›Р',
+    t1:'РљР°СЂС‚Р° РІС‹Р·РѕРІР°',d1:'Р‘С‹СЃС‚СЂРѕРµ Р·Р°РїРѕР»РЅРµРЅРёРµ РєР°СЂС‚С‹ РЎРњРџ',
+    t2:'РЈС‡С‘С‚ РјРµРґРёРєР°РјРµРЅС‚РѕРІ',d2:'РљРѕРЅС‚СЂРѕР»СЊ РїСЂРёС…РѕРґР° Рё СЂР°СЃС…РѕРґР° Р·Р° СЃРјРµРЅСѓ',
+    t3:'РњРµРґРёС†РёРЅСЃРєРёР№ AI',d3:'РџСЂРѕС‚РѕРєРѕР»С‹ РњР— Р Рљ Рё Р±С‹СЃС‚СЂС‹Рµ РѕС‚РІРµС‚С‹',
+    t4:'РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ',d4:'Р”РѕР·С‹ РґРµС‚СЏРј В· РЁРѕРє-РёРЅРґРµРєСЃ РђР»СЊРіРѕРІРµСЂР°',
+    hFoot:'MEDIX AI В· РЎРњРџ РљР°Р·Р°С…СЃС‚Р°РЅ',
+    kTitle:'РљР°СЂС‚Р° РІС‹Р·РѕРІР°',kSub:'РљР°СЂС‚Р° РІС‹Р·РѕРІР° РЎРњРџ',
+    kExLabel:'РџР РРњР•Р Р«',
+    kChips:[{i:'вќ¤пёЏ',t:'РћРљРЎ, Р±РѕР»СЊ РІ РіСЂСѓРґРё 40 РјРёРЅ, РїРѕС‚Р»РёРІРѕСЃС‚СЊ, Р­РљР“ вЂ” РїРѕРґСЉС‘Рј ST'},{i:'рџ§ ',t:'РРЅСЃСѓР»СЊС‚, Р»РµРІРѕСЃС‚РѕСЂРѕРЅРЅРёР№ РїР°СЂРµР·, РЅР°СЂСѓС€РµРЅРёРµ СЂРµС‡Рё, 1 С‡Р°СЃ РЅР°Р·Р°Рґ'},{i:'рџ’‰',t:'РђРЅР°С„РёР»Р°РєСЃРёСЏ, РїРѕС‚РµСЂСЏ СЃРѕР·РЅР°РЅРёСЏ, РђР” 60/40, СЃС‹РїСЊ'}],
+kChipsPreg:[{i:'рџ¤°',t:'РЎС…РІР°С‚РєРё РєР°Р¶РґС‹Рµ 10 РјРёРЅСѓС‚, СЃСЂРѕРє 38 РЅРµРґРµР»СЊ, РїРµСЂРІС‹Рµ СЂРѕРґС‹'},{i:'рџ©ё',t:'РљСЂРѕРІРѕС‚РµС‡РµРЅРёРµ РёР· РїРѕР»РѕРІС‹С… РїСѓС‚РµР№, СЃСЂРѕРє 32 РЅРµРґРµР»Рё, Р±РѕР»Рё РЅРµС‚'},{i:'рџ’Љ',t:'РђР” 160/100, РѕС‚С‘РєРё РЅРѕРі, РіРѕР»РѕРІРЅР°СЏ Р±РѕР»СЊ, СЃСЂРѕРє 36 РЅРµРґРµР»СЊ'}],
+kChipsChild:[{i:'рџЊЎпёЏ',t:'Р РµР±С‘РЅРѕРє 4 РіРѕРґР°, С‚РµРјРїРµСЂР°С‚СѓСЂР° 39.5, СЃСѓРґРѕСЂРѕРіРё 2 РјРёРЅСѓС‚С‹, РІРїРµСЂРІС‹Рµ'},{i:'рџ®вЂЌрџ’Ё',t:'Р РµР±С‘РЅРѕРє 6 Р»РµС‚, РїСЂРёСЃС‚СѓРї СѓРґСѓС€СЊСЏ, СЃРІРёСЃС‚СЏС‰РµРµ РґС‹С…Р°РЅРёРµ, Р±СЂРѕРЅС…РёР°Р»СЊРЅР°СЏ Р°СЃС‚РјР°'},{i:'рџ’‰',t:'Р РµР±С‘РЅРѕРє 2 РіРѕРґР°, Р°Р»Р»РµСЂРіРёСЏ РЅР° Р°РЅС‚РёР±РёРѕС‚РёРє, СЃС‹РїСЊ, РѕС‚С‘Рє РіСѓР±'}],
+    kPh:'РћРїРёС€РёС‚Рµ РІС‹Р·РѕРІ...',ptA:'рџ‘¤ Р’Р·СЂРѕСЃР»С‹Р№',ptC:'рџ‘¶ Р РµР±С‘РЅРѕРє',ptP:'рџ¤° Р‘РµСЂРµРјРµРЅРЅР°СЏ',
+    sComplaints:'Р–Р°Р»РѕР±С‹',sMorbi:'РђРЅР°РјРЅРµР· Р·Р°Р±РѕР»РµРІР°РЅРёСЏ',sVitae:'РђРЅР°РјРЅРµР· Р¶РёР·РЅРё',
+    sStatus:'Status Localis',sInstr:'РРЅСЃС‚СЂСѓРјРµРЅС‚Р°Р»СЊРЅС‹Рµ',sDiag:'Р”РёР°РіРЅРѕР· РЎРњРџ',
+    sMkb:'РњРљР‘-10',sTreat:'РћРєР°Р·Р°РЅРЅР°СЏ РїРѕРјРѕС‰СЊ',sTactics:'РўР°РєС‚РёРєР°',
+    copy:'РљРѕРїРёСЂРѕРІР°С‚СЊ',copied:'вњ“ РЎРєРѕРїРёСЂРѕРІР°РЅРѕ',loading:'РЎРѕСЃС‚Р°РІР»СЏРµРј РєР°СЂС‚Сѓ...',
+    mTitle:'РЈС‡С‘С‚ РјРµРґРёРєР°РјРµРЅС‚РѕРІ',mSub:'Р Р°СЃС…РѕРґ Рё РїСЂРёС…РѕРґ Р·Р° СЃРјРµРЅСѓ',
+    tabRashod:'рџ“¤ Р Р°СЃС…РѕРґ',tabPrihod:'рџ“Ґ РџСЂРёС…РѕРґ',tabOstatki:'рџ“¦ РћСЃС‚Р°С‚РєРё',
+    stab1:'рџ’Љ РўР°Р±Р»РµС‚РєРё',stab2:'рџ’‰ РђРјРїСѓР»С‹',stab3:'в­ђ Р”РѕСЂРѕРі.',stab4:'рџ©№ РР·РґРµР»РёСЏ',
+    jBtnR:'рџ“‹ Р–СѓСЂРЅР°Р» СЂР°СЃС…РѕРґР°',jBtnP:'рџ“‹ Р–СѓСЂРЅР°Р» РїСЂРёС…РѕРґР°',
+    resetBtn:'рџ”„ Р—Р°РєСЂС‹С‚СЊ СЃРјРµРЅСѓ',jUsed:'РСЃРїРѕР»СЊР·РѕРІР°РЅРѕ',jInc:'РџСЂРёС…РѕРґ',
+    addCall:'+ РґРѕР±Р°РІРёС‚СЊ РІС‹Р·РѕРІ',
+    aiTitle:'РњРµРґРёС†РёРЅСЃРєРёР№ AI',aiSub:'РџСЂРѕС‚РѕРєРѕР»С‹ РњР— Р Рљ В· РђРєС‚СѓР°Р»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ',
+    aiExLabel:'РџР РРњР•Р Р« Р’РћРџР РћРЎРћР’',
+    aiChips:[{i:'вќ¤пёЏ',t:'РђР»РіРѕСЂРёС‚Рј РїРѕРјРѕС‰Рё РїСЂРё РћРљРЎ: РґРѕР·РёСЂРѕРІРєРё Рё РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РїРѕ РњР— Р Рљ'},{i:'рџ¤°',t:'РџСЂРµСЌРєР»Р°РјРїСЃРёСЏ Сѓ Р±РµСЂРµРјРµРЅРЅРѕР№: РђР” 160/100, Р»РµС‡РµРЅРёРµ Рё С‚Р°РєС‚РёРєР° РЎРњРџ'},{i:'рџ‘¶',t:'РЎСѓРґРѕСЂРѕРіРё Сѓ СЂРµР±С‘РЅРєР° 3 Р»РµС‚: РґРёР°Р·РµРїР°Рј, РґРѕР·РёСЂРѕРІРєР° Рё РІРІРµРґРµРЅРёРµ'}],
+    aiPh:'Р—Р°РґР°Р№С‚Рµ РјРµРґРёС†РёРЅСЃРєРёР№ РІРѕРїСЂРѕСЃ...',aiLoad:'РС‰Сѓ Р°РєС‚СѓР°Р»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ...',
+    cTitle:'РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ',cSub:'Р”РѕР·С‹ РґРµС‚СЏРј В· РЁРѕРє-РёРЅРґРµРєСЃ РђР»СЊРіРѕРІРµСЂР°',cTabDose:'рџ’Љ Р”РѕР·С‹ РґРµС‚СЏРј',cTabShock:'вљЎ РЁРѕРє-РёРЅРґРµРєСЃ',
+    cExLabel:'РџР РРњР•Р Р« Р—РђРџР РћРЎРћР’',
+    shockChips:[{i:'рџ©ё',t:'Р§РЎРЎ 110, РђР” 90 вЂ” РіРёРїРѕРІРѕР»РµРјРёС‡РµСЃРєРёР№ С€РѕРє (РєСЂРѕРІРѕРїРѕС‚РµСЂСЏ, СЂРІРѕС‚Р°, РґРёР°СЂРµСЏ)'},{i:'рџљ—',t:'Р§РЎРЎ 120, РђР” 80 вЂ” С‚СЂР°РІРјР°С‚РёС‡РµСЃРєРёР№ С€РѕРє (Р”РўРџ, С‚СЂР°РІРјС‹)'},{i:'рџ”Ґ',t:'Р§РЎРЎ 130, РђР” 70 вЂ” РѕР¶РѕРіРѕРІС‹Р№ С€РѕРє'}],
     cChips:[
-      {i:'💉',t:'Ребёнок 5 лет — церукал в/м сколько мл'},
-      {i:'👶',t:'Ребёнок 3 года, 14 кг — анафилаксия, адреналин в/м'},
-      {i:'🌡️',t:'Ребёнок 7 лет — судороги, диазепам в/в'},
-      {i:'😮‍💨',t:'Ребёнок 6 лет, 20 кг — бронхоспазм, эуфиллин в/в'}
+      {i:'рџ’‰',t:'Р РµР±С‘РЅРѕРє 5 Р»РµС‚ вЂ” С†РµСЂСѓРєР°Р» РІ/Рј СЃРєРѕР»СЊРєРѕ РјР»'},
+      {i:'рџ‘¶',t:'Р РµР±С‘РЅРѕРє 3 РіРѕРґР°, 14 РєРі вЂ” Р°РЅР°С„РёР»Р°РєСЃРёСЏ, Р°РґСЂРµРЅР°Р»РёРЅ РІ/Рј'},
+      {i:'рџЊЎпёЏ',t:'Р РµР±С‘РЅРѕРє 7 Р»РµС‚ вЂ” СЃСѓРґРѕСЂРѕРіРё, РґРёР°Р·РµРїР°Рј РІ/РІ'},
+      {i:'рџ®вЂЌрџ’Ё',t:'Р РµР±С‘РЅРѕРє 6 Р»РµС‚, 20 РєРі вЂ” Р±СЂРѕРЅС…РѕСЃРїР°Р·Рј, СЌСѓС„РёР»Р»РёРЅ РІ/РІ'}
     ],
-    cPh:'Возраст (и вес) ребёнка, препарат...',
-    cLoad1:'🔍 Ищу актуальные протоколы МЗ РК...',cLoad2:'⚗️ Проверяю дозировки...',cLoad3:'🧮 Считаю по весу и возрасту...',
-    sParams:'Параметры пациента',sDoses:'Расчёт доз',sWarn:'Важно',sRoute:'Пути введения',
-    wLabel:'ВЕС',ageLabel:'ВОЗРАСТ',sitLabel:'СИТУАЦИЯ',
+    cPh:'Р’РѕР·СЂР°СЃС‚ (Рё РІРµСЃ) СЂРµР±С‘РЅРєР°, РїСЂРµРїР°СЂР°С‚...',
+    cLoad1:'рџ”Ќ РС‰Сѓ Р°РєС‚СѓР°Р»СЊРЅС‹Рµ РїСЂРѕС‚РѕРєРѕР»С‹ РњР— Р Рљ...',cLoad2:'вљ—пёЏ РџСЂРѕРІРµСЂСЏСЋ РґРѕР·РёСЂРѕРІРєРё...',cLoad3:'рџ§® РЎС‡РёС‚Р°СЋ РїРѕ РІРµСЃСѓ Рё РІРѕР·СЂР°СЃС‚Сѓ...',
+    sParams:'РџР°СЂР°РјРµС‚СЂС‹ РїР°С†РёРµРЅС‚Р°',sDoses:'Р Р°СЃС‡С‘С‚ РґРѕР·',sWarn:'Р’Р°Р¶РЅРѕ',sRoute:'РџСѓС‚Рё РІРІРµРґРµРЅРёСЏ',
+    wLabel:'Р’Р•РЎ',ageLabel:'Р’РћР—Р РђРЎРў',sitLabel:'РЎРРўРЈРђР¦РРЇ',
   }
 };
 function t(k){return T[lang][k]||T.ru[k]||'';}
@@ -699,7 +699,7 @@ function t(k){return T[lang][k]||T.ru[k]||'';}
 function applyTheme(){
   document.body.classList.toggle('lt',!dark);
   const tkEl = document.getElementById('h-tk');
-  if(tkEl) tkEl.textContent = dark?'🌙':'☀️';
+  if(tkEl) tkEl.textContent = dark?'рџЊ™':'вЂпёЏ';
 }
 function toggleTheme(){
   dark=!dark;
@@ -830,12 +830,12 @@ function setKartaEx(chipEl){
 function kartaSystemPrompt(){
   const isChild=ptype==='child';
   if(lang==='kz'){
-    if(isChild) return `Сіз — 15 жылдық тәжірибесі бар ЖМЖ фельдшерісіз. Бала пациентіне арналған карта жасаңыз.\nӨмірінің анамнезі: "Анасының сөзімен бала диспансерлік есепте тұрмайды. Боткин ауруын жоққа шығарады. Аллергоанамнез ауырластырылмаған. Жұқпалы байланысты жоққа шығарады. Соңғы аптада қаладан тысқары шықпаған. Жарақат пен операцияларды өткермеген. Ауырған аурулардан: ЖРВИ, ЖРА."\nStatus Localis: АД/пульс/сатурациясыз. Жас нәрестеде: "Үлкен нүкте тегіс, шықпаған, шөгілмеген, өлшемі жас нормасына сәйкес."\nТек JSON, markdown жоқ:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия","Пальпация","Перкуссия","Термометрия","Аускультация","ЧСС","ЧДД"],"ecg":"синусовый ритм, ЧСС соответствует возрасту","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
-    return `Сіз — 15 жылдық тәжірибесі бар ЖМЖ фельдшерісіз. Ересек пациентке карта жасаңыз.\nӨмірінің анамнезі: "Науқастың сөзімен созылмалы аурулар жоқ. Туберкулез, вирустық гепатит, ЖБ жоққа шығарады. Аллергиялық реакцияларды жоққа шығарады. Соңғы айда қаладан тысқары шықпаған. Жұқпалы науқастармен байланысы болмаған."\nStatus Localis: АД/пульс/сатурациясыз. FAST-тест нәтижесін жазыңыз.\nТек JSON, markdown жоқ:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия","Пальпация","Аускультация","АД","ЧСС","ЧДД","Термометрия","Запись ЭКГ"],"ecg":"синусовый ритм. ЧСС 80 уд/мин, данных за ОКС нет","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+    if(isChild) return `РЎС–Р· вЂ” 15 Р¶С‹Р»РґС‹Т› С‚У™Р¶С–СЂРёР±РµСЃС– Р±Р°СЂ Р–РњР– С„РµР»СЊРґС€РµСЂС–СЃС–Р·. Р‘Р°Р»Р° РїР°С†РёРµРЅС‚С–РЅРµ Р°СЂРЅР°Р»Т“Р°РЅ РєР°СЂС‚Р° Р¶Р°СЃР°ТЈС‹Р·.\nУЁРјС–СЂС–РЅС–ТЈ Р°РЅР°РјРЅРµР·С–: "РђРЅР°СЃС‹РЅС‹ТЈ СЃУ©Р·С–РјРµРЅ Р±Р°Р»Р° РґРёСЃРїР°РЅСЃРµСЂР»С–Рє РµСЃРµРїС‚Рµ С‚Т±СЂРјР°Р№РґС‹. Р‘РѕС‚РєРёРЅ Р°СѓСЂСѓС‹РЅ Р¶РѕТ›Т›Р° С€С‹Т“Р°СЂР°РґС‹. РђР»Р»РµСЂРіРѕР°РЅР°РјРЅРµР· Р°СѓС‹СЂР»Р°СЃС‚С‹СЂС‹Р»РјР°Т“Р°РЅ. Р–Т±Т›РїР°Р»С‹ Р±Р°Р№Р»Р°РЅС‹СЃС‚С‹ Р¶РѕТ›Т›Р° С€С‹Т“Р°СЂР°РґС‹. РЎРѕТЈТ“С‹ Р°РїС‚Р°РґР° Т›Р°Р»Р°РґР°РЅ С‚С‹СЃТ›Р°СЂС‹ С€С‹Т›РїР°Т“Р°РЅ. Р–Р°СЂР°Т›Р°С‚ РїРµРЅ РѕРїРµСЂР°С†РёСЏР»Р°СЂРґС‹ У©С‚РєРµСЂРјРµРіРµРЅ. РђСѓС‹СЂТ“Р°РЅ Р°СѓСЂСѓР»Р°СЂРґР°РЅ: Р–Р Р’Р, Р–Р Рђ."\nStatus Localis: РђР”/РїСѓР»СЊСЃ/СЃР°С‚СѓСЂР°С†РёСЏСЃС‹Р·. Р–Р°СЃ РЅУ™СЂРµСЃС‚РµРґРµ: "Т®Р»РєРµРЅ РЅТЇРєС‚Рµ С‚РµРіС–СЃ, С€С‹Т›РїР°Т“Р°РЅ, С€У©РіС–Р»РјРµРіРµРЅ, У©Р»С€РµРјС– Р¶Р°СЃ РЅРѕСЂРјР°СЃС‹РЅР° СЃУ™Р№РєРµСЃ."\nРўРµРє JSON, markdown Р¶РѕТ›:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["РџСѓР»СЊСЃРѕРєСЃРёРјРµС‚СЂРёСЏ","РџР°Р»СЊРїР°С†РёСЏ","РџРµСЂРєСѓСЃСЃРёСЏ","РўРµСЂРјРѕРјРµС‚СЂРёСЏ","РђСѓСЃРєСѓР»СЊС‚Р°С†РёСЏ","Р§РЎРЎ","Р§Р”Р”"],"ecg":"СЃРёРЅСѓСЃРѕРІС‹Р№ СЂРёС‚Рј, Р§РЎРЎ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РІРѕР·СЂР°СЃС‚Сѓ","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+    return `РЎС–Р· вЂ” 15 Р¶С‹Р»РґС‹Т› С‚У™Р¶С–СЂРёР±РµСЃС– Р±Р°СЂ Р–РњР– С„РµР»СЊРґС€РµСЂС–СЃС–Р·. Р•СЂРµСЃРµРє РїР°С†РёРµРЅС‚РєРµ РєР°СЂС‚Р° Р¶Р°СЃР°ТЈС‹Р·.\nУЁРјС–СЂС–РЅС–ТЈ Р°РЅР°РјРЅРµР·С–: "РќР°СѓТ›Р°СЃС‚С‹ТЈ СЃУ©Р·С–РјРµРЅ СЃРѕР·С‹Р»РјР°Р»С‹ Р°СѓСЂСѓР»Р°СЂ Р¶РѕТ›. РўСѓР±РµСЂРєСѓР»РµР·, РІРёСЂСѓСЃС‚С‹Т› РіРµРїР°С‚РёС‚, Р–Р‘ Р¶РѕТ›Т›Р° С€С‹Т“Р°СЂР°РґС‹. РђР»Р»РµСЂРіРёСЏР»С‹Т› СЂРµР°РєС†РёСЏР»Р°СЂРґС‹ Р¶РѕТ›Т›Р° С€С‹Т“Р°СЂР°РґС‹. РЎРѕТЈТ“С‹ Р°Р№РґР° Т›Р°Р»Р°РґР°РЅ С‚С‹СЃТ›Р°СЂС‹ С€С‹Т›РїР°Т“Р°РЅ. Р–Т±Т›РїР°Р»С‹ РЅР°СѓТ›Р°СЃС‚Р°СЂРјРµРЅ Р±Р°Р№Р»Р°РЅС‹СЃС‹ Р±РѕР»РјР°Т“Р°РЅ."\nStatus Localis: РђР”/РїСѓР»СЊСЃ/СЃР°С‚СѓСЂР°С†РёСЏСЃС‹Р·. FAST-С‚РµСЃС‚ РЅУ™С‚РёР¶РµСЃС–РЅ Р¶Р°Р·С‹ТЈС‹Р·.\nРўРµРє JSON, markdown Р¶РѕТ›:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["РџСѓР»СЊСЃРѕРєСЃРёРјРµС‚СЂРёСЏ","РџР°Р»СЊРїР°С†РёСЏ","РђСѓСЃРєСѓР»СЊС‚Р°С†РёСЏ","РђР”","Р§РЎРЎ","Р§Р”Р”","РўРµСЂРјРѕРјРµС‚СЂРёСЏ","Р—Р°РїРёСЃСЊ Р­РљР“"],"ecg":"СЃРёРЅСѓСЃРѕРІС‹Р№ СЂРёС‚Рј. Р§РЎРЎ 80 СѓРґ/РјРёРЅ, РґР°РЅРЅС‹С… Р·Р° РћРљРЎ РЅРµС‚","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
   }
-  if(isChild) return `Ты — опытный фельдшер СМП Казахстана, 15 лет стажа. Заполни карту вызова для ребёнка.\nАнамнез жизни: "Со слов матери ребёнок на диспансерном учёте не состоит. Болезнь Боткина отрицает. Аллергоанамнез не отягощён. Инфекционный контакт отрицает. В течение последней недели за пределы города не выезжала. Травм и оперативных вмешательств не переносила. Из перенесённых заболеваний ОРВИ, ОРЗ."\nStatus Localis: БЕЗ АД/пульса/сатурации. Если грудной — упомяни большой родничок: "ровный, не выбухает, не западает, размер соответствует возрастной норме."\nОтвечай СТРОГО JSON без markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия","Пальпация","Перкуссия","Термометрия","Аускультация","ЧСС","ЧДД"],"ecg":"синусовый ритм, ЧСС соответствует возрасту","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
-  if(ptype==='preg') return `Ты — опытный фельдшер СМП Казахстана, 15 лет стажа. Заполни карту вызова для беременной пациентки.\nАнамнез жизни: "Со слов пациента хронические заболевания отрицает. Состоит на диспансерном учете у гинеколога по беременности. Гинекологический анамнез: менархе с 12 лет, цикл 28 дней. Акушерский анамнез: заполни по ситуации. ТБЦ, болезнь Боткина отрицает. Аллергии отрицает. Эпидемиологический анамнез: за пределы города не выезжала, контактов с инфекционными больными не было."\nStatus Localis: опиши локальный статус. Обязательно: состояние живота, шевеление плода, сердцебиение плода (уд/мин), тонус матки, схватки (если есть — частота и длительность), ВДМ, окружность живота, выделения из половых путей. БЕЗ АД/ЧСС/ЧДД — они в инструментальных.\nОтвечай СТРОГО JSON без markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия: SpO2 ...%","АД ... мм рт.ст.","ЧСС ... уд/мин","ЧДД ... в мин","Термометрия: t ...°C","КТГ плода"],"ecg":"синусовый ритм. ЧСС 80 уд/мин","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
-  return `Ты — опытный фельдшер СМП Казахстана, 15 лет стажа. Пиши карту вызова профессионально.\nАнамнез жизни: "Со слов пациента хронические заболевания отрицает. Туберкулёз, вирусный гепатит, ББ отрицает. Аллергические реакции отрицает. Эпидемиологический анамнез: в течение последнего месяца за пределы города не выезжал(а). Контактов с инфекционными больными не было."\nStatus Localis: опиши ТОЛЬКО локальный статус органов и систем (осмотр, пальпация, перкуссия, аускультация). БЕЗ АД, ЧСС, ЧДД, SpO2 — они в инструментальных.\nОтвечай СТРОГО JSON без markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия: SpO2 ...%","АД ... мм рт.ст.","ЧСС ... уд/мин","ЧДД ... в мин","Термометрия: t ...°C","Запись ЭКГ"],"ecg":"синусовый ритм. ЧСС 80 уд/мин, данных за ОКС нет","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+  if(isChild) return `РўС‹ вЂ” РѕРїС‹С‚РЅС‹Р№ С„РµР»СЊРґС€РµСЂ РЎРњРџ РљР°Р·Р°С…СЃС‚Р°РЅР°, 15 Р»РµС‚ СЃС‚Р°Р¶Р°. Р—Р°РїРѕР»РЅРё РєР°СЂС‚Сѓ РІС‹Р·РѕРІР° РґР»СЏ СЂРµР±С‘РЅРєР°.\nРђРЅР°РјРЅРµР· Р¶РёР·РЅРё: "РЎРѕ СЃР»РѕРІ РјР°С‚РµСЂРё СЂРµР±С‘РЅРѕРє РЅР° РґРёСЃРїР°РЅСЃРµСЂРЅРѕРј СѓС‡С‘С‚Рµ РЅРµ СЃРѕСЃС‚РѕРёС‚. Р‘РѕР»РµР·РЅСЊ Р‘РѕС‚РєРёРЅР° РѕС‚СЂРёС†Р°РµС‚. РђР»Р»РµСЂРіРѕР°РЅР°РјРЅРµР· РЅРµ РѕС‚СЏРіРѕС‰С‘РЅ. РРЅС„РµРєС†РёРѕРЅРЅС‹Р№ РєРѕРЅС‚Р°РєС‚ РѕС‚СЂРёС†Р°РµС‚. Р’ С‚РµС‡РµРЅРёРµ РїРѕСЃР»РµРґРЅРµР№ РЅРµРґРµР»Рё Р·Р° РїСЂРµРґРµР»С‹ РіРѕСЂРѕРґР° РЅРµ РІС‹РµР·Р¶Р°Р»Р°. РўСЂР°РІРј Рё РѕРїРµСЂР°С‚РёРІРЅС‹С… РІРјРµС€Р°С‚РµР»СЊСЃС‚РІ РЅРµ РїРµСЂРµРЅРѕСЃРёР»Р°. РР· РїРµСЂРµРЅРµСЃС‘РЅРЅС‹С… Р·Р°Р±РѕР»РµРІР°РЅРёР№ РћР Р’Р, РћР Р—."\nStatus Localis: Р‘Р•Р— РђР”/РїСѓР»СЊСЃР°/СЃР°С‚СѓСЂР°С†РёРё. Р•СЃР»Рё РіСЂСѓРґРЅРѕР№ вЂ” СѓРїРѕРјСЏРЅРё Р±РѕР»СЊС€РѕР№ СЂРѕРґРЅРёС‡РѕРє: "СЂРѕРІРЅС‹Р№, РЅРµ РІС‹Р±СѓС…Р°РµС‚, РЅРµ Р·Р°РїР°РґР°РµС‚, СЂР°Р·РјРµСЂ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РІРѕР·СЂР°СЃС‚РЅРѕР№ РЅРѕСЂРјРµ."\nРћС‚РІРµС‡Р°Р№ РЎРўР РћР“Рћ JSON Р±РµР· markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["РџСѓР»СЊСЃРѕРєСЃРёРјРµС‚СЂРёСЏ","РџР°Р»СЊРїР°С†РёСЏ","РџРµСЂРєСѓСЃСЃРёСЏ","РўРµСЂРјРѕРјРµС‚СЂРёСЏ","РђСѓСЃРєСѓР»СЊС‚Р°С†РёСЏ","Р§РЎРЎ","Р§Р”Р”"],"ecg":"СЃРёРЅСѓСЃРѕРІС‹Р№ СЂРёС‚Рј, Р§РЎРЎ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РІРѕР·СЂР°СЃС‚Сѓ","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+  if(ptype==='preg') return `РўС‹ вЂ” РѕРїС‹С‚РЅС‹Р№ С„РµР»СЊРґС€РµСЂ РЎРњРџ РљР°Р·Р°С…СЃС‚Р°РЅР°, 15 Р»РµС‚ СЃС‚Р°Р¶Р°. Р—Р°РїРѕР»РЅРё РєР°СЂС‚Сѓ РІС‹Р·РѕРІР° РґР»СЏ Р±РµСЂРµРјРµРЅРЅРѕР№ РїР°С†РёРµРЅС‚РєРё.\nРђРЅР°РјРЅРµР· Р¶РёР·РЅРё: "РЎРѕ СЃР»РѕРІ РїР°С†РёРµРЅС‚Р° С…СЂРѕРЅРёС‡РµСЃРєРёРµ Р·Р°Р±РѕР»РµРІР°РЅРёСЏ РѕС‚СЂРёС†Р°РµС‚. РЎРѕСЃС‚РѕРёС‚ РЅР° РґРёСЃРїР°РЅСЃРµСЂРЅРѕРј СѓС‡РµС‚Рµ Сѓ РіРёРЅРµРєРѕР»РѕРіР° РїРѕ Р±РµСЂРµРјРµРЅРЅРѕСЃС‚Рё. Р“РёРЅРµРєРѕР»РѕРіРёС‡РµСЃРєРёР№ Р°РЅР°РјРЅРµР·: РјРµРЅР°СЂС…Рµ СЃ 12 Р»РµС‚, С†РёРєР» 28 РґРЅРµР№. РђРєСѓС€РµСЂСЃРєРёР№ Р°РЅР°РјРЅРµР·: Р·Р°РїРѕР»РЅРё РїРѕ СЃРёС‚СѓР°С†РёРё. РўР‘Р¦, Р±РѕР»РµР·РЅСЊ Р‘РѕС‚РєРёРЅР° РѕС‚СЂРёС†Р°РµС‚. РђР»Р»РµСЂРіРёРё РѕС‚СЂРёС†Р°РµС‚. Р­РїРёРґРµРјРёРѕР»РѕРіРёС‡РµСЃРєРёР№ Р°РЅР°РјРЅРµР·: Р·Р° РїСЂРµРґРµР»С‹ РіРѕСЂРѕРґР° РЅРµ РІС‹РµР·Р¶Р°Р»Р°, РєРѕРЅС‚Р°РєС‚РѕРІ СЃ РёРЅС„РµРєС†РёРѕРЅРЅС‹РјРё Р±РѕР»СЊРЅС‹РјРё РЅРµ Р±С‹Р»Рѕ."\nStatus Localis: РѕРїРёС€Рё Р»РѕРєР°Р»СЊРЅС‹Р№ СЃС‚Р°С‚СѓСЃ. РћР±СЏР·Р°С‚РµР»СЊРЅРѕ: СЃРѕСЃС‚РѕСЏРЅРёРµ Р¶РёРІРѕС‚Р°, С€РµРІРµР»РµРЅРёРµ РїР»РѕРґР°, СЃРµСЂРґС†РµР±РёРµРЅРёРµ РїР»РѕРґР° (СѓРґ/РјРёРЅ), С‚РѕРЅСѓСЃ РјР°С‚РєРё, СЃС…РІР°С‚РєРё (РµСЃР»Рё РµСЃС‚СЊ вЂ” С‡Р°СЃС‚РѕС‚Р° Рё РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ), Р’Р”Рњ, РѕРєСЂСѓР¶РЅРѕСЃС‚СЊ Р¶РёРІРѕС‚Р°, РІС‹РґРµР»РµРЅРёСЏ РёР· РїРѕР»РѕРІС‹С… РїСѓС‚РµР№. Р‘Р•Р— РђР”/Р§РЎРЎ/Р§Р”Р” вЂ” РѕРЅРё РІ РёРЅСЃС‚СЂСѓРјРµРЅС‚Р°Р»СЊРЅС‹С….\nРћС‚РІРµС‡Р°Р№ РЎРўР РћР“Рћ JSON Р±РµР· markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["РџСѓР»СЊСЃРѕРєСЃРёРјРµС‚СЂРёСЏ: SpO2 ...%","РђР” ... РјРј СЂС‚.СЃС‚.","Р§РЎРЎ ... СѓРґ/РјРёРЅ","Р§Р”Р” ... РІ РјРёРЅ","РўРµСЂРјРѕРјРµС‚СЂРёСЏ: t ...В°C","РљРўР“ РїР»РѕРґР°"],"ecg":"СЃРёРЅСѓСЃРѕРІС‹Р№ СЂРёС‚Рј. Р§РЎРЎ 80 СѓРґ/РјРёРЅ","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+  return `РўС‹ вЂ” РѕРїС‹С‚РЅС‹Р№ С„РµР»СЊРґС€РµСЂ РЎРњРџ РљР°Р·Р°С…СЃС‚Р°РЅР°, 15 Р»РµС‚ СЃС‚Р°Р¶Р°. РџРёС€Рё РєР°СЂС‚Сѓ РІС‹Р·РѕРІР° РїСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅРѕ.\nРђРЅР°РјРЅРµР· Р¶РёР·РЅРё: "РЎРѕ СЃР»РѕРІ РїР°С†РёРµРЅС‚Р° С…СЂРѕРЅРёС‡РµСЃРєРёРµ Р·Р°Р±РѕР»РµРІР°РЅРёСЏ РѕС‚СЂРёС†Р°РµС‚. РўСѓР±РµСЂРєСѓР»С‘Р·, РІРёСЂСѓСЃРЅС‹Р№ РіРµРїР°С‚РёС‚, Р‘Р‘ РѕС‚СЂРёС†Р°РµС‚. РђР»Р»РµСЂРіРёС‡РµСЃРєРёРµ СЂРµР°РєС†РёРё РѕС‚СЂРёС†Р°РµС‚. Р­РїРёРґРµРјРёРѕР»РѕРіРёС‡РµСЃРєРёР№ Р°РЅР°РјРЅРµР·: РІ С‚РµС‡РµРЅРёРµ РїРѕСЃР»РµРґРЅРµРіРѕ РјРµСЃСЏС†Р° Р·Р° РїСЂРµРґРµР»С‹ РіРѕСЂРѕРґР° РЅРµ РІС‹РµР·Р¶Р°Р»(Р°). РљРѕРЅС‚Р°РєС‚РѕРІ СЃ РёРЅС„РµРєС†РёРѕРЅРЅС‹РјРё Р±РѕР»СЊРЅС‹РјРё РЅРµ Р±С‹Р»Рѕ."\nStatus Localis: РѕРїРёС€Рё РўРћР›Р¬РљРћ Р»РѕРєР°Р»СЊРЅС‹Р№ СЃС‚Р°С‚СѓСЃ РѕСЂРіР°РЅРѕРІ Рё СЃРёСЃС‚РµРј (РѕСЃРјРѕС‚СЂ, РїР°Р»СЊРїР°С†РёСЏ, РїРµСЂРєСѓСЃСЃРёСЏ, Р°СѓСЃРєСѓР»СЊС‚Р°С†РёСЏ). Р‘Р•Р— РђР”, Р§РЎРЎ, Р§Р”Р”, SpO2 вЂ” РѕРЅРё РІ РёРЅСЃС‚СЂСѓРјРµРЅС‚Р°Р»СЊРЅС‹С….\nРћС‚РІРµС‡Р°Р№ РЎРўР РћР“Рћ JSON Р±РµР· markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["РџСѓР»СЊСЃРѕРєСЃРёРјРµС‚СЂРёСЏ: SpO2 ...%","РђР” ... РјРј СЂС‚.СЃС‚.","Р§РЎРЎ ... СѓРґ/РјРёРЅ","Р§Р”Р” ... РІ РјРёРЅ","РўРµСЂРјРѕРјРµС‚СЂРёСЏ: t ...В°C","Р—Р°РїРёСЃСЊ Р­РљР“"],"ecg":"СЃРёРЅСѓСЃРѕРІС‹Р№ СЂРёС‚Рј. Р§РЎРЎ 80 СѓРґ/РјРёРЅ, РґР°РЅРЅС‹С… Р·Р° РћРљРЎ РЅРµС‚","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
 }
 
 async function genKarta(){
@@ -847,7 +847,7 @@ async function genKarta(){
   document.getElementById('k-mid').scrollTop=0;
   const start=Date.now();
   try{
-    const r=await apiCall({system:kartaSystemPrompt(),messages:[{role:'user',content:(lang==='kz'?'Шақыру:\n':'Вызов:\n')+txt}],max_tokens:2000});
+    const r=await apiCall({system:kartaSystemPrompt(),messages:[{role:'user',content:(lang==='kz'?'РЁР°Т›С‹СЂСѓ:\n':'Р’С‹Р·РѕРІ:\n')+txt}],max_tokens:2000});
     let raw=r.content[0].text.replace(/```json|```/g,'').trim();
     const jm=raw.match(/\{[\s\S]*\}/);if(jm)raw=jm[0];
     const d=JSON.parse(raw);
@@ -859,7 +859,7 @@ async function genKarta(){
 
 function renderKartaResult(d,time){
   const secs=[
-    {l:t('sComplaints'),dot:'db',body:(lang==='kz'?'Науқас мынадай шағымдар ұсынады: ':'На момент осмотра жалобы на ')+d.complaints},
+    {l:t('sComplaints'),dot:'db',body:(lang==='kz'?'РќР°СѓТ›Р°СЃ РјС‹РЅР°РґР°Р№ С€Р°Т“С‹РјРґР°СЂ Т±СЃС‹РЅР°РґС‹: ':'РќР° РјРѕРјРµРЅС‚ РѕСЃРјРѕС‚СЂР° Р¶Р°Р»РѕР±С‹ РЅР° ')+d.complaints},
     {l:t('sMorbi'),dot:'db',body:d.anamnesis_morbi},
     {l:t('sVitae'),dot:'dgr',body:d.anamnesis_vitae},
     {l:t('sStatus'),dot:'dg',sp:'status',body:d.status_localis},
@@ -874,12 +874,12 @@ function renderKartaResult(d,time){
     const rawTxt=typeof s.body==='string'?s.body:JSON.stringify(s.body);
     let b='';
     if(s.sp==='status') b=`<div class="status-box">${s.body}</div>`;
-    else if(s.sp==='tags') b=`<div style="font-size:12.5px;line-height:1.9;color:var(--text2)">${(s.body||[]).map(x=>`${x}`).join('<br>')}</div>${s.ecg?`<div style="margin-top:8px;font-size:12px;color:var(--text2)">ЭКГ: ${s.ecg}</div>`:''}`;
+    else if(s.sp==='tags') b=`<div style="font-size:12.5px;line-height:1.9;color:var(--text2)">${(s.body||[]).map(x=>`${x}`).join('<br>')}</div>${s.ecg?`<div style="margin-top:8px;font-size:12px;color:var(--text2)">Р­РљР“: ${s.ecg}</div>`:''}`;
     else if(s.sp==='mkb') b=`<div class="mkb-list">${(s.body||[]).map(m=>`<div class="mkb-item"><span class="mkb-code">${m.code}</span><span class="mkb-name">${m.name}</span></div>`).join('')}</div>`;
     else b=s.body;
     html+=`<div class="rcard" style="animation-delay:${i*0.04}s"><div class="rcard-head"><div class="rcard-label"><span class="dot ${s.dot}"></span>${s.l}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(rawTxt)}')">${t('copy')}</button></div><div class="rcard-body">${b}</div></div>`;
   });
-  html+=`<div class="time-info">${time} сек · </div>`;
+  html+=`<div class="time-info">${time} СЃРµРє В· </div>`;
   document.getElementById('k-results').innerHTML=html;
 }
 
@@ -887,73 +887,73 @@ function renderKartaResult(d,time){
 // MEDS DATA
 // ================================================================
 const LIST1=[
-  {id:'l1_1',name:'Ацетилсалициловая к-та',dose:'500 мг, табл'},{id:'l1_2',name:'Бисопролол',dose:'5/10 мг, табл'},
-  {id:'l1_3',name:'Беродуал / Вентолин',dose:'раствор для инг.'},{id:'l1_4',name:'Кворекс',dose:'75 мг, табл'},
-  {id:'l1_5',name:'Брилинта',dose:'90 мг, табл'},{id:'l1_6',name:'Кетатоп',dose:'50 мг, табл'},
-  {id:'l1_7',name:'Лорноксикам',dose:'8 мг, табл'},{id:'l1_8',name:'Каптоприл',dose:'25 мг, табл'},
-  {id:'l1_9',name:'Ибупрофен / Биброн',dose:'200/400 мг, табл'},{id:'l1_10',name:'Лизиноприл',dose:'10 мг, табл'},
-  {id:'l1_11',name:'Коринфар / Нифедипин',dose:'10 мг, табл'},{id:'l1_12',name:'Спазерин / Меверин',dose:'135 мг, табл'},
-  {id:'l1_13',name:'Лоратал',dose:'10 мг, табл'},{id:'l1_14',name:'Цефекон',dose:'100 мг, свечи'},{id:'l1_14b',name:'Цефекон',dose:'250 мг, свечи'},
-  {id:'l1_15',name:'Парацетамол',dose:'80 мг, свечи'},{id:'l1_15b',name:'Парацетамол',dose:'250 мг, свечи'},{id:'l1_16',name:'Парацетамол',dose:'500 мг, табл'},
-  {id:'l1_17',name:'Фуросемид',dose:'40 мг, табл'},{id:'l1_18',name:'Физиотенз',dose:'0.2/0.4 мг, табл'},
-  {id:'l1_19',name:'БИ-тест',dose:'тест-полоска'},{id:'l1_22',name:'Тривентин',dose:'250 мг, табл'},
-  {id:'l1_23',name:'Сальбутамол',dose:'2.5 мг/2.5 мл, небулы'},{id:'l1_24',name:'Нитроминт / Нитрозимик',dose:'0.4 мг, спрей'},
-  {id:'l1_25',name:'Тест белок',dose:'тест-полоска'},{id:'l1_26',name:'Тест алкоголь',dose:'тест'},
-  {id:'l1_27',name:'Аммиак',dose:'10%, р-р'},{id:'l1_28',name:'Регидрон',dose:'пакет'},
-  {id:'l1_29',name:'Лидокаин спрей',dose:'10%, спрей'},{id:'l1_30',name:'Уголь активированный',dose:'250 мг, табл'},
-  {id:'l1_31',name:'Бефрон',dose:'суппозитории'},{id:'l1_32',name:'Пантенол',dose:'спрей'},{id:'l1_32b',name:'Гидрогель',dose:'гель'},
-  {id:'l1_33',name:'Перекись водорода',dose:'3%, р-р'},
+  {id:'l1_1',name:'РђС†РµС‚РёР»СЃР°Р»РёС†РёР»РѕРІР°СЏ Рє-С‚Р°',dose:'500 РјРі, С‚Р°Р±Р»'},{id:'l1_2',name:'Р‘РёСЃРѕРїСЂРѕР»РѕР»',dose:'5/10 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_3',name:'Р‘РµСЂРѕРґСѓР°Р» / Р’РµРЅС‚РѕР»РёРЅ',dose:'СЂР°СЃС‚РІРѕСЂ РґР»СЏ РёРЅРі.'},{id:'l1_4',name:'РљРІРѕСЂРµРєСЃ',dose:'75 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_5',name:'Р‘СЂРёР»РёРЅС‚Р°',dose:'90 РјРі, С‚Р°Р±Р»'},{id:'l1_6',name:'РљРµС‚Р°С‚РѕРї',dose:'50 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_7',name:'Р›РѕСЂРЅРѕРєСЃРёРєР°Рј',dose:'8 РјРі, С‚Р°Р±Р»'},{id:'l1_8',name:'РљР°РїС‚РѕРїСЂРёР»',dose:'25 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_9',name:'РР±СѓРїСЂРѕС„РµРЅ / Р‘РёР±СЂРѕРЅ',dose:'200/400 РјРі, С‚Р°Р±Р»'},{id:'l1_10',name:'Р›РёР·РёРЅРѕРїСЂРёР»',dose:'10 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_11',name:'РљРѕСЂРёРЅС„Р°СЂ / РќРёС„РµРґРёРїРёРЅ',dose:'10 РјРі, С‚Р°Р±Р»'},{id:'l1_12',name:'РЎРїР°Р·РµСЂРёРЅ / РњРµРІРµСЂРёРЅ',dose:'135 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_13',name:'Р›РѕСЂР°С‚Р°Р»',dose:'10 РјРі, С‚Р°Р±Р»'},{id:'l1_14',name:'Р¦РµС„РµРєРѕРЅ',dose:'100 РјРі, СЃРІРµС‡Рё'},{id:'l1_14b',name:'Р¦РµС„РµРєРѕРЅ',dose:'250 РјРі, СЃРІРµС‡Рё'},
+  {id:'l1_15',name:'РџР°СЂР°С†РµС‚Р°РјРѕР»',dose:'80 РјРі, СЃРІРµС‡Рё'},{id:'l1_15b',name:'РџР°СЂР°С†РµС‚Р°РјРѕР»',dose:'250 РјРі, СЃРІРµС‡Рё'},{id:'l1_16',name:'РџР°СЂР°С†РµС‚Р°РјРѕР»',dose:'500 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_17',name:'Р¤СѓСЂРѕСЃРµРјРёРґ',dose:'40 РјРі, С‚Р°Р±Р»'},{id:'l1_18',name:'Р¤РёР·РёРѕС‚РµРЅР·',dose:'0.2/0.4 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_19',name:'Р‘Р-С‚РµСЃС‚',dose:'С‚РµСЃС‚-РїРѕР»РѕСЃРєР°'},{id:'l1_22',name:'РўСЂРёРІРµРЅС‚РёРЅ',dose:'250 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_23',name:'РЎР°Р»СЊР±СѓС‚Р°РјРѕР»',dose:'2.5 РјРі/2.5 РјР», РЅРµР±СѓР»С‹'},{id:'l1_24',name:'РќРёС‚СЂРѕРјРёРЅС‚ / РќРёС‚СЂРѕР·РёРјРёРє',dose:'0.4 РјРі, СЃРїСЂРµР№'},
+  {id:'l1_25',name:'РўРµСЃС‚ Р±РµР»РѕРє',dose:'С‚РµСЃС‚-РїРѕР»РѕСЃРєР°'},{id:'l1_26',name:'РўРµСЃС‚ Р°Р»РєРѕРіРѕР»СЊ',dose:'С‚РµСЃС‚'},
+  {id:'l1_27',name:'РђРјРјРёР°Рє',dose:'10%, СЂ-СЂ'},{id:'l1_28',name:'Р РµРіРёРґСЂРѕРЅ',dose:'РїР°РєРµС‚'},
+  {id:'l1_29',name:'Р›РёРґРѕРєР°РёРЅ СЃРїСЂРµР№',dose:'10%, СЃРїСЂРµР№'},{id:'l1_30',name:'РЈРіРѕР»СЊ Р°РєС‚РёРІРёСЂРѕРІР°РЅРЅС‹Р№',dose:'250 РјРі, С‚Р°Р±Р»'},
+  {id:'l1_31',name:'Р‘РµС„СЂРѕРЅ',dose:'СЃСѓРїРїРѕР·РёС‚РѕСЂРёРё'},{id:'l1_32',name:'РџР°РЅС‚РµРЅРѕР»',dose:'СЃРїСЂРµР№'},{id:'l1_32b',name:'Р“РёРґСЂРѕРіРµР»СЊ',dose:'РіРµР»СЊ'},
+  {id:'l1_33',name:'РџРµСЂРµРєРёСЃСЊ РІРѕРґРѕСЂРѕРґР°',dose:'3%, СЂ-СЂ'},
 ];
 const LIST2=[
-  {id:'l2_1',name:'Адреналин',dose:'0.1%, 1 мл'},{id:'l2_2',name:'Аллергопресс',dose:'1 мг/мл, 1 мл'},
-  {id:'l2_3',name:'Атропин',dose:'0.1%, 1 мл'},{id:'l2_4',name:'Аскорбиновая кислота',dose:'5%, 2 мл'},
-  {id:'l2_5',name:'Тиамин (В1)',dose:'5%, 1 мл'},{id:'l2_6',name:'Пиридоксин (В6)',dose:'5%, 1 мл'},
-  {id:'l2_7',name:'Глюкоза',dose:'40%, 20 мл'},{id:'l2_8',name:'Диклоген',dose:'75 мг/3 мл'},
-  {id:'l2_9',name:'Димедрол',dose:'1%, 1 мл'},{id:'l2_10',name:'Дротаверин',dose:'2%, 2 мл'},
-  {id:'l2_11',name:'Левомицетин',dose:'0.25%, 10 мл'},{id:'l2_12',name:'Лидокаин',dose:'2%, 2 мл'},
-  {id:'l2_13',name:'Калия хлорид',dose:'4%, 10 мл'},{id:'l2_14',name:'Магния сульфат',dose:'25%, 10 мл'},
-  {id:'l2_15',name:'Мезатон',dose:'1%, 1 мл'},{id:'l2_16',name:'Церулин',dose:'40 мкг/2 мл'},
-  {id:'l2_17',name:'Новокаин',dose:'0.5%, 5 мл'},{id:'l2_18',name:'Вода для инъекций',dose:'5 мл, амп'},
-  {id:'l2_19',name:'Дигоксин',dose:'0.025%, 1 мл'},{id:'l2_20',name:'Папаверин',dose:'2%, 2 мл'},
-  {id:'l2_21',name:'Платифиллин',dose:'0.2%, 1 мл'},{id:'l2_22',name:'Натрия хлорид 5.0',dose:'10%, 10 мл'},
-  {id:'l2_23',name:'Этамзилат',dose:'12.5%, 2 мл'},{id:'l2_24',name:'Эуфиллин',dose:'2.4%, 10 мл'},
-  {id:'l2_25',name:'Коргликон',dose:'0.06%, 1 мл'},{id:'l2_26',name:'Метопролол',dose:'1 мг/мл, 5 мл'},
-  {id:'l2_27',name:'Кальция хлорид',dose:'10%, 10 мл'},{id:'l2_28',name:'Эбрантил',dose:'25 мг/5 мл'},
-  {id:'l2_29',name:'Гидрогель',dose:'туба'},{id:'l2_30',name:'Повязка противоожоговая',dose:'стерильная'},
-  {id:'l2_31',name:'Зелёнка',dose:'1%, р-р'},
+  {id:'l2_1',name:'РђРґСЂРµРЅР°Р»РёРЅ',dose:'0.1%, 1 РјР»'},{id:'l2_2',name:'РђР»Р»РµСЂРіРѕРїСЂРµСЃСЃ',dose:'1 РјРі/РјР», 1 РјР»'},
+  {id:'l2_3',name:'РђС‚СЂРѕРїРёРЅ',dose:'0.1%, 1 РјР»'},{id:'l2_4',name:'РђСЃРєРѕСЂР±РёРЅРѕРІР°СЏ РєРёСЃР»РѕС‚Р°',dose:'5%, 2 РјР»'},
+  {id:'l2_5',name:'РўРёР°РјРёРЅ (Р’1)',dose:'5%, 1 РјР»'},{id:'l2_6',name:'РџРёСЂРёРґРѕРєСЃРёРЅ (Р’6)',dose:'5%, 1 РјР»'},
+  {id:'l2_7',name:'Р“Р»СЋРєРѕР·Р°',dose:'40%, 20 РјР»'},{id:'l2_8',name:'Р”РёРєР»РѕРіРµРЅ',dose:'75 РјРі/3 РјР»'},
+  {id:'l2_9',name:'Р”РёРјРµРґСЂРѕР»',dose:'1%, 1 РјР»'},{id:'l2_10',name:'Р”СЂРѕС‚Р°РІРµСЂРёРЅ',dose:'2%, 2 РјР»'},
+  {id:'l2_11',name:'Р›РµРІРѕРјРёС†РµС‚РёРЅ',dose:'0.25%, 10 РјР»'},{id:'l2_12',name:'Р›РёРґРѕРєР°РёРЅ',dose:'2%, 2 РјР»'},
+  {id:'l2_13',name:'РљР°Р»РёСЏ С…Р»РѕСЂРёРґ',dose:'4%, 10 РјР»'},{id:'l2_14',name:'РњР°РіРЅРёСЏ СЃСѓР»СЊС„Р°С‚',dose:'25%, 10 РјР»'},
+  {id:'l2_15',name:'РњРµР·Р°С‚РѕРЅ',dose:'1%, 1 РјР»'},{id:'l2_16',name:'Р¦РµСЂСѓР»РёРЅ',dose:'40 РјРєРі/2 РјР»'},
+  {id:'l2_17',name:'РќРѕРІРѕРєР°РёРЅ',dose:'0.5%, 5 РјР»'},{id:'l2_18',name:'Р’РѕРґР° РґР»СЏ РёРЅСЉРµРєС†РёР№',dose:'5 РјР», Р°РјРї'},
+  {id:'l2_19',name:'Р”РёРіРѕРєСЃРёРЅ',dose:'0.025%, 1 РјР»'},{id:'l2_20',name:'РџР°РїР°РІРµСЂРёРЅ',dose:'2%, 2 РјР»'},
+  {id:'l2_21',name:'РџР»Р°С‚РёС„РёР»Р»РёРЅ',dose:'0.2%, 1 РјР»'},{id:'l2_22',name:'РќР°С‚СЂРёСЏ С…Р»РѕСЂРёРґ 5.0',dose:'10%, 10 РјР»'},
+  {id:'l2_23',name:'Р­С‚Р°РјР·РёР»Р°С‚',dose:'12.5%, 2 РјР»'},{id:'l2_24',name:'Р­СѓС„РёР»Р»РёРЅ',dose:'2.4%, 10 РјР»'},
+  {id:'l2_25',name:'РљРѕСЂРіР»РёРєРѕРЅ',dose:'0.06%, 1 РјР»'},{id:'l2_26',name:'РњРµС‚РѕРїСЂРѕР»РѕР»',dose:'1 РјРі/РјР», 5 РјР»'},
+  {id:'l2_27',name:'РљР°Р»СЊС†РёСЏ С…Р»РѕСЂРёРґ',dose:'10%, 10 РјР»'},{id:'l2_28',name:'Р­Р±СЂР°РЅС‚РёР»',dose:'25 РјРі/5 РјР»'},
+  {id:'l2_29',name:'Р“РёРґСЂРѕРіРµР»СЊ',dose:'С‚СѓР±Р°'},{id:'l2_30',name:'РџРѕРІСЏР·РєР° РїСЂРѕС‚РёРІРѕРѕР¶РѕРіРѕРІР°СЏ',dose:'СЃС‚РµСЂРёР»СЊРЅР°СЏ'},
+  {id:'l2_31',name:'Р—РµР»С‘РЅРєР°',dose:'1%, СЂ-СЂ'},
 ];
 const LIST3=[
-  {id:'l3_1',name:'Преднизолон',dose:'30 мг/мл, 1 мл'},{id:'l3_2',name:'Дексаметазон',dose:'4 мг/мл, 1 мл'},
-  {id:'l3_3',name:'Феброфид',dose:'100 мг/мл, 2 мл'},{id:'l3_4',name:'Эналаприлат',dose:'1.25 мг/мл, 1 мл'},
-  {id:'l3_5',name:'Фуросемид',dose:'10 мг/мл, 2 мл'},{id:'l3_6',name:'Арикстра',dose:'2.5 мг/0.5 мл'},
-  {id:'l3_7',name:'Гелофузин',dose:'500 мл, фл'},{id:'l3_8',name:'Фраксипарин',dose:'0.3/0.4/0.6 мл'},
-  {id:'l3_9',name:'Беталок',dose:'1 мг/мл, 5 мл'},{id:'l3_10',name:'Кордарон',dose:'50 мг/мл, 3 мл'},
-  {id:'l3_11',name:'Допамин',dose:'40 мг/мл, 5 мл'},{id:'l3_12',name:'Изосорбид динитрат',dose:'1 мг/мл, 10 мл'},
-  {id:'l3_13',name:'Тиосульфат натрия',dose:'30%, 10 мл'},{id:'l3_14',name:'Окситоцин',dose:'5 МЕ/мл, 1 мл'},
-  {id:'l3_15',name:'ГЭК',dose:'6%, 500 мл'},{id:'l3_16',name:'Реополиглюкин 100',dose:'100 мл'},
-  {id:'l3_17',name:'Реополиглюкин 200',dose:'200 мл'},{id:'l3_18',name:'Дисоль',dose:'400 мл'},
-  {id:'l3_19',name:'Аминокапроновая к-та 5%',dose:'100 мл'},{id:'l3_20',name:'Физ. р-р 100 мл',dose:'0.9%, 100 мл'},
-  {id:'l3_21',name:'Физ. р-р 200 мл',dose:'0.9%, 200 мл'},{id:'l3_22',name:'Физ. р-р 400 мл',dose:'0.9%, 400 мл'},
-  {id:'l3_23',name:'Тропонин',dose:'экспресс-тест'},{id:'l3_24',name:'Д-димер',dose:'экспресс-тест'},
-  {id:'l3_25',name:'Глюкоза 5% 200 мл',dose:'5%, 200 мл'},
+  {id:'l3_1',name:'РџСЂРµРґРЅРёР·РѕР»РѕРЅ',dose:'30 РјРі/РјР», 1 РјР»'},{id:'l3_2',name:'Р”РµРєСЃР°РјРµС‚Р°Р·РѕРЅ',dose:'4 РјРі/РјР», 1 РјР»'},
+  {id:'l3_3',name:'Р¤РµР±СЂРѕС„РёРґ',dose:'100 РјРі/РјР», 2 РјР»'},{id:'l3_4',name:'Р­РЅР°Р»Р°РїСЂРёР»Р°С‚',dose:'1.25 РјРі/РјР», 1 РјР»'},
+  {id:'l3_5',name:'Р¤СѓСЂРѕСЃРµРјРёРґ',dose:'10 РјРі/РјР», 2 РјР»'},{id:'l3_6',name:'РђСЂРёРєСЃС‚СЂР°',dose:'2.5 РјРі/0.5 РјР»'},
+  {id:'l3_7',name:'Р“РµР»РѕС„СѓР·РёРЅ',dose:'500 РјР», С„Р»'},{id:'l3_8',name:'Р¤СЂР°РєСЃРёРїР°СЂРёРЅ',dose:'0.3/0.4/0.6 РјР»'},
+  {id:'l3_9',name:'Р‘РµС‚Р°Р»РѕРє',dose:'1 РјРі/РјР», 5 РјР»'},{id:'l3_10',name:'РљРѕСЂРґР°СЂРѕРЅ',dose:'50 РјРі/РјР», 3 РјР»'},
+  {id:'l3_11',name:'Р”РѕРїР°РјРёРЅ',dose:'40 РјРі/РјР», 5 РјР»'},{id:'l3_12',name:'РР·РѕСЃРѕСЂР±РёРґ РґРёРЅРёС‚СЂР°С‚',dose:'1 РјРі/РјР», 10 РјР»'},
+  {id:'l3_13',name:'РўРёРѕСЃСѓР»СЊС„Р°С‚ РЅР°С‚СЂРёСЏ',dose:'30%, 10 РјР»'},{id:'l3_14',name:'РћРєСЃРёС‚РѕС†РёРЅ',dose:'5 РњР•/РјР», 1 РјР»'},
+  {id:'l3_15',name:'Р“Р­Рљ',dose:'6%, 500 РјР»'},{id:'l3_16',name:'Р РµРѕРїРѕР»РёРіР»СЋРєРёРЅ 100',dose:'100 РјР»'},
+  {id:'l3_17',name:'Р РµРѕРїРѕР»РёРіР»СЋРєРёРЅ 200',dose:'200 РјР»'},{id:'l3_18',name:'Р”РёСЃРѕР»СЊ',dose:'400 РјР»'},
+  {id:'l3_19',name:'РђРјРёРЅРѕРєР°РїСЂРѕРЅРѕРІР°СЏ Рє-С‚Р° 5%',dose:'100 РјР»'},{id:'l3_20',name:'Р¤РёР·. СЂ-СЂ 100 РјР»',dose:'0.9%, 100 РјР»'},
+  {id:'l3_21',name:'Р¤РёР·. СЂ-СЂ 200 РјР»',dose:'0.9%, 200 РјР»'},{id:'l3_22',name:'Р¤РёР·. СЂ-СЂ 400 РјР»',dose:'0.9%, 400 РјР»'},
+  {id:'l3_23',name:'РўСЂРѕРїРѕРЅРёРЅ',dose:'СЌРєСЃРїСЂРµСЃСЃ-С‚РµСЃС‚'},{id:'l3_24',name:'Р”-РґРёРјРµСЂ',dose:'СЌРєСЃРїСЂРµСЃСЃ-С‚РµСЃС‚'},
+  {id:'l3_25',name:'Р“Р»СЋРєРѕР·Р° 5% 200 РјР»',dose:'5%, 200 РјР»'},
 ];
 const LIST4=[
-  {id:'l4_1',name:'Бахилы',dose:'пар'},{id:'l4_2',name:'Бинт стерильный',dose:'рулон'},
-  {id:'l4_3',name:'Бинт нестерильный',dose:'рулон'},{id:'l4_4',name:'Вазофикс 14',dose:'14G'},
-  {id:'l4_5',name:'Вазофикс 16',dose:'16G'},{id:'l4_6',name:'Вазофикс 18',dose:'18G'},
-  {id:'l4_7',name:'Вазофикс 20',dose:'20G'},{id:'l4_8',name:'Вазофикс 22',dose:'22G'},
-  {id:'l4_9',name:'Вазофикс 24',dose:'24G'},{id:'l4_10',name:'Зажим пупочный',dose:'шт'},
-  {id:'l4_11',name:'Зонд жел. 20/12',dose:'Fr'},{id:'l4_12',name:'Зонд жел. 14/16',dose:'Fr'},
-  {id:'l4_13',name:'Зонд жел. 28/30',dose:'Fr'},{id:'l4_14',name:'Катетер Фолея / Нелатон',dose:'шт'},
-  {id:'l4_15',name:'Маски хирургические',dose:'шт'},{id:'l4_16',name:'Маски усиленные',dose:'FFP2/3'},
-  {id:'l4_17',name:'Лейкопластырь',dose:'рулон'},{id:'l4_18',name:'Транспортир',dose:'шт'},
-  {id:'l4_19',name:'Перчатки стерильные',dose:'пар'},{id:'l4_20',name:'Перчатки нестерильные',dose:'пар'},
-  {id:'l4_21',name:'Система в/в',dose:'шт'},{id:'l4_22',name:'Система БИО',dose:'шт'},
-  {id:'l4_23',name:'Шпатель',dose:'шт'},{id:'l4_24',name:'Спирт. салфетки',dose:'шт'},
-  {id:'l4_25',name:'Тест-полосы на сахар',dose:'шт'},{id:'l4_26',name:'Скарификаторы',dose:'шт'},
-  {id:'l4_27',name:'Инсул. шприц',dose:'1 мл'},{id:'l4_28',name:'Шприц Жане',dose:'150 мл'},
-  {id:'l4_29',name:'Шприц 2.0',dose:'2 мл'},{id:'l4_30',name:'Шприц 5.0',dose:'5 мл'},
-  {id:'l4_31',name:'Шприц 10.0',dose:'10 мл'},{id:'l4_32',name:'Шприц 20.0',dose:'20 мл'},
+  {id:'l4_1',name:'Р‘Р°С…РёР»С‹',dose:'РїР°СЂ'},{id:'l4_2',name:'Р‘РёРЅС‚ СЃС‚РµСЂРёР»СЊРЅС‹Р№',dose:'СЂСѓР»РѕРЅ'},
+  {id:'l4_3',name:'Р‘РёРЅС‚ РЅРµСЃС‚РµСЂРёР»СЊРЅС‹Р№',dose:'СЂСѓР»РѕРЅ'},{id:'l4_4',name:'Р’Р°Р·РѕС„РёРєСЃ 14',dose:'14G'},
+  {id:'l4_5',name:'Р’Р°Р·РѕС„РёРєСЃ 16',dose:'16G'},{id:'l4_6',name:'Р’Р°Р·РѕС„РёРєСЃ 18',dose:'18G'},
+  {id:'l4_7',name:'Р’Р°Р·РѕС„РёРєСЃ 20',dose:'20G'},{id:'l4_8',name:'Р’Р°Р·РѕС„РёРєСЃ 22',dose:'22G'},
+  {id:'l4_9',name:'Р’Р°Р·РѕС„РёРєСЃ 24',dose:'24G'},{id:'l4_10',name:'Р—Р°Р¶РёРј РїСѓРїРѕС‡РЅС‹Р№',dose:'С€С‚'},
+  {id:'l4_11',name:'Р—РѕРЅРґ Р¶РµР». 20/12',dose:'Fr'},{id:'l4_12',name:'Р—РѕРЅРґ Р¶РµР». 14/16',dose:'Fr'},
+  {id:'l4_13',name:'Р—РѕРЅРґ Р¶РµР». 28/30',dose:'Fr'},{id:'l4_14',name:'РљР°С‚РµС‚РµСЂ Р¤РѕР»РµСЏ / РќРµР»Р°С‚РѕРЅ',dose:'С€С‚'},
+  {id:'l4_15',name:'РњР°СЃРєРё С…РёСЂСѓСЂРіРёС‡РµСЃРєРёРµ',dose:'С€С‚'},{id:'l4_16',name:'РњР°СЃРєРё СѓСЃРёР»РµРЅРЅС‹Рµ',dose:'FFP2/3'},
+  {id:'l4_17',name:'Р›РµР№РєРѕРїР»Р°СЃС‚С‹СЂСЊ',dose:'СЂСѓР»РѕРЅ'},{id:'l4_18',name:'РўСЂР°РЅСЃРїРѕСЂС‚РёСЂ',dose:'С€С‚'},
+  {id:'l4_19',name:'РџРµСЂС‡Р°С‚РєРё СЃС‚РµСЂРёР»СЊРЅС‹Рµ',dose:'РїР°СЂ'},{id:'l4_20',name:'РџРµСЂС‡Р°С‚РєРё РЅРµСЃС‚РµСЂРёР»СЊРЅС‹Рµ',dose:'РїР°СЂ'},
+  {id:'l4_21',name:'РЎРёСЃС‚РµРјР° РІ/РІ',dose:'С€С‚'},{id:'l4_22',name:'РЎРёСЃС‚РµРјР° Р‘РРћ',dose:'С€С‚'},
+  {id:'l4_23',name:'РЁРїР°С‚РµР»СЊ',dose:'С€С‚'},{id:'l4_24',name:'РЎРїРёСЂС‚. СЃР°Р»С„РµС‚РєРё',dose:'С€С‚'},
+  {id:'l4_25',name:'РўРµСЃС‚-РїРѕР»РѕСЃС‹ РЅР° СЃР°С…Р°СЂ',dose:'С€С‚'},{id:'l4_26',name:'РЎРєР°СЂРёС„РёРєР°С‚РѕСЂС‹',dose:'С€С‚'},
+  {id:'l4_27',name:'РРЅСЃСѓР». С€РїСЂРёС†',dose:'1 РјР»'},{id:'l4_28',name:'РЁРїСЂРёС† Р–Р°РЅРµ',dose:'150 РјР»'},
+  {id:'l4_29',name:'РЁРїСЂРёС† 2.0',dose:'2 РјР»'},{id:'l4_30',name:'РЁРїСЂРёС† 5.0',dose:'5 РјР»'},
+  {id:'l4_31',name:'РЁРїСЂРёС† 10.0',dose:'10 РјР»'},{id:'l4_32',name:'РЁРїСЂРёС† 20.0',dose:'20 РјР»'},
 ];
 const LISTS=[null,LIST1,LIST2,LIST3,LIST4];
 
@@ -978,7 +978,7 @@ function updateShiftTime(){
   const diff=Math.floor((Date.now()-new Date(shiftStart))/60000);
   const h=Math.floor(diff/60),m=diff%60;
   const el=document.getElementById('shift-time');
-  if(el) el.textContent=`${h} ч ${m} мин`;
+  if(el) el.textContent=`${h} С‡ ${m} РјРёРЅ`;
 }
 setInterval(updateShiftTime,60000);
 
@@ -1019,7 +1019,7 @@ function renderRashodList(){
       const val=medsState[item.id]?.r||0;
       const row=document.createElement('div');
       row.className='item-row';row.style.animationDelay=(i*0.02)+'s';
-      row.innerHTML=`<div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div><div class="counter"><div class="cnt-btn m" onclick="changeR('${item.id}',-1)">−</div><div class="cnt-val${val===0?' zero':''}" id="rv-${item.id}">${val}</div><div class="cnt-btn p" onclick="changeR('${item.id}',+1)">+</div></div>`;
+      row.innerHTML=`<div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div><div class="counter"><div class="cnt-btn m" onclick="changeR('${item.id}',-1)">в€’</div><div class="cnt-val${val===0?' zero':''}" id="rv-${item.id}">${val}</div><div class="cnt-btn p" onclick="changeR('${item.id}',+1)">+</div></div>`;
       cont.appendChild(row);
     });
   }
@@ -1041,8 +1041,8 @@ function renderList3(cont,list){
     const entries=expEntries[item.id]||[{call:'',qty:''}];
     const row=document.createElement('div');
     row.className='item-row exp-row';row.style.animationDelay=(i*0.02)+'s';
-    const eh=entries.map((e,ei)=>`<div class="exp-entry"><input class="exp-inp" placeholder="${lang==='kz'?'№ шақыру':'№ вызова'}" value="${e.call||''}" oninput="upExp('${item.id}',${ei},'call',this.value)"><input class="exp-inp num" type="number" placeholder="${lang==='kz'?'мөл.':'кол.'}" value="${e.qty||''}" oninput="upExp('${item.id}',${ei},'qty',this.value)" min="0"><div class="exp-del" onclick="delExp('${item.id}',${ei})">✕</div></div>`).join('');
-    row.innerHTML=`<div class="exp-top"><div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div></div><div class="exp-entries" id="expE-${item.id}">${eh}</div><div class="exp-add-line" onclick="addExp('${item.id}')">＋ ${t('addCall')}</div>`;
+    const eh=entries.map((e,ei)=>`<div class="exp-entry"><input class="exp-inp" placeholder="${lang==='kz'?'в„– С€Р°Т›С‹СЂСѓ':'в„– РІС‹Р·РѕРІР°'}" value="${e.call||''}" oninput="upExp('${item.id}',${ei},'call',this.value)"><input class="exp-inp num" type="number" placeholder="${lang==='kz'?'РјУ©Р».':'РєРѕР».'}" value="${e.qty||''}" oninput="upExp('${item.id}',${ei},'qty',this.value)" min="0"><div class="exp-del" onclick="delExp('${item.id}',${ei})">вњ•</div></div>`).join('');
+    row.innerHTML=`<div class="exp-top"><div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div></div><div class="exp-entries" id="expE-${item.id}">${eh}</div><div class="exp-add-line" onclick="addExp('${item.id}')">пј‹ ${t('addCall')}</div>`;
     cont.appendChild(row);
   });
 }
@@ -1057,7 +1057,7 @@ function upExp(itemId,idx,field,val){
   const qty=parseInt(entry.qty)||0;
   const ei=rashodJournal.findIndex(j=>j.key===key);
   if(qty>0){
-    const rec={key,id:itemId,name:item.name,dose:item.dose,call:entry.call||'—',qty,time:now()};
+    const rec={key,id:itemId,name:item.name,dose:item.dose,call:entry.call||'вЂ”',qty,time:now()};
     if(ei>=0) rashodJournal[ei]=rec; else rashodJournal.push(rec);
   } else {if(ei>=0) rashodJournal.splice(ei,1);}
   saveJournal('medix_rjour_v3',rashodJournal);
@@ -1084,7 +1084,7 @@ function renderOstatkiList(){
     const val=medsState[item.id]?.o||0;
     const row=document.createElement('div');
     row.className='item-row';row.style.animationDelay=(i*0.02)+'s';
-    row.innerHTML=`<div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div><div class="counter"><div class="cnt-btn m" onclick="changeO('${item.id}',-1)">−</div><input type="number" min="0" value="${val}" style="width:44px;text-align:center;font-size:14px;font-weight:700;background:var(--inp);border:1px solid var(--border2);border-radius:8px;color:var(--text1);padding:4px 2px;font-family:'Inter',sans-serif;outline:none;" id="ov-${item.id}" oninput="setO('${item.id}',this.value)"><div class="cnt-btn p" onclick="changeO('${item.id}',+1)">+</div></div>`;
+    row.innerHTML=`<div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div><div class="counter"><div class="cnt-btn m" onclick="changeO('${item.id}',-1)">в€’</div><input type="number" min="0" value="${val}" style="width:44px;text-align:center;font-size:14px;font-weight:700;background:var(--inp);border:1px solid var(--border2);border-radius:8px;color:var(--text1);padding:4px 2px;font-family:'Inter',sans-serif;outline:none;" id="ov-${item.id}" oninput="setO('${item.id}',this.value)"><div class="cnt-btn p" onclick="changeO('${item.id}',+1)">+</div></div>`;
    
     cont.appendChild(row);
   });
@@ -1123,14 +1123,14 @@ function renderOstatkiList(){
   if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:medsState[id].o,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
 }
 function confirmResetPrihod(){
-  if(!confirm(lang==='kz'?'Кірісті тазалауды растайсыз ба?':'Подтвердить очистку прихода?')) return;
+  if(!confirm(lang==='kz'?'РљС–СЂС–СЃС‚С– С‚Р°Р·Р°Р»Р°СѓРґС‹ СЂР°СЃС‚Р°Р№СЃС‹Р· Р±Р°?':'РџРѕРґС‚РІРµСЂРґРёС‚СЊ РѕС‡РёСЃС‚РєСѓ РїСЂРёС…РѕРґР°?')) return;
   [...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{if(medsState[d.id]) medsState[d.id].p=0;});
   prihodJournal=[];
   saveMedsState();saveJournal('medix_pjour_v3',prihodJournal);
   renderPrihodList();
 }
 function confirmResetOstatki(){
-  if(!confirm(lang==='kz'?'Қалдықты тазалауды растайсыз ба?':'Подтвердить очистку остатков?')) return;
+  if(!confirm(lang==='kz'?'ТљР°Р»РґС‹Т›С‚С‹ С‚Р°Р·Р°Р»Р°СѓРґС‹ СЂР°СЃС‚Р°Р№СЃС‹Р· Р±Р°?':'РџРѕРґС‚РІРµСЂРґРёС‚СЊ РѕС‡РёСЃС‚РєСѓ РѕСЃС‚Р°С‚РєРѕРІ?')) return;
   [...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{if(medsState[d.id]) medsState[d.id].o=0;});
   ostatkiJournal=[];
   saveMedsState();saveJournal('medix_ojour_v3',ostatkiJournal);
@@ -1145,7 +1145,7 @@ function renderPrihodList(){
     const val=medsState[item.id]?.p||0;
     const row=document.createElement('div');
     row.className='income-row';row.style.animationDelay=(i*0.02)+'s';
-    row.innerHTML=`<div class="income-name"><div class="income-title">${item.name}</div><div class="income-dose">${item.dose}</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="cnt-btn m" onclick="changeP('${item.id}',-1)">−</div><div class="income-val${val===0?' zero':''}" id="pv-${item.id}">${val}</div><div class="cnt-btn p" onclick="changeP('${item.id}',+1)">+</div></div>`;
+    row.innerHTML=`<div class="income-name"><div class="income-title">${item.name}</div><div class="income-dose">${item.dose}</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="cnt-btn m" onclick="changeP('${item.id}',-1)">в€’</div><div class="income-val${val===0?' zero':''}" id="pv-${item.id}">${val}</div><div class="cnt-btn p" onclick="changeP('${item.id}',+1)">+</div></div>`;
     cont.appendChild(row);
   });
 }
@@ -1166,25 +1166,25 @@ function openJournal(type){
   overlay.classList.add('show');
   if(type==='ostatki'){
     titleEl.textContent=t('jBtnO');
-    if(!ostatkiJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Қалдық жоқ':'Остатков нет'}</div>`;return;}
+    if(!ostatkiJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'ТљР°Р»РґС‹Т› Р¶РѕТ›':'РћСЃС‚Р°С‚РєРѕРІ РЅРµС‚'}</div>`;return;}
     const byId={};
     ostatkiJournal.forEach(j=>{byId[j.id]={name:j.name,dose:j.dose,qty:j.qty,time:j.time};});
-    cont.innerHTML=Object.values(byId).map(g=>`<div class="ientry"><div class="ientry-top"><div class="ientry-name">${g.name}</div><div class="ientry-qty">${g.qty} шт</div></div><div class="ientry-meta">${g.dose} · ${g.time}</div></div>`).join('');
+    cont.innerHTML=Object.values(byId).map(g=>`<div class="ientry"><div class="ientry-top"><div class="ientry-name">${g.name}</div><div class="ientry-qty">${g.qty} С€С‚</div></div><div class="ientry-meta">${g.dose} В· ${g.time}</div></div>`).join('');
     return;
   }
   if(type==='rashod'){
     titleEl.textContent=t('jBtnR');
-    if(!rashodJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Шығыс жоқ':'Расходов нет'}</div>`;return;}
+    if(!rashodJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'РЁС‹Т“С‹СЃ Р¶РѕТ›':'Р Р°СЃС…РѕРґРѕРІ РЅРµС‚'}</div>`;return;}
     const byId={};
     rashodJournal.forEach(j=>{if(!byId[j.id]) byId[j.id]={name:j.name,dose:j.dose,entries:[]};byId[j.id].entries.push(j);});
     cont.innerHTML=Object.values(byId).map(g=>{
       const total=g.entries.reduce((s,e)=>s+(parseInt(e.qty)||0),0);
-      const rows=g.entries.map(e=>`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)"><span style="font-size:11px;color:var(--sub)">${e.call?'№ '+e.call:'—'} · ${e.time}</span><span style="font-size:12px;font-weight:700;color:var(--warn)">${e.qty} шт</span></div>`).join('');
-      return `<div class="jentry"><div class="jentry-top"><div class="jentry-name">${g.name}</div><div class="jentry-qty">${lang==='kz'?'Барлығы':'Итого'}: ${total}</div></div><div class="jentry-meta">${g.dose}</div>${rows}</div>`;
+      const rows=g.entries.map(e=>`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)"><span style="font-size:11px;color:var(--sub)">${e.call?'в„– '+e.call:'вЂ”'} В· ${e.time}</span><span style="font-size:12px;font-weight:700;color:var(--warn)">${e.qty} С€С‚</span></div>`).join('');
+      return `<div class="jentry"><div class="jentry-top"><div class="jentry-name">${g.name}</div><div class="jentry-qty">${lang==='kz'?'Р‘Р°СЂР»С‹Т“С‹':'РС‚РѕРіРѕ'}: ${total}</div></div><div class="jentry-meta">${g.dose}</div>${rows}</div>`;
     }).join('');
   } else {
     titleEl.textContent=t('jBtnP');
-    if(!prihodJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Кіріс жоқ':'Приходов нет'}</div>`;return;}
+    if(!prihodJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'РљС–СЂС–СЃ Р¶РѕТ›':'РџСЂРёС…РѕРґРѕРІ РЅРµС‚'}</div>`;return;}
     const byId={};
     prihodJournal.forEach(j=>{if(!byId[j.id]) byId[j.id]={name:j.name,dose:j.dose,total:0};byId[j.id].total++;});
     cont.innerHTML=Object.values(byId).map(g=>`<div class="ientry"><div class="ientry-top"><div class="ientry-name">${g.name}</div><div class="ientry-qty">+${g.total}</div></div><div class="ientry-meta">${g.dose}</div></div>`).join('');
@@ -1194,7 +1194,7 @@ function closeJournal(){document.getElementById('journal-overlay').classList.rem
 function closeJournalBg(e){if(e.target===document.getElementById('journal-overlay'))closeJournal();}
 
 function confirmReset(){
-  if(!confirm(lang==='kz'?'Кезеңді жабуды растайсыз ба?':'Подтвердить закрытие смены?')) return;
+  if(!confirm(lang==='kz'?'РљРµР·РµТЈРґС– Р¶Р°Р±СѓРґС‹ СЂР°СЃС‚Р°Р№СЃС‹Р· Р±Р°?':'РџРѕРґС‚РІРµСЂРґРёС‚СЊ Р·Р°РєСЂС‹С‚РёРµ СЃРјРµРЅС‹?')) return;
   [...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{medsState[d.id]={r:0,p:0};});
   rashodJournal=[];prihodJournal=[];expEntries={};
   shiftStart=new Date().toISOString();
@@ -1207,8 +1207,8 @@ function confirmReset(){
 // AI CHAT
 // ================================================================
 function aiSystemPrompt(){
-  if(lang==='kz') return `Сіз — Қазақстан жедел медициналық жәрдемінің тәжірибелі фельдшерісіз (15 жыл). ҚР ДСМ хаттамалары мен халықаралық нұсқаулықтар (WHO, ERC) бойынша нақты, практикалық жауаптар беріңіз. Жауапты нақты бөлімдерге бөліңіз. Қазақ тілінде жауап беріңіз.`;
-  return `Ты — опытный фельдшер скорой медицинской помощи Казахстана, 15 лет стажа. Давай чёткие, практические ответы по протоколам МЗ РК и международным руководствам (WHO, ERC, ILCOR). Структурируй ответ: Определение → Алгоритм → Дозировки → Тактика. ЖИРНЫМ выделяй критически важное. Отвечай на русском языке.`;
+  if(lang==='kz') return `РЎС–Р· вЂ” ТљР°Р·Р°Т›СЃС‚Р°РЅ Р¶РµРґРµР» РјРµРґРёС†РёРЅР°Р»С‹Т› Р¶У™СЂРґРµРјС–РЅС–ТЈ С‚У™Р¶С–СЂРёР±РµР»С– С„РµР»СЊРґС€РµСЂС–СЃС–Р· (15 Р¶С‹Р»). ТљР  Р”РЎРњ С…Р°С‚С‚Р°РјР°Р»Р°СЂС‹ РјРµРЅ С…Р°Р»С‹Т›Р°СЂР°Р»С‹Т› РЅТ±СЃТ›Р°СѓР»С‹Т›С‚Р°СЂ (WHO, ERC) Р±РѕР№С‹РЅС€Р° РЅР°Т›С‚С‹, РїСЂР°РєС‚РёРєР°Р»С‹Т› Р¶Р°СѓР°РїС‚Р°СЂ Р±РµСЂС–ТЈС–Р·. Р–Р°СѓР°РїС‚С‹ РЅР°Т›С‚С‹ Р±У©Р»С–РјРґРµСЂРіРµ Р±У©Р»С–ТЈС–Р·. ТљР°Р·Р°Т› С‚С–Р»С–РЅРґРµ Р¶Р°СѓР°Рї Р±РµСЂС–ТЈС–Р·.`;
+  return `РўС‹ вЂ” РѕРїС‹С‚РЅС‹Р№ С„РµР»СЊРґС€РµСЂ СЃРєРѕСЂРѕР№ РјРµРґРёС†РёРЅСЃРєРѕР№ РїРѕРјРѕС‰Рё РљР°Р·Р°С…СЃС‚Р°РЅР°, 15 Р»РµС‚ СЃС‚Р°Р¶Р°. Р”Р°РІР°Р№ С‡С‘С‚РєРёРµ, РїСЂР°РєС‚РёС‡РµСЃРєРёРµ РѕС‚РІРµС‚С‹ РїРѕ РїСЂРѕС‚РѕРєРѕР»Р°Рј РњР— Р Рљ Рё РјРµР¶РґСѓРЅР°СЂРѕРґРЅС‹Рј СЂСѓРєРѕРІРѕРґСЃС‚РІР°Рј (WHO, ERC, ILCOR). РЎС‚СЂСѓРєС‚СѓСЂРёСЂСѓР№ РѕС‚РІРµС‚: РћРїСЂРµРґРµР»РµРЅРёРµ в†’ РђР»РіРѕСЂРёС‚Рј в†’ Р”РѕР·РёСЂРѕРІРєРё в†’ РўР°РєС‚РёРєР°. Р–РР РќР«Рњ РІС‹РґРµР»СЏР№ РєСЂРёС‚РёС‡РµСЃРєРё РІР°Р¶РЅРѕРµ. РћС‚РІРµС‡Р°Р№ РЅР° СЂСѓСЃСЃРєРѕРј СЏР·С‹РєРµ.`;
 }
 
 async function genAI(){
@@ -1238,7 +1238,7 @@ function appendUserMsg(txt,contId){
   const wrap=document.getElementById(contId);
   const div=document.createElement('div');
   div.className='msg user';
-  div.innerHTML=`<div class="msg-avatar">👤</div><div class="msg-bubble">${esc(txt)}</div>`;
+  div.innerHTML=`<div class="msg-avatar">рџ‘¤</div><div class="msg-bubble">${esc(txt)}</div>`;
   wrap.appendChild(div);
 }
 function appendLoading(contId){
@@ -1246,14 +1246,14 @@ function appendLoading(contId){
   const id='ld-'+Date.now();
   const div=document.createElement('div');
   div.className='msg ai';div.id=id;
-  div.innerHTML=`<div class="msg-avatar">🤖</div><div class="loading-bubble"><div class="dots"><div class="dot-anim"></div><div class="dot-anim"></div><div class="dot-anim"></div></div><div style="font-size:12px;color:var(--sub)">${t('aiLoad')}</div></div>`;
+  div.innerHTML=`<div class="msg-avatar">рџ¤–</div><div class="loading-bubble"><div class="dots"><div class="dot-anim"></div><div class="dot-anim"></div><div class="dot-anim"></div></div><div style="font-size:12px;color:var(--sub)">${t('aiLoad')}</div></div>`;
   wrap.appendChild(div);return id;
 }
 function removeLoading(id){const el=document.getElementById(id);if(el)el.remove();}
 function appendErrMsg(msg,contId){
   const wrap=document.getElementById(contId);
   const div=document.createElement('div');div.className='msg ai';
-  div.innerHTML=`<div class="msg-avatar">⚠️</div><div class="msg-bubble" style="color:#f87171;border-color:rgba(248,113,113,0.3)">${msg}</div>`;
+  div.innerHTML=`<div class="msg-avatar">вљ пёЏ</div><div class="msg-bubble" style="color:#f87171;border-color:rgba(248,113,113,0.3)">${msg}</div>`;
   wrap.appendChild(div);
 }
 function appendAIMsg(rawText,contId){
@@ -1261,7 +1261,7 @@ function appendAIMsg(rawText,contId){
   const div=document.createElement('div');div.className='msg ai';
   const formatted=formatAIText(rawText);
   const plain=rawText;
-  div.innerHTML=`<div class="msg-avatar">🤖</div><div class="msg-bubble">${formatted}<div class="msg-footer"><button class="copy-btn" onclick="cpBtn(this,'${escA(plain)}')">${t('copy')}</button><span style="font-size:10px;color:var(--time-color)">${now()}</span></div></div>`;
+  div.innerHTML=`<div class="msg-avatar">рџ¤–</div><div class="msg-bubble">${formatted}<div class="msg-footer"><button class="copy-btn" onclick="cpBtn(this,'${escA(plain)}')">${t('copy')}</button><span style="font-size:10px;color:var(--time-color)">${now()}</span></div></div>`;
   wrap.appendChild(div);
 }
 function formatAIText(text){
@@ -1271,7 +1271,7 @@ function formatAIText(text){
   if(parts.length>1){
     return parts.map(part=>{
       const hm=part.match(/^#{1,3}\s(.+)\n?([\s\S]*)/);
-      if(hm) return `<div class="ai-section"><div class="ai-section-title">▸ ${hm[1]}</div><div class="ai-section-body">${fmtBody(hm[2]||'')}</div></div>`;
+      if(hm) return `<div class="ai-section"><div class="ai-section-title">в–ё ${hm[1]}</div><div class="ai-section-body">${fmtBody(hm[2]||'')}</div></div>`;
       return `<div class="ai-section-body">${fmtBody(part)}</div>`;
     }).join('');
   }
@@ -1282,9 +1282,9 @@ function fmtBody(text){
   const lines=text.split('\n');let html='';let inL=false;
   lines.forEach(line=>{
     const tr=line.trim();if(!tr){if(inL){html+='</ul>';inL=false;}return;}
-    if(/^[-•]\s/.test(tr)||/^\d+\.\s/.test(tr)){
+    if(/^[-вЂў]\s/.test(tr)||/^\d+\.\s/.test(tr)){
       if(!inL){html+='<ul>';inL=true;}
-      html+=`<li>${tr.replace(/^[-•]\s/,'').replace(/^\d+\.\s/,'')}</li>`;
+      html+=`<li>${tr.replace(/^[-вЂў]\s/,'').replace(/^\d+\.\s/,'')}</li>`;
     } else {if(inL){html+='</ul>';inL=false;}html+=`<p>${tr}</p>`;}
   });
   if(inL) html+='</ul>';return html;
@@ -1294,33 +1294,24 @@ function fmtBody(text){
 // CALC
 // ================================================================
 function calcSystemPrompt(){
-  if(lang==='kz') return `Сіз — Қазақстан жедел медициналық жәрдемінің тәжірибелі фельдшерісіз. Дозаны нақты және қарапайым есептеңіз.
-
-МАҢЫЗДЫ ЕРЕЖЕЛЕР:
-1. Нақты мл санын беріңіз — мысалы "0.4 мл" немесе "1.5 мл"
-2. Формуланы қысқаша көрсетіңіз — мысалы "0.1 мг/кг × 18 кг = 1.8 мг = 1.8 мл"
-3. Препараттың концентрациясын жазыңыз
-4. Максималды дозаны жазыңыз
-5. Енгізу жолын жазыңыз (в/м, в/в)
-6. Қысқа және нақты болыңыз — артық мәтін жазбаңыз
-
-Тек JSON форматында жауап беріңіз, markdown жоқ:
-{"weight":число,"age":число,"situation":"...","drugs":[{"name":"...","dose_per_kg":"X мг/кг","calculated_dose":"X мг","volume":"X мл","concentration":"мысалы: 5 мг/мл","max_dose":"X мг","route":"в/м немесе в/в","note":"еріту ережесі немесе ескерту"}],"warnings":["нақты ескерту"],"routes_summary":"1. ... 2. ..."}`;
-
+  if(lang==='kz') return `Сіз — Қазақстан ЖМЖ тәжірибелі фельдшерісіз. 15 жасқа дейінгі балаларға доза есептеңіз.
+ЕРЕЖЕЛЕР:
+1. Салмақ көрсетілмесе — формула: 1-5 жас: жас×2+8, 6-15 жас: жас×3+2. Warnings-та жазыңыз.
+2. Нақты мл беріңіз — "0.4 мл в/м"
+3. Формула: "0.1 мг/кг × 16 кг = 1.6 мг = 1.6 мл"
+4. Концентрация, макс. доза, енгізу жолы
+5. Қысқа және нақты
+Тек JSON, markdown жоқ:
+{"weight":0,"age":0,"situation":"қысқаша","drugs":[{"name":"МНН","dose_per_kg":"X мг/кг","calculated_dose":"X мг","volume":"X мл","concentration":"X мг/мл","max_dose":"X мг","route":"в/м","note":"ескерту"}],"warnings":["ескерту"],"routes_summary":"1. Препарат X мл в/м"}`;
   return `Ты — опытный фельдшер СМП Казахстана. Рассчитывай дозы для детей до 15 лет.
-
 ПРАВИЛА:
-1. Если вес НЕ указан — рассчитай примерный вес по формуле: 1-5 лет: возраст×2+8, 6-15 лет: возраст×3+2. Укажи в warnings что вес приблизительный.
-2. Давай КОНКРЕТНЫЕ мл — например "0.4 мл в/м"
-3. Формула кратко — "0.1 мг/кг × 16 кг = 1.6 мг = 1.6 мл"
-4. Указывай концентрацию, максимальную дозу, путь введения
-5. Кратко и точно — без лишнего текста
-
+1. Если вес НЕ указан — рассчитай по формуле: 1-5 лет: возраст×2+8, 6-15 лет: возраст×3+2. Укажи в warnings.
+2. Давай КОНКРЕТНЫЕ мл — "0.4 мл в/м"
+3. Формула: "0.1 мг/кг × 16 кг = 1.6 мг = 1.6 мл"
+4. Концентрация, максимальная доза, путь введения
+5. Кратко и точно
 Отвечай СТРОГО JSON без markdown:
-{"weight":число,"age":число,"situation":"кратко","drugs":[{"name":"МНН","dose_per_kg":"X мг/кг","calculated_dose":"X мг","volume":"X мл","concentration":"X мг/мл","max_dose":"X мг","route":"в/м","note":"особенности"}],"warnings":["предупреждение"],"routes_summary":"1. Препарат X мл в/м"}`;
-
-
-`;
+{"weight":0,"age":0,"situation":"кратко","drugs":[{"name":"МНН","dose_per_kg":"X мг/кг","calculated_dose":"X мг","volume":"X мл","concentration":"X мг/мл","max_dose":"X мг","route":"в/м","note":"особенности"}],"warnings":["предупреждение"],"routes_summary":"1. Препарат X мл в/м"}`;
 }
 
 const CLOADS={ru:['cLoad1','cLoad2','cLoad3'],kz:['cLoad1','cLoad2','cLoad3']};
@@ -1335,7 +1326,7 @@ document.getElementById('c-back-btn').style.display='block';
   document.getElementById('c-mid').scrollTop=0;
   const start=Date.now();
   try{
-    const userMsg=(lang==='kz'?'Сұрау:\n':'Запрос:\n')+txt;
+    const userMsg=(lang==='kz'?'РЎТ±СЂР°Сѓ:\n':'Р—Р°РїСЂРѕСЃ:\n')+txt;
     showCalcLoad(0);
     const s1=await apiCall({system:calcSystemPrompt(),messages:[{role:'user',content:userMsg}],max_tokens:2000,tools:[{type:'web_search_20250305',name:'web_search'}]});
     let msgs=[{role:'user',content:userMsg},{role:'assistant',content:s1.content}];
@@ -1371,22 +1362,22 @@ function showCalcLoad(step){
 }
 function renderCalcResult(d,time){
   let html='';
-  const ageStr=d.age?(lang==='kz'?`${d.age} жас`:`${d.age} лет`):(lang==='kz'?'Жас жоқ':'Не указан');
-  html+=`<div class="rcard" style="animation-delay:0s"><div class="rcard-head"><div class="rcard-label"><span class="dot db"></span>${t('sParams')}</div></div><div class="rcard-body"><div class="params-row"><div class="param-box"><div class="param-label">${t('wLabel')}</div><div class="param-val">${d.weight||'—'} кг</div></div><div class="param-box"><div class="param-label">${t('ageLabel')}</div><div class="param-val">${ageStr}</div></div><div class="param-box" style="flex:2"><div class="param-label">${t('sitLabel')}</div><div class="param-val" style="font-size:12px;line-height:1.3">${d.situation||'—'}</div></div></div></div></div>`;
+  const ageStr=d.age?(lang==='kz'?`${d.age} Р¶Р°СЃ`:`${d.age} Р»РµС‚`):(lang==='kz'?'Р–Р°СЃ Р¶РѕТ›':'РќРµ СѓРєР°Р·Р°РЅ');
+  html+=`<div class="rcard" style="animation-delay:0s"><div class="rcard-head"><div class="rcard-label"><span class="dot db"></span>${t('sParams')}</div></div><div class="rcard-body"><div class="params-row"><div class="param-box"><div class="param-label">${t('wLabel')}</div><div class="param-val">${d.weight||'вЂ”'} РєРі</div></div><div class="param-box"><div class="param-label">${t('ageLabel')}</div><div class="param-val">${ageStr}</div></div><div class="param-box" style="flex:2"><div class="param-label">${t('sitLabel')}</div><div class="param-val" style="font-size:12px;line-height:1.3">${d.situation||'вЂ”'}</div></div></div></div></div>`;
   if(d.drugs&&d.drugs.length){
     const dotC=['dm','dc','dy','dg','dp','dr','dgr'];
-    const drugsHtml=d.drugs.map((dr,i)=>`<div class="drug-row"><div class="drug-left"><div class="drug-name">${dr.name}</div><div class="drug-note">${dr.dose_per_kg||''} · ${dr.route||''}</div>${dr.note?`<div class="drug-note" style="color:var(--warn);margin-top:2px">⚠ ${dr.note}</div>`:''}</div><div class="drug-right"><div class="drug-dose">${dr.calculated_dose||'—'}</div><div class="drug-unit">${dr.volume||''}</div><div class="drug-conc">${dr.concentration||''}</div>${dr.max_dose?`<div class="drug-conc" style="color:var(--danger)">max ${dr.max_dose}</div>`:''}</div></div>`).join('');
+    const drugsHtml=d.drugs.map((dr,i)=>`<div class="drug-row"><div class="drug-left"><div class="drug-name">${dr.name}</div><div class="drug-note">${dr.dose_per_kg||''} В· ${dr.route||''}</div>${dr.note?`<div class="drug-note" style="color:var(--warn);margin-top:2px">вљ  ${dr.note}</div>`:''}</div><div class="drug-right"><div class="drug-dose">${dr.calculated_dose||'вЂ”'}</div><div class="drug-unit">${dr.volume||''}</div><div class="drug-conc">${dr.concentration||''}</div>${dr.max_dose?`<div class="drug-conc" style="color:var(--danger)">max ${dr.max_dose}</div>`:''}</div></div>`).join('');
     const copyTxt=d.drugs.map(dr=>`${dr.name}: ${dr.calculated_dose}${dr.volume?' / '+dr.volume:''} (${dr.dose_per_kg}, ${dr.route})`).join('\n');
     html+=`<div class="rcard" style="animation-delay:0.06s"><div class="rcard-head"><div class="rcard-label"><span class="dot dg"></span>${t('sDoses')}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(copyTxt)}')">${t('copy')}</button></div><div class="rcard-body">${drugsHtml}</div></div>`;
   }
   if(d.warnings&&d.warnings.length){
-    const wh=d.warnings.map(w=>`<div class="warn-item"><span class="warn-icon">⚠️</span><span class="warn-text">${w}</span></div>`).join('');
+    const wh=d.warnings.map(w=>`<div class="warn-item"><span class="warn-icon">вљ пёЏ</span><span class="warn-text">${w}</span></div>`).join('');
     html+=`<div class="rcard" style="animation-delay:0.12s"><div class="rcard-head"><div class="rcard-label"><span class="dot dr"></span>${t('sWarn')}</div></div><div class="rcard-body">${wh}</div></div>`;
   }
   if(d.routes_summary){
     html+=`<div class="rcard" style="animation-delay:0.18s"><div class="rcard-head"><div class="rcard-label"><span class="dot dy"></span>${t('sRoute')}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(d.routes_summary)}')">${t('copy')}</button></div><div class="rcard-body">${d.routes_summary}</div></div>`;
   }
-  html+=`<div class="time-info">${time} сек · Claude Haiku + Web</div>`;
+  html+=`<div class="time-info">${time} СЃРµРє В· Claude Haiku + Web</div>`;
   document.getElementById('c-results').innerHTML=html;
 }
 
@@ -1411,9 +1402,9 @@ function switchCalcTab(tab){
 }
 function setShockEx(chipEl){
   const txt=chipEl.querySelector('span:last-child').textContent;
-  // Парсим ЧСС и АД из текста примера: "ЧСС 110, АД 90"
-  const hrM=txt.match(/ЧСС\s*(\d+)/i)||txt.match(/ЖСЖ\s*(\d+)/i);
-  const bpM=txt.match(/АД\s*(\d+)/i);
+  // РџР°СЂСЃРёРј Р§РЎРЎ Рё РђР” РёР· С‚РµРєСЃС‚Р° РїСЂРёРјРµСЂР°: "Р§РЎРЎ 110, РђР” 90"
+  const hrM=txt.match(/Р§РЎРЎ\s*(\d+)/i)||txt.match(/Р–РЎР–\s*(\d+)/i);
+  const bpM=txt.match(/РђР”\s*(\d+)/i);
   if(hrM) document.getElementById('sh-hr').value=hrM[1];
   if(bpM) document.getElementById('sh-bp').value=bpM[1];
   document.getElementById('sh-welcome').style.display='none';
@@ -1423,7 +1414,7 @@ function calcShock(){
   const hr=parseInt(document.getElementById('sh-hr').value);
   const bp=parseInt(document.getElementById('sh-bp').value);
   if(!hr||!bp||bp===0){
-    showErr('sh-results',lang==='kz'?'ЖСЖ және АД енгізіңіз':'Введите ЧСС и АД');
+    showErr('sh-results',lang==='kz'?'Р–РЎР– Р¶У™РЅРµ РђР” РµРЅРіС–Р·С–ТЈС–Р·':'Р’РІРµРґРёС‚Рµ Р§РЎРЎ Рё РђР”');
     document.getElementById('sh-welcome').style.display='none';
     return;
   }
@@ -1431,50 +1422,50 @@ function calcShock(){
   const idx=(hr/bp).toFixed(2);
   let grade,color,dot,advice;
   if(idx<0.5){
-    grade=lang==='kz'?'Норма':'Норма';
+    grade=lang==='kz'?'РќРѕСЂРјР°':'РќРѕСЂРјР°';
     color='var(--success)';dot='dg';
-    advice=lang==='kz'?'Шок белгілері жоқ. Науқасты бақылауда ұстаңыз.':'Признаков шока нет. Наблюдение.';
+    advice=lang==='kz'?'РЁРѕРє Р±РµР»РіС–Р»РµСЂС– Р¶РѕТ›. РќР°СѓТ›Р°СЃС‚С‹ Р±Р°Т›С‹Р»Р°СѓРґР° Т±СЃС‚Р°ТЈС‹Р·.':'РџСЂРёР·РЅР°РєРѕРІ С€РѕРєР° РЅРµС‚. РќР°Р±Р»СЋРґРµРЅРёРµ.';
   } else if(idx<1.0){
-    grade=lang==='kz'?'I дәреже (жеңіл)':'I степень (лёгкий)';
+    grade=lang==='kz'?'I РґУ™СЂРµР¶Рµ (Р¶РµТЈС–Р»)':'I СЃС‚РµРїРµРЅСЊ (Р»С‘РіРєРёР№)';
     color='var(--warn)';dot='dy';
-    advice=lang==='kz'?'Жеңіл шок. Инфузия 500 мл физ. р-р в/в. Мониторинг АД.':'Лёгкий шок. Инфузия 500 мл физ. р-р в/в. Мониторинг АД.';
+    advice=lang==='kz'?'Р–РµТЈС–Р» С€РѕРє. РРЅС„СѓР·РёСЏ 500 РјР» С„РёР·. СЂ-СЂ РІ/РІ. РњРѕРЅРёС‚РѕСЂРёРЅРі РђР”.':'Р›С‘РіРєРёР№ С€РѕРє. РРЅС„СѓР·РёСЏ 500 РјР» С„РёР·. СЂ-СЂ РІ/РІ. РњРѕРЅРёС‚РѕСЂРёРЅРі РђР”.';
   } else if(idx<1.5){
-    grade=lang==='kz'?'II дәреже (орташа)':'II степень (средний)';
+    grade=lang==='kz'?'II РґУ™СЂРµР¶Рµ (РѕСЂС‚Р°С€Р°)':'II СЃС‚РµРїРµРЅСЊ (СЃСЂРµРґРЅРёР№)';
     color='#f97316';dot='dy';
-    advice=lang==='kz'?'Орташа шок. Инфузия 1000 мл в/в струйно. Допамин 5-10 мкг/кг/мин. Госпитализация шұғыл.':'Средний шок. Инфузия 1000 мл в/в струйно. Допамин 5-10 мкг/кг/мин. Госпитализация срочно.';
+    advice=lang==='kz'?'РћСЂС‚Р°С€Р° С€РѕРє. РРЅС„СѓР·РёСЏ 1000 РјР» РІ/РІ СЃС‚СЂСѓР№РЅРѕ. Р”РѕРїР°РјРёРЅ 5-10 РјРєРі/РєРі/РјРёРЅ. Р“РѕСЃРїРёС‚Р°Р»РёР·Р°С†РёСЏ С€Т±Т“С‹Р».':'РЎСЂРµРґРЅРёР№ С€РѕРє. РРЅС„СѓР·РёСЏ 1000 РјР» РІ/РІ СЃС‚СЂСѓР№РЅРѕ. Р”РѕРїР°РјРёРЅ 5-10 РјРєРі/РєРі/РјРёРЅ. Р“РѕСЃРїРёС‚Р°Р»РёР·Р°С†РёСЏ СЃСЂРѕС‡РЅРѕ.';
   } else {
-    grade=lang==='kz'?'III дәреже (ауыр)':'III степень (тяжёлый)';
+    grade=lang==='kz'?'III РґУ™СЂРµР¶Рµ (Р°СѓС‹СЂ)':'III СЃС‚РµРїРµРЅСЊ (С‚СЏР¶С‘Р»С‹Р№)';
     color='var(--danger)';dot='dr';
-    advice=lang==='kz'?'Ауыр шок! Инфузия максималды жылдамдықпен. Адреналин 0.1-0.5 мг в/в. Реанимация бригадасы.':'Тяжёлый шок! Инфузия максимально быстро. Адреналин 0.1-0.5 мг в/в. Реанимационная бригада.';
+    advice=lang==='kz'?'РђСѓС‹СЂ С€РѕРє! РРЅС„СѓР·РёСЏ РјР°РєСЃРёРјР°Р»РґС‹ Р¶С‹Р»РґР°РјРґС‹Т›РїРµРЅ. РђРґСЂРµРЅР°Р»РёРЅ 0.1-0.5 РјРі РІ/РІ. Р РµР°РЅРёРјР°С†РёСЏ Р±СЂРёРіР°РґР°СЃС‹.':'РўСЏР¶С‘Р»С‹Р№ С€РѕРє! РРЅС„СѓР·РёСЏ РјР°РєСЃРёРјР°Р»СЊРЅРѕ Р±С‹СЃС‚СЂРѕ. РђРґСЂРµРЅР°Р»РёРЅ 0.1-0.5 РјРі РІ/РІ. Р РµР°РЅРёРјР°С†РёРѕРЅРЅР°СЏ Р±СЂРёРіР°РґР°.';
   }
-  const copyTxt=`Шок-индекс Альговера: ${idx}\nЧСС: ${hr}, АД: ${bp}\n${grade}\n${advice}`;
+  const copyTxt=`РЁРѕРє-РёРЅРґРµРєСЃ РђР»СЊРіРѕРІРµСЂР°: ${idx}\nР§РЎРЎ: ${hr}, РђР”: ${bp}\n${grade}\n${advice}`;
   document.getElementById('sh-results').innerHTML=`
     <div class="rcard" style="animation:fadeUp 0.3s both">
       <div class="rcard-head">
-        <div class="rcard-label"><span class="dot ${dot}"></span>${lang==='kz'?'Шок-индекс нәтижесі':'Результат шок-индекса'}</div>
+        <div class="rcard-label"><span class="dot ${dot}"></span>${lang==='kz'?'РЁРѕРє-РёРЅРґРµРєСЃ РЅУ™С‚РёР¶РµСЃС–':'Р РµР·СѓР»СЊС‚Р°С‚ С€РѕРє-РёРЅРґРµРєСЃР°'}</div>
         <button class="copy-btn" onclick="cpBtn(this,'${escA(copyTxt)}')">${t('copy')}</button>
       </div>
       <div class="rcard-body">
         <div style="text-align:center;padding:12px 0 8px;">
           <div style="font-size:48px;font-weight:800;color:${color};line-height:1;">${idx}</div>
-          <div style="font-size:11px;color:var(--sub);margin-top:4px;">${lang==='kz'?'Шок-индекс Альговера':'Индекс Альговера'}</div>
+          <div style="font-size:11px;color:var(--sub);margin-top:4px;">${lang==='kz'?'РЁРѕРє-РёРЅРґРµРєСЃ РђР»СЊРіРѕРІРµСЂР°':'РРЅРґРµРєСЃ РђР»СЊРіРѕРІРµСЂР°'}</div>
         </div>
         <div style="display:flex;gap:10px;margin:10px 0;">
           <div class="param-box" style="flex:1;text-align:center;">
-            <div class="param-label">ЧСС</div>
+            <div class="param-label">Р§РЎРЎ</div>
             <div class="param-val">${hr}</div>
           </div>
           <div class="param-box" style="flex:1;text-align:center;">
-            <div class="param-label">${lang==='kz'?'АД':'АД'}</div>
+            <div class="param-label">${lang==='kz'?'РђР”':'РђР”'}</div>
             <div class="param-val">${bp}</div>
           </div>
           <div class="param-box" style="flex:2;text-align:center;">
-            <div class="param-label">${lang==='kz'?'ДӘРЕЖЕ':'СТЕПЕНЬ'}</div>
+            <div class="param-label">${lang==='kz'?'Р”УР Р•Р–Р•':'РЎРўР•РџР•РќР¬'}</div>
             <div class="param-val" style="font-size:13px;color:${color};">${grade}</div>
           </div>
         </div>
         <div class="warn-item" style="border-color:${color};background:transparent;margin-top:4px;">
-          <span class="warn-icon">💡</span>
+          <span class="warn-icon">рџ’Ў</span>
           <span class="warn-text">${advice}</span>
         </div>
       </div>
@@ -1513,7 +1504,7 @@ function filterList(section,query){
   });
 }
 function loadCard(txt){return `<div class="loading-card"><div class="spinner"></div><div class="loading-text">${txt}</div></div>`;}
-function showErr(contId,msg){document.getElementById(contId).innerHTML=`<div class="loading-card"><div style="color:#f87171;font-size:13px">${lang==='kz'?'Қате':'Ошибка'}: ${msg}</div></div>`;}
+function showErr(contId,msg){document.getElementById(contId).innerHTML=`<div class="loading-card"><div style="color:#f87171;font-size:13px">${lang==='kz'?'ТљР°С‚Рµ':'РћС€РёР±РєР°'}: ${msg}</div></div>`;}
 function scrollMid(id){const el=document.getElementById(id);if(el)setTimeout(()=>el.scrollTop=el.scrollHeight,50);}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function now(){return new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});}
@@ -1526,3 +1517,4 @@ renderAll();
 </script>
 </body>
 </html>
+
