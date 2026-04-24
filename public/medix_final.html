@@ -782,7 +782,7 @@ function renderKartaResult(d,time){
     else b=s.body;
     html+=`<div class="rcard" style="animation-delay:${i*0.04}s"><div class="rcard-head"><div class="rcard-label"><span class="dot ${s.dot}"></span>${s.l}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(rawTxt)}')">${t('copy')}</button></div><div class="rcard-body">${b}</div></div>`;
   });
-  html+=`<div class="time-info">${time} сек · Claude Sonnet</div>`;
+  html+=`<div class="time-info">${time} сек · </div>`;
   document.getElementById('k-results').innerHTML=html;
 }
 
@@ -1212,7 +1212,7 @@ function renderCalcResult(d,time){
   if(d.routes_summary){
     html+=`<div class="rcard" style="animation-delay:0.18s"><div class="rcard-head"><div class="rcard-label"><span class="dot dy"></span>${t('sRoute')}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(d.routes_summary)}')">${t('copy')}</button></div><div class="rcard-body">${d.routes_summary}</div></div>`;
   }
-  html+=`<div class="time-info">${time} сек · Claude Sonnet + Web</div>`;
+  html+=`<div class="time-info">${time} сек · Claude Haiku + Web</div>`;
   document.getElementById('c-results').innerHTML=html;
 }
 
