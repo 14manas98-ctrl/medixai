@@ -744,7 +744,8 @@ function renderAll(){
   setText('c-ex-label',t('cExLabel'));
   setText('sh-ex-label',t('cExLabel'));
   setAttr('c-inp','placeholder',t('cPh'));
-  renderChipsFor('c-chips',t('cChips'),'setEx("c-inp",this)');
+  renderChipsFor('c-chips',t('cChips'),'setCalcEx(this)');
+
   renderChipsFor('sh-chips',t('shockChips'),'setShockEx(this)');
 }
 
@@ -758,6 +759,14 @@ function setEx(inpId, chipEl){
   const inp=document.getElementById(inpId);
   inp.value=txt;ar(inp);inp.focus();
 }
+function setCalcEx(chipEl){
+  const txt=chipEl.querySelector('span:last-child').textContent;
+  const inp=document.getElementById('c-inp');
+  inp.value=txt;ar(inp);inp.focus();
+  document.getElementById('c-welcome').style.display='none';
+  document.getElementById('c-back-btn').style.display='block';
+}
+
 function setText(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
 function setHTML(id,v){const el=document.getElementById(id);if(el)el.innerHTML=v;}
 function setAttr(id,attr,v){const el=document.getElementById(id);if(el)el.setAttribute(attr,v);}
