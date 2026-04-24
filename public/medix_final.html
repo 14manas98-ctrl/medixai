@@ -619,7 +619,7 @@ kChipsChild:[{i:'🌡️',t:'Ребёнок 4 года, температура 3
     addCall:'+ добавить вызов',
     aiTitle:'Медицинский AI',aiSub:'Протоколы МЗ РК · Актуальные данные',
     aiExLabel:'ПРИМЕРЫ ВОПРОСОВ',
-    aiChips:[{i:'❤️',t:'Алгоритм помощи при ОКС: дозировки, последовательность'},{i:'🧠',t:'Протокол лечения анафилактического шока по МЗ РК'},{i:'💉',t:'Дозировки адреналина у детей при анафилаксии по весу'}],
+    aiChips:[{i:'❤️',t:'Алгоритм помощи при ОКС: дозировки и последовательность по МЗ РК'},{i:'🤰',t:'Преэклампсия у беременной: АД 160/100, лечение и тактика СМП'},{i:'👶',t:'Судороги у ребёнка 3 лет: диазепам, дозировка и введение'}],
     aiPh:'Задайте медицинский вопрос...',aiLoad:'Ищу актуальные данные...',
     cTitle:'Калькулятор доз',cSub:'Расчёт по весу и возрасту пациента',
     cExLabel:'ПРИМЕРЫ ЗАПРОСОВ',
@@ -683,7 +683,7 @@ function renderAll(){
   setText('ai-title',t('aiTitle'));setText('ai-sub',t('aiSub'));
   setText('ai-ex-label',t('aiExLabel'));
   setAttr('ai-inp','placeholder',t('aiPh'));
-  renderChipsFor('ai-chips',t('aiChips'),'setEx("ai-inp",this)');
+  renderAiChips();
   // CALC
   setText('c-title',t('cTitle'));setText('c-sub',t('cSub'));
   setText('c-ex-label',t('cExLabel'));
@@ -745,6 +745,17 @@ function renderKartaChips(){
   const cont=document.getElementById('k-chips');
   if(!cont||!chips) return;
   cont.innerHTML=chips.map(c=>`<div class="chip" onclick="setKartaEx(this)"><span class="chip-icon">${c.i}</span><span>${c.t}</span></div>`).join('');
+}
+function renderAiChips(){
+  const cont=document.getElementById('ai-chips');
+  const chips=t('aiChips');
+  if(!cont||!chips) return;
+  cont.innerHTML=chips.map(c=>`<div class="chip" onclick="setAiEx(this)"><span class="chip-icon">${c.i}</span><span>${c.t}</span></div>`).join('');
+}
+function setAiEx(chipEl){
+  const txt=chipEl.querySelector('span:last-child').textContent;
+  const inp=document.getElementById('ai-inp');
+  inp.value=txt;ar(inp);inp.focus();
 }
 function setKartaEx(chipEl){
   const txt=chipEl.querySelector('span:last-child').textContent;
