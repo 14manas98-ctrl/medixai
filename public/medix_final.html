@@ -530,17 +530,46 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <button class="lb on" id="c-ru" onclick="setLang('ru')">РУС</button>
       </div>
     </div>
-    <div class="mid" id="c-mid">
-      <div class="welcome" id="c-welcome">
-        <div class="ex-label" id="c-ex-label"></div>
-        <div class="chips" id="c-chips"></div>
+    <!-- Вкладки калькулятора -->
+    <div class="tabs-wrap" style="padding-top:10px;">
+      <div class="tabs">
+        <div class="mtab on" id="ct-dose" onclick="switchCalcTab('dose')" id="ct-dose">💊 <span id="ct-dose-lbl"></span></div>
+        <div class="mtab" id="ct-shock" onclick="switchCalcTab('shock')">⚡ <span id="ct-shock-lbl"></span></div>
       </div>
-      <div id="c-results"></div>
     </div>
-    <div class="bottom">
-      <div class="inp-row">
-        <textarea class="inp" id="c-inp" rows="1" oninput="ar(this)" onkeydown="kKey(event,'c')"></textarea>
-        <button class="send" id="c-send" onclick="genCalc()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    <!-- Панель: Дозы детям -->
+    <div class="pane active" id="cpane-dose" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+      <div class="mid" id="c-mid">
+        <div class="welcome" id="c-welcome">
+          <div class="ex-label" id="c-ex-label"></div>
+          <div class="chips" id="c-chips"></div>
+        </div>
+        <div id="c-results"></div>
+      </div>
+      <div class="bottom">
+        <div class="inp-row">
+          <textarea class="inp" id="c-inp" rows="1" oninput="ar(this)" onkeydown="kKey(event,'c')" ></textarea>
+          <button class="send" id="c-send" onclick="genCalc()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <!-- Панель: Шок-индекс -->
+    <div class="pane" id="cpane-shock" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+      <div class="mid" id="sh-mid">
+        <div class="welcome" id="sh-welcome">
+          <div class="ex-label" id="sh-ex-label"></div>
+          <div class="chips" id="sh-chips"></div>
+        </div>
+        <div id="sh-results"></div>
+      </div>
+      <div class="bottom">
+        <div class="inp-row" style="gap:8px;">
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+            <input class="inp" id="sh-hr" type="number" placeholder="ЧСС (уд/мин)" style="min-height:44px;padding:10px 14px;">
+            <input class="inp" id="sh-bp" type="number" placeholder="АД сист. (мм рт.ст.)" style="min-height:44px;padding:10px 14px;">
+          </div>
+          <button class="send" onclick="calcShock()" style="height:96px;width:50px;align-self:stretch;"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        </div>
       </div>
     </div>
   </div>
@@ -710,9 +739,12 @@ function renderAll(){
   renderAiChips();
   // CALC
   setText('c-title',t('cTitle'));setText('c-sub',t('cSub'));
+  setText('ct-dose-lbl',t('cTabDose'));setText('ct-shock-lbl',t('cTabShock'));
   setText('c-ex-label',t('cExLabel'));
+  setText('sh-ex-label',t('cExLabel'));
   setAttr('c-inp','placeholder',t('cPh'));
   renderChipsFor('c-chips',t('cChips'),'setEx("c-inp",this)');
+  renderChipsFor('sh-chips',t('shockChips'),'setShockEx(this)');
 }
 
 function renderChipsFor(contId, chips, onclick){
@@ -1349,8 +1381,87 @@ function renderCalcResult(d,time){
 }
 
 // ================================================================
-// API HELPER
+// CALC TABS
 // ================================================================
+let calcTab='dose';
+function switchCalcTab(tab){
+  calcTab=tab;
+  document.getElementById('cpane-dose').classList.toggle('active',tab==='dose');
+  document.getElementById('cpane-shock').classList.toggle('active',tab==='shock');
+  document.getElementById('ct-dose').classList.toggle('on',tab==='dose');
+  document.getElementById('ct-shock').classList.toggle('on',tab==='shock');
+}
+function setShockEx(chipEl){
+  const txt=chipEl.querySelector('span:last-child').textContent;
+  // Парсим ЧСС и АД из текста примера: "ЧСС 110, АД 90"
+  const hrM=txt.match(/ЧСС\s*(\d+)/i)||txt.match(/ЖСЖ\s*(\d+)/i);
+  const bpM=txt.match(/АД\s*(\d+)/i);
+  if(hrM) document.getElementById('sh-hr').value=hrM[1];
+  if(bpM) document.getElementById('sh-bp').value=bpM[1];
+  document.getElementById('sh-welcome').style.display='none';
+  calcShock();
+}
+function calcShock(){
+  const hr=parseInt(document.getElementById('sh-hr').value);
+  const bp=parseInt(document.getElementById('sh-bp').value);
+  if(!hr||!bp||bp===0){
+    showErr('sh-results',lang==='kz'?'ЖСЖ және АД енгізіңіз':'Введите ЧСС и АД');
+    document.getElementById('sh-welcome').style.display='none';
+    return;
+  }
+  document.getElementById('sh-welcome').style.display='none';
+  const idx=(hr/bp).toFixed(2);
+  let grade,color,dot,advice;
+  if(idx<0.5){
+    grade=lang==='kz'?'Норма':'Норма';
+    color='var(--success)';dot='dg';
+    advice=lang==='kz'?'Шок белгілері жоқ. Науқасты бақылауда ұстаңыз.':'Признаков шока нет. Наблюдение.';
+  } else if(idx<1.0){
+    grade=lang==='kz'?'I дәреже (жеңіл)':'I степень (лёгкий)';
+    color='var(--warn)';dot='dy';
+    advice=lang==='kz'?'Жеңіл шок. Инфузия 500 мл физ. р-р в/в. Мониторинг АД.':'Лёгкий шок. Инфузия 500 мл физ. р-р в/в. Мониторинг АД.';
+  } else if(idx<1.5){
+    grade=lang==='kz'?'II дәреже (орташа)':'II степень (средний)';
+    color='#f97316';dot='dy';
+    advice=lang==='kz'?'Орташа шок. Инфузия 1000 мл в/в струйно. Допамин 5-10 мкг/кг/мин. Госпитализация шұғыл.':'Средний шок. Инфузия 1000 мл в/в струйно. Допамин 5-10 мкг/кг/мин. Госпитализация срочно.';
+  } else {
+    grade=lang==='kz'?'III дәреже (ауыр)':'III степень (тяжёлый)';
+    color='var(--danger)';dot='dr';
+    advice=lang==='kz'?'Ауыр шок! Инфузия максималды жылдамдықпен. Адреналин 0.1-0.5 мг в/в. Реанимация бригадасы.':'Тяжёлый шок! Инфузия максимально быстро. Адреналин 0.1-0.5 мг в/в. Реанимационная бригада.';
+  }
+  const copyTxt=`Шок-индекс Альговера: ${idx}\nЧСС: ${hr}, АД: ${bp}\n${grade}\n${advice}`;
+  document.getElementById('sh-results').innerHTML=`
+    <div class="rcard" style="animation:fadeUp 0.3s both">
+      <div class="rcard-head">
+        <div class="rcard-label"><span class="dot ${dot}"></span>${lang==='kz'?'Шок-индекс нәтижесі':'Результат шок-индекса'}</div>
+        <button class="copy-btn" onclick="cpBtn(this,'${escA(copyTxt)}')">${t('copy')}</button>
+      </div>
+      <div class="rcard-body">
+        <div style="text-align:center;padding:12px 0 8px;">
+          <div style="font-size:48px;font-weight:800;color:${color};line-height:1;">${idx}</div>
+          <div style="font-size:11px;color:var(--sub);margin-top:4px;">${lang==='kz'?'Шок-индекс Альговера':'Индекс Альговера'}</div>
+        </div>
+        <div style="display:flex;gap:10px;margin:10px 0;">
+          <div class="param-box" style="flex:1;text-align:center;">
+            <div class="param-label">ЧСС</div>
+            <div class="param-val">${hr}</div>
+          </div>
+          <div class="param-box" style="flex:1;text-align:center;">
+            <div class="param-label">${lang==='kz'?'АД':'АД'}</div>
+            <div class="param-val">${bp}</div>
+          </div>
+          <div class="param-box" style="flex:2;text-align:center;">
+            <div class="param-label">${lang==='kz'?'ДӘРЕЖЕ':'СТЕПЕНЬ'}</div>
+            <div class="param-val" style="font-size:13px;color:${color};">${grade}</div>
+          </div>
+        </div>
+        <div class="warn-item" style="border-color:${color};background:transparent;margin-top:4px;">
+          <span class="warn-icon">💡</span>
+          <span class="warn-text">${advice}</span>
+        </div>
+      </div>
+    </div>`;
+}
 async function apiCall({system, messages, max_tokens=2000, tools, endpoint}){
   if(!endpoint){
     const hasSearch = tools && tools.some(x=>x.name==='web_search');
