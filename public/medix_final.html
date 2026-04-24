@@ -451,6 +451,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div class="tabs">
         <div class="mtab on" onclick="switchMTab('rashod')" id="mt-rashod"></div>
         <div class="mtab" onclick="switchMTab('prihod')" id="mt-prihod"></div>
+        <div class="mtab" onclick="switchMTab('ostatki')" id="mt-ostatki"></div>
       </div>
     </div>
     <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
@@ -464,6 +465,13 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="prihod-stabs"></div></div>
         <div class="list-scroll" id="prihod-list"></div>
         <div class="journal-btn" onclick="openJournal('prihod')" id="m-jbtn-p"></div>
+        <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0"></div>
+      </div>
+      <div class="pane" id="pane-ostatki">
+        <div class="sub-tabs-wrap"><div class="sub-tabs" id="ostatki-stabs"></div></div>
+        <div class="list-scroll" id="ostatki-list"></div>
+        <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o"></div>
+        <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o"></div>
       </div>
     </div>
   </div>
@@ -552,6 +560,7 @@ let ptype = 'adult';
 let aiHistory = [];
 let medsRashodTab = 1;
 let medsIncomeTab = 1;
+let medsOstatkiTab = 1;
 
 // ================================================================
 // TRANSLATIONS
@@ -576,7 +585,7 @@ kChipsChild:[{i:'🌡️',t:'Бала 4 жас, температура 39.5, 2 �
     sMkb:'МКБ-10',sTreat:'Көрсетілген көмек',sTactics:'Тактика',
     copy:'Көшіру',copied:'✓ Көшірілді',loading:'Карта жасалуда...',
     mTitle:'Дәрілер есебі',mSub:'Кезеңдегі медикамент есебі',
-    tabRashod:'📤 Шығыс',tabPrihod:'📥 Кіріс',
+    tabRashod:'📤 Шығыс',tabPrihod:'📥 Кіріс',tabOstatki:'📦 Қалдық',
     stab1:'💊 Таблетка',stab2:'💉 Ампула',stab3:'⭐ Қымбат',stab4:'🩹 Бұйымдар',
     jBtnR:'📋 Шығыс журналы',jBtnP:'📋 Кіріс журналы',
     resetBtn:'🔄 Кезеңді жабу',jUsed:'Жұмсалды',jInc:'Кіріс',
@@ -612,7 +621,7 @@ kChipsChild:[{i:'🌡️',t:'Ребёнок 4 года, температура 3
     sMkb:'МКБ-10',sTreat:'Оказанная помощь',sTactics:'Тактика',
     copy:'Копировать',copied:'✓ Скопировано',loading:'Составляем карту...',
     mTitle:'Учёт медикаментов',mSub:'Расход и приход за смену',
-    tabRashod:'📤 Расход',tabPrihod:'📥 Приход',
+    tabRashod:'📤 Расход',tabPrihod:'📥 Приход',tabOstatki:'📦 Остатки',
     stab1:'💊 Таблетки',stab2:'💉 Ампулы',stab3:'⭐ Дорог.',stab4:'🩹 Изделия',
     jBtnR:'📋 Журнал расхода',jBtnP:'📋 Журнал прихода',
     resetBtn:'🔄 Закрыть смену',jUsed:'Использовано',jInc:'Приход',
@@ -676,8 +685,8 @@ function renderAll(){
   // MEDS
   setText('m-title',t('mTitle'));setText('m-sub',t('mSub'));
   setText('mt-rashod',t('tabRashod'));setText('mt-prihod',t('tabPrihod'));
-  setText('m-jbtn-r',t('jBtnR'));setText('m-jbtn-p',t('jBtnP'));
-  setText('m-reset',t('resetBtn'));
+  setText('m-jbtn-r',t('jBtnR'));setText('m-jbtn-p',t('jBtnP'));setText('m-jbtn-o',t('jBtnO'));
+  setText('m-reset',t('resetBtn'));setText('m-reset-o',t('resetOBtn'));setText('m-reset-p',t('resetPBtn'));
   renderMedSubTabs();renderRashodList();renderPrihodList();updateShiftTime();
   // AI
   setText('ai-title',t('aiTitle'));setText('ai-sub',t('aiSub'));
@@ -894,7 +903,7 @@ const LIST4=[
 const LISTS=[null,LIST1,LIST2,LIST3,LIST4];
 
 function loadMedsState(){
-  const def={};[...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{def[d.id]={r:0,p:0};});
+  const def={};[...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{def[d.id]={r:0,p:0,o:0};});
   try{return JSON.parse(localStorage.getItem('medix_meds_v3')||'null')||def;}catch(e){return def;}
 }
 function saveMedsState(){localStorage.setItem('medix_meds_v3',JSON.stringify(medsState));}
@@ -906,6 +915,7 @@ function saveExpEntries(){localStorage.setItem('medix_exp_v3',JSON.stringify(exp
 let medsState=loadMedsState();
 let rashodJournal=loadJournal('medix_rjour_v3');
 let prihodJournal=loadJournal('medix_pjour_v3');
+let ostatkiJournal=loadJournal('medix_ojour_v3');
 let expEntries=loadExpEntries();
 let shiftStart=localStorage.getItem('medix_shift_v3')||new Date().toISOString();
 
@@ -920,20 +930,26 @@ setInterval(updateShiftTime,60000);
 function renderMedSubTabs(){
   const rtabs=document.getElementById('rashod-stabs');
   const ptabs=document.getElementById('prihod-stabs');
+  const otabs=document.getElementById('ostatki-stabs');
   if(!rtabs||!ptabs) return;
   const labels=[t('stab1'),t('stab2'),t('stab3'),t('stab4')];
   rtabs.innerHTML=labels.map((l,i)=>`<div class="stab${medsRashodTab===i+1?' on':''}" onclick="switchMSubTab('r',${i+1})">${l}</div>`).join('');
   ptabs.innerHTML=labels.map((l,i)=>`<div class="stab${medsIncomeTab===i+1?' on':''}" onclick="switchMSubTab('p',${i+1})">${l}</div>`).join('');
+  if(otabs) otabs.innerHTML=labels.map((l,i)=>`<div class="stab${medsOstatkiTab===i+1?' on':''}" onclick="switchMSubTab('o',${i+1})">${l}</div>`).join('');
 }
 function switchMTab(tab){
   document.getElementById('pane-rashod').classList.toggle('active',tab==='rashod');
   document.getElementById('pane-prihod').classList.toggle('active',tab==='prihod');
+  document.getElementById('pane-ostatki').classList.toggle('active',tab==='ostatki');
   document.getElementById('mt-rashod').classList.toggle('on',tab==='rashod');
   document.getElementById('mt-prihod').classList.toggle('on',tab==='prihod');
+  document.getElementById('mt-ostatki').classList.toggle('on',tab==='ostatki');
+  if(tab==='ostatki') renderOstatkiList();
 }
 function switchMSubTab(side,n){
   if(side==='r'){medsRashodTab=n;renderRashodList();}
-  else{medsIncomeTab=n;renderPrihodList();}
+  else if(side==='p'){medsIncomeTab=n;renderPrihodList();}
+  else{medsOstatkiTab=n;renderOstatkiList();}
   renderMedSubTabs();
 }
 
@@ -1004,6 +1020,42 @@ function delExp(itemId,idx){
   saveExpEntries();saveJournal('medix_rjour_v3',rashodJournal);renderRashodList();
 }
 
+function renderOstatkiList(){
+  const cont=document.getElementById('ostatki-list');
+  if(!cont) return;
+  cont.innerHTML='';
+  const list=LISTS[medsOstatkiTab];
+  list.forEach((item,i)=>{
+    const val=medsState[item.id]?.o||0;
+    const row=document.createElement('div');
+    row.className='item-row';row.style.animationDelay=(i*0.02)+'s';
+    row.innerHTML=`<div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div><div class="counter"><div class="cnt-btn m" onclick="changeO('${item.id}',-1)">−</div><div class="cnt-val${val===0?' zero':''}" id="ov-${item.id}">${val}</div><div class="cnt-btn p" onclick="changeO('${item.id}',+1)">+</div></div>`;
+    cont.appendChild(row);
+  });
+}
+function changeO(id,delta){
+  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
+  medsState[id].o=Math.max(0,(medsState[id].o||0)+delta);
+  saveMedsState();
+  const el=document.getElementById('ov-'+id);
+  if(el){el.textContent=medsState[id].o;el.className='cnt-val'+(medsState[id].o===0?' zero':'');}
+  const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
+  if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:medsState[id].o,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
+}
+function confirmResetPrihod(){
+  if(!confirm(lang==='kz'?'Кірісті тазалауды растайсыз ба?':'Подтвердить очистку прихода?')) return;
+  [...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{if(medsState[d.id]) medsState[d.id].p=0;});
+  prihodJournal=[];
+  saveMedsState();saveJournal('medix_pjour_v3',prihodJournal);
+  renderPrihodList();
+}
+function confirmResetOstatki(){
+  if(!confirm(lang==='kz'?'Қалдықты тазалауды растайсыз ба?':'Подтвердить очистку остатков?')) return;
+  [...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{if(medsState[d.id]) medsState[d.id].o=0;});
+  ostatkiJournal=[];
+  saveMedsState();saveJournal('medix_ojour_v3',ostatkiJournal);
+  renderOstatkiList();
+}
 function renderPrihodList(){
   const cont=document.getElementById('prihod-list');
   if(!cont) return;
@@ -1013,12 +1065,12 @@ function renderPrihodList(){
     const val=medsState[item.id]?.p||0;
     const row=document.createElement('div');
     row.className='income-row';row.style.animationDelay=(i*0.02)+'s';
-    row.innerHTML=`<div class="income-name"><div class="income-title">${item.name}</div><div class="income-dose">${item.dose}</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="income-val${val===0?' zero':''}" id="pv-${item.id}">${val}</div><div class="cnt-btn p" onclick="changeP('${item.id}',+1)">+</div></div>`;
+    row.innerHTML=`<div class="income-name"><div class="income-title">${item.name}</div><div class="income-dose">${item.dose}</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="cnt-btn m" onclick="changeP('${item.id}',-1)">−</div><div class="income-val${val===0?' zero':''}" id="pv-${item.id}">${val}</div><div class="cnt-btn p" onclick="changeP('${item.id}',+1)">+</div></div>`;
     cont.appendChild(row);
   });
 }
 function changeP(id,delta){
-  if(!medsState[id]) medsState[id]={r:0,p:0};
+  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
   medsState[id].p=Math.max(0,(medsState[id].p||0)+delta);
   saveMedsState();
   const el=document.getElementById('pv-'+id);
@@ -1032,6 +1084,14 @@ function openJournal(type){
   const titleEl=document.getElementById('journal-title');
   const cont=document.getElementById('journal-content');
   overlay.classList.add('show');
+  if(type==='ostatki'){
+    titleEl.textContent=t('jBtnO');
+    if(!ostatkiJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Қалдық жоқ':'Остатков нет'}</div>`;return;}
+    const byId={};
+    ostatkiJournal.forEach(j=>{byId[j.id]={name:j.name,dose:j.dose,qty:j.qty,time:j.time};});
+    cont.innerHTML=Object.values(byId).map(g=>`<div class="ientry"><div class="ientry-top"><div class="ientry-name">${g.name}</div><div class="ientry-qty">${g.qty} шт</div></div><div class="ientry-meta">${g.dose} · ${g.time}</div></div>`).join('');
+    return;
+  }
   if(type==='rashod'){
     titleEl.textContent=t('jBtnR');
     if(!rashodJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Шығыс жоқ':'Расходов нет'}</div>`;return;}
