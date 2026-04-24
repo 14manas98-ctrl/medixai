@@ -9,7 +9,7 @@ app.use(express.json());
 // SECURITY — helmet
 // ─────────────────────────────────────────
 app.use(helmet({
-  contentSecurityPolicy: false, // отключаем CSP чтобы не ломать Telegram Mini App
+  contentSecurityPolicy: false,
 }));
 
 // ─────────────────────────────────────────
@@ -21,6 +21,26 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
+});
+
+// ─────────────────────────────────────────
+// СЧЁТЧИК УНИКАЛЬНЫХ ПОЛЬЗОВАТЕЛЕЙ
+// ─────────────────────────────────────────
+const uniqueUsers = new Set();
+
+function trackUser(req) {
+  const userId = req.body?.user_id;
+  if (userId) {
+    uniqueUsers.add(String(userId));
+  }
+}
+
+// Эндпоинт для просмотра статистики
+app.get('/api/stats', (req, res) => {
+  res.json({
+    unique_users: uniqueUsers.size,
+    uptime_hours: Math.floor(process.uptime() / 3600)
+  });
 });
 
 // ─────────────────────────────────────────
@@ -36,22 +56,24 @@ const generalLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Лимит для AI запросов: 20 запросов в минуту
+// Лимит для AI запросов: 20 запросов в минуту по user_id или IP
 const aiLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 20,
   message: { error: 'Слишком много AI запросов. Подождите 1 минуту.' },
   standardHeaders: true,
   legacyHeaders: false,
+  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : req.ip,
 });
 
-// Лимит для карты вызова: 10 запросов в минуту
+// Лимит для карты вызова: 10 запросов в минуту по user_id или IP
 const kartaLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 10,
   message: { error: 'Слишком много запросов карты. Подождите 1 минуту.' },
   standardHeaders: true,
   legacyHeaders: false,
+  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : req.ip,
 });
 
 // Применяем общий лимит ко всем /api маршрутам
@@ -88,8 +110,9 @@ async function callAnthropic(body) {
 // max_tokens: 4096 (фикс бага обрыва JSON)
 // ─────────────────────────────────────────
 app.post('/api/karta', kartaLimiter, async (req, res) => {
-  const { prompt, system, messages } = req.body;
-  console.log('Request /api/karta from:', req.ip);
+  const { prompt, system, messages, user_id } = req.body;
+  trackUser(req);
+  console.log('Request /api/karta from user_id:', user_id || req.ip);
   try {
     let body;
     if (messages) {
@@ -119,8 +142,9 @@ app.post('/api/karta', kartaLimiter, async (req, res) => {
 // Модель: Sonnet (сложные клинические вопросы)
 // ─────────────────────────────────────────
 app.post('/api/ai', aiLimiter, async (req, res) => {
-  const { system, messages, max_tokens } = req.body;
-  console.log('Request /api/ai from:', req.ip);
+  const { system, messages, max_tokens, user_id } = req.body;
+  trackUser(req);
+  console.log('Request /api/ai from user_id:', user_id || req.ip);
   try {
     const data = await callAnthropic({
       model: 'claude-sonnet-4-6',
@@ -141,8 +165,9 @@ app.post('/api/ai', aiLimiter, async (req, res) => {
 // Модель: Haiku (структурированные расчёты, дешевле)
 // ─────────────────────────────────────────
 app.post('/api/calc', aiLimiter, async (req, res) => {
-  const { system, messages, max_tokens, tools } = req.body;
-  console.log('Request /api/calc from:', req.ip);
+  const { system, messages, max_tokens, tools, user_id } = req.body;
+  trackUser(req);
+  console.log('Request /api/calc from user_id:', user_id || req.ip);
   try {
     const body = {
       model: 'claude-haiku-4-5-20251001',
@@ -171,6 +196,8 @@ if (BOT_TOKEN) {
   bot.onText(/\/start/, function(msg) {
     const chatId = msg.chat.id;
     const name = msg.from.first_name;
+    // Считаем пользователей через бот тоже
+    uniqueUsers.add(String(msg.from.id));
     bot.sendMessage(chatId, 'Салем ' + name + '! Мен Medix AI!', {
       reply_markup: {
         inline_keyboard: [[
@@ -198,6 +225,6 @@ if (BOT_TOKEN) {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`MedixAI server running on port ${PORT}`);
-  console.log('Rate limiting: ENABLED');
+  console.log('Rate limiting: ENABLED (by user_id + IP)');
   console.log('Security: ACTIVE');
 });
