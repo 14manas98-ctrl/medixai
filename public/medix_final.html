@@ -563,6 +563,8 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
           <div class="chips" id="sh-chips"></div>
         </div>
         <div id="sh-results"></div>
+        <div id="sh-back-btn" onclick="resetShock()" style="display:none;margin:0 14px 8px;padding:11px;border-radius:13px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;text-align:center;flex-shrink:0;">← Назад к примерам</div>
+
       </div>
       <div class="bottom">
         <div class="inp-row" style="gap:8px;">
@@ -1400,6 +1402,14 @@ function resetCalc(){
   document.getElementById('c-inp').value='';
   document.getElementById('c-inp').style.height='';
 }
+function resetShock(){
+  document.getElementById('sh-welcome').style.display='flex';
+  document.getElementById('sh-results').innerHTML='';
+  document.getElementById('sh-back-btn').style.display='none';
+  document.getElementById('sh-hr').value='';
+  document.getElementById('sh-bp').value='';
+}
+
 
 // CALC TABS
 
