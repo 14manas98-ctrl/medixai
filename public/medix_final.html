@@ -784,7 +784,7 @@ function renderKartaResult(d,time){
     const rawTxt=typeof s.body==='string'?s.body:JSON.stringify(s.body);
     let b='';
     if(s.sp==='status') b=`<div class="status-box">${s.body}</div>`;
-    else if(s.sp==='tags') b=`<div class="tags">${(s.body||[]).map(x=>`<span class="tag">${x}</span>`).join('')}</div>${s.ecg?`<div style="margin-top:8px;font-size:12px;color:var(--text2)">ЭКГ: ${s.ecg}</div>`:''}`;
+    else if(s.sp==='tags') b=`<div style="font-size:12.5px;line-height:1.9;color:var(--text2)">${(s.body||[]).map(x=>`${x}`).join('<br>')}</div>${s.ecg?`<div style="margin-top:8px;font-size:12px;color:var(--text2)">ЭКГ: ${s.ecg}</div>`:''}`;
     else if(s.sp==='mkb') b=`<div class="mkb-list">${(s.body||[]).map(m=>`<div class="mkb-item"><span class="mkb-code">${m.code}</span><span class="mkb-name">${m.name}</span></div>`).join('')}</div>`;
     else b=s.body;
     html+=`<div class="rcard" style="animation-delay:${i*0.04}s"><div class="rcard-head"><div class="rcard-label"><span class="dot ${s.dot}"></span>${s.l}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(rawTxt)}')">${t('copy')}</button></div><div class="rcard-body">${b}</div></div>`;
