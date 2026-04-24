@@ -76,6 +76,8 @@ async function callAnthropic(body) {
 
 // ─────────────────────────────────────────
 // /api/karta — Карта вызова
+// Модель: Haiku (структурированная задача, дешевле)
+// max_tokens: 4096 (фикс бага обрыва JSON)
 // ─────────────────────────────────────────
 app.post('/api/karta', kartaLimiter, async (req, res) => {
   const { prompt, system, messages } = req.body;
@@ -84,15 +86,15 @@ app.post('/api/karta', kartaLimiter, async (req, res) => {
     let body;
     if (messages) {
       body = {
-        model: 'claude-sonnet-4-5',
-        max_tokens: 2000,
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 4096,
         system: system,
         messages: messages
       };
     } else {
       body = {
-        model: 'claude-sonnet-4-5',
-        max_tokens: 2000,
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 4096,
         messages: [{ role: 'user', content: prompt }]
       };
     }
@@ -106,13 +108,14 @@ app.post('/api/karta', kartaLimiter, async (req, res) => {
 
 // ─────────────────────────────────────────
 // /api/ai — Медицинский AI чат
+// Модель: Sonnet (сложные клинические вопросы)
 // ─────────────────────────────────────────
 app.post('/api/ai', aiLimiter, async (req, res) => {
   const { system, messages, max_tokens } = req.body;
   console.log('Request /api/ai from:', req.ip);
   try {
     const data = await callAnthropic({
-      model: 'claude-sonnet-4-5',
+      model: 'claude-sonnet-4-6',
       max_tokens: max_tokens || 1500,
       system: system,
       messages: messages,
@@ -127,13 +130,14 @@ app.post('/api/ai', aiLimiter, async (req, res) => {
 
 // ─────────────────────────────────────────
 // /api/calc — Калькулятор доз
+// Модель: Haiku (структурированные расчёты, дешевле)
 // ─────────────────────────────────────────
 app.post('/api/calc', aiLimiter, async (req, res) => {
   const { system, messages, max_tokens, tools } = req.body;
   console.log('Request /api/calc from:', req.ip);
   try {
     const body = {
-      model: 'claude-sonnet-4-5',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: max_tokens || 2000,
       system: system,
       messages: messages
