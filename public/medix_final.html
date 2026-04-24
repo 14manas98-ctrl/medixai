@@ -1430,6 +1430,9 @@ function setShockEx(chipEl){
   if(hrM) document.getElementById('sh-hr').value=hrM[1];
   if(bpM) document.getElementById('sh-bp').value=bpM[1];
   document.getElementById('sh-welcome').style.display='none';
+  document.getElementById('sh-back-btn').style.display='block';
+  
+
   calcShock();
 }
 function calcShock(){
