@@ -294,6 +294,12 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 .journal-btn:hover{background:rgba(0,200,167,0.1);}
 .reset-btn{display:flex;align-items:center;justify-content:center;gap:7px;margin:4px 14px 10px;padding:12px;border-radius:13px;border:1px solid rgba(248,113,113,0.2);background:rgba(248,113,113,0.05);color:var(--danger);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;flex-shrink:0;}
 .reset-btn:hover{background:rgba(248,113,113,0.1);}
+.search-wrap{padding:8px 14px 0;flex-shrink:0;}
+.search-inp{width:100%;padding:9px 14px 9px 36px;border-radius:11px;background:var(--inp);border:1.5px solid var(--border2);color:var(--text1);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.3s;}
+.search-inp:focus{border-color:rgba(0,200,167,0.4);}
+.search-inp::placeholder{color:var(--text3);}
+.search-box{position:relative;}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
 
 /* ============================================================
    MODAL
@@ -457,18 +463,21 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
     <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
       <div class="pane active" id="pane-rashod">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="rashod-stabs"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="rashod-search" type="text" placeholder="Поиск..." oninput="filterList('rashod',this.value)"></div></div>
         <div class="list-scroll" id="rashod-list"></div>
         <div class="journal-btn" onclick="openJournal('rashod')" id="m-jbtn-r"></div>
         <div class="reset-btn" onclick="confirmReset()" id="m-reset"></div>
       </div>
       <div class="pane" id="pane-prihod">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="prihod-stabs"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="prihod-search" type="text" placeholder="Поиск..." oninput="filterList('prihod',this.value)"></div></div>
         <div class="list-scroll" id="prihod-list"></div>
         <div class="journal-btn" onclick="openJournal('prihod')" id="m-jbtn-p"></div>
         <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0">🗑️ Очистить приход</div>
       </div>
       <div class="pane" id="pane-ostatki">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="ostatki-stabs"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="ostatki-search" type="text" placeholder="Поиск..." oninput="filterList('ostatki',this.value)"></div></div>
         <div class="list-scroll" id="ostatki-list"></div>
         <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o">📋 Журнал остатков</div>
         <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o">🗑️ Очистить остатки</div>
@@ -1331,6 +1340,18 @@ async function apiCall({system, messages, max_tokens=2000, tools, endpoint}){
 // ================================================================
 // MISC HELPERS
 // ================================================================
+function filterList(section,query){
+  const q=query.toLowerCase().trim();
+  const cont=document.getElementById(section+'-list');
+  if(!cont) return;
+  const rows=cont.querySelectorAll('.item-row,.income-row');
+  rows.forEach(row=>{
+    const name=row.querySelector('.item-title,.income-title');
+    const dose=row.querySelector('.item-dose,.income-dose');
+    const text=((name?name.textContent:'')+(dose?dose.textContent:'')).toLowerCase();
+    row.style.display=(!q||text.includes(q))?'':'none';
+  });
+}
 function loadCard(txt){return `<div class="loading-card"><div class="spinner"></div><div class="loading-text">${txt}</div></div>`;}
 function showErr(contId,msg){document.getElementById(contId).innerHTML=`<div class="loading-card"><div style="color:#f87171;font-size:13px">${lang==='kz'?'Қате':'Ошибка'}: ${msg}</div></div>`;}
 function scrollMid(id){const el=document.getElementById(id);if(el)setTimeout(()=>el.scrollTop=el.scrollHeight,50);}
