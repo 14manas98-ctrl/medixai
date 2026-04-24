@@ -76,7 +76,7 @@ async function callAnthropic(body) {
 
 // ─────────────────────────────────────────
 // /api/karta — Карта вызова
-// Модель: Haiku (структурированная задача, дешевле)
+// Модель: Sonnet (главный продукт, качество важно)
 // max_tokens: 4096 (фикс бага обрыва JSON)
 // ─────────────────────────────────────────
 app.post('/api/karta', kartaLimiter, async (req, res) => {
@@ -86,14 +86,14 @@ app.post('/api/karta', kartaLimiter, async (req, res) => {
     let body;
     if (messages) {
       body = {
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-sonnet-4-6',
         max_tokens: 4096,
         system: system,
         messages: messages
       };
     } else {
       body = {
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-sonnet-4-6',
         max_tokens: 4096,
         messages: [{ role: 'user', content: prompt }]
       };
