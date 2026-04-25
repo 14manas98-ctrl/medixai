@@ -1663,8 +1663,7 @@ function calcShock(){
 }
 async function apiCall({system, messages, max_tokens=2000, tools, endpoint}){
   if(!endpoint){
-    const hasSearch = tools && tools.some(x=>x.name==='web_search');
-    endpoint = hasSearch ? 'https://medixai-production.up.railway.app/api/ai' : 'https://medixai-production.up.railway.app/api/karta';
+    endpoint = 'https://medixai-production.up.railway.app/api/karta';
   }
   let userId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
 if (!userId) {
