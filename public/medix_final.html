@@ -544,8 +544,48 @@ font-size:20px;font-weight:800;color:var(--result-num);line-height:1;}
       <div class="mid" id="c-mid">
         <div class="welcome" id="c-welcome">
           <div class="ex-label" id="c-ex-label"></div>
+          <!-- Шпаргалка веса -->
+          <div style="width:100%;margin-bottom:8px;">
+            <div style="font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ex-label);margin-bottom:6px;">ВЕС ПО ВОЗРАСТУ</div>
+            <div style="display:flex;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:0;">
+              <div class="wtab on" id="wt1" onclick="showWTab(1)" style="flex:1;padding:6px 2px;text-align:center;font-size:10px;font-weight:700;cursor:pointer;border-right:1px solid var(--border);">0–1 год</div>
+              <div class="wtab" id="wt2" onclick="showWTab(2)" style="flex:1;padding:6px 2px;text-align:center;font-size:10px;color:var(--sub);cursor:pointer;border-right:1px solid var(--border);">1–5 лет</div>
+              <div class="wtab" id="wt3" onclick="showWTab(3)" style="flex:1;padding:6px 2px;text-align:center;font-size:10px;color:var(--sub);cursor:pointer;border-right:1px solid var(--border);">5–10 лет</div>
+              <div class="wtab" id="wt4" onclick="showWTab(4)" style="flex:1;padding:6px 2px;text-align:center;font-size:10px;color:var(--sub);cursor:pointer;">10–15 лет</div>
+            </div>
+            <div id="wtab1" style="border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">
+              <div onclick="pickWeight('3 месяца, 6 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">3 месяца</span><span style="font-size:12px;font-weight:700;color:var(--success);">6 кг</span></div>
+              <div onclick="pickWeight('6 месяцев, 8 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">6 месяцев</span><span style="font-size:12px;font-weight:700;color:var(--success);">8 кг</span></div>
+              <div onclick="pickWeight('9 месяцев, 9 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">9 месяцев</span><span style="font-size:12px;font-weight:700;color:var(--success);">9 кг</span></div>
+              <div onclick="pickWeight('12 месяцев, 10 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;cursor:pointer;"><span style="font-size:12px;color:var(--text1);">12 месяцев</span><span style="font-size:12px;font-weight:700;color:var(--success);">10 кг</span></div>
+            </div>
+            <div id="wtab2" style="display:none;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">
+              <div onclick="pickWeight('1 год, 10 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">1 год</span><span style="font-size:12px;font-weight:700;color:var(--success);">10 кг</span></div>
+              <div onclick="pickWeight('2 года, 12 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">2 года</span><span style="font-size:12px;font-weight:700;color:var(--success);">12 кг</span></div>
+              <div onclick="pickWeight('3 года, 14 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">3 года</span><span style="font-size:12px;font-weight:700;color:var(--success);">14 кг</span></div>
+              <div onclick="pickWeight('4 года, 16 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">4 года</span><span style="font-size:12px;font-weight:700;color:var(--success);">16 кг</span></div>
+              <div onclick="pickWeight('5 лет, 18 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;cursor:pointer;"><span style="font-size:12px;color:var(--text1);">5 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">18 кг</span></div>
+            </div>
+            <div id="wtab3" style="display:none;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">
+              <div onclick="pickWeight('5 лет, 18 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">5 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">18 кг</span></div>
+              <div onclick="pickWeight('6 лет, 20 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">6 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">20 кг</span></div>
+              <div onclick="pickWeight('7 лет, 22 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">7 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">22 кг</span></div>
+              <div onclick="pickWeight('8 лет, 26 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">8 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">26 кг</span></div>
+              <div onclick="pickWeight('9 лет, 28 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">9 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">28 кг</span></div>
+              <div onclick="pickWeight('10 лет, 32 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;cursor:pointer;"><span style="font-size:12px;color:var(--text1);">10 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">32 кг</span></div>
+            </div>
+            <div id="wtab4" style="display:none;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">
+              <div onclick="pickWeight('11 лет, 36 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">11 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">36 кг</span></div>
+              <div onclick="pickWeight('12 лет, 40 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">12 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">40 кг</span></div>
+              <div onclick="pickWeight('13 лет, 43 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">13 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">43 кг</span></div>
+              <div onclick="pickWeight('14 лет, 47 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">14 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">47 кг</span></div>
+              <div onclick="pickWeight('15 лет, 50 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;cursor:pointer;"><span style="font-size:12px;color:var(--text1);">15 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">50 кг</span></div>
+            </div>
+          </div>
           <div class="chips" id="c-chips"></div>
         </div>
+  
+
         <div id="c-results"></div>
         <div id="c-back-btn" onclick="resetCalc()" style="display:none;margin:0 14px 8px;padding:11px;border-radius:13px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;text-align:center;flex-shrink:0;">← Назад к примерам</div>
 
@@ -1403,7 +1443,10 @@ function resetCalc(){
   document.getElementById('c-back-btn').style.display='none';
   document.getElementById('c-inp').value='';
   document.getElementById('c-inp').style.height='';
+  showWTab(1);
 }
+  
+
 function resetShock(){
   document.getElementById('sh-welcome').style.display='flex';
   document.getElementById('sh-results').innerHTML='';
@@ -1413,7 +1456,26 @@ function resetShock(){
 }
 
 
+function showWTab(n){
+  for(var i=1;i<=4;i++){
+    var tab=document.getElementById('wtab'+i);
+    var t=document.getElementById('wt'+i);
+    if(tab) tab.style.display=i===n?'block':'none';
+    if(t){
+      if(i===n){t.style.color='var(--accent)';t.style.fontWeight='700';}
+      else{t.style.color='var(--sub)';t.style.fontWeight='400';}
+    }
+  }
+}
+function pickWeight(val){
+  var inp=document.getElementById('c-inp');
+  inp.value='Ребёнок '+val+' — ';
+  ar(inp);inp.focus();
+}
+
 // CALC TABS
+  
+
 
 // ================================================================
 let calcTab='dose';
