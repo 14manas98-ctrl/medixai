@@ -1608,9 +1608,11 @@ async function apiCall({system, messages, max_tokens=2000, tools, endpoint}){
     const hasSearch = tools && tools.some(x=>x.name==='web_search');
     endpoint = hasSearch ? 'https://medixai-production.up.railway.app/api/ai' : 'https://medixai-production.up.railway.app/api/karta';
   }
-  const body={system, messages, max_tokens};
+  const userId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id || null;
+  const body={system, messages, max_tokens, user_id: userId};
   if(tools) body.tools=tools;
   const r=await fetch(endpoint,{
+
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify(body)
