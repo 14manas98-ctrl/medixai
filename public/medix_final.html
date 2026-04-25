@@ -432,7 +432,12 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <div class="ex-label" id="k-ex-label"></div>
         <div class="chips" id="k-chips"></div>
       </div>
+      <div id="k-nav" style="display:none;gap:8px;margin-bottom:10px;">
+        <div onclick="kartaNewCall()" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--card);text-align:center;font-size:12px;font-weight:600;color:var(--sub);cursor:pointer;">← Новый вызов</div>
+        <div onclick="kartaShowResult()" id="k-nav-result" style="display:none;flex:1;padding:10px;border-radius:10px;border:1px solid rgba(0,200,167,0.3);background:rgba(0,200,167,0.08);text-align:center;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;">📋 Текущая карта</div>
+      </div>
       <div id="k-results"></div>
+
     </div>
     <div class="bottom">
       <div class="inp-row">
@@ -894,7 +899,9 @@ async function genKarta(){
   const inp=document.getElementById('k-inp');
   const txt=inp.value.trim();if(!txt)return;
   document.getElementById('k-welcome').style.display='none';
+  document.getElementById('k-nav').style.display='flex';
   document.getElementById('k-send').disabled=true;
+
   document.getElementById('k-results').innerHTML=loadCard(t('loading'));
   document.getElementById('k-mid').scrollTop=0;
   const start=Date.now();
@@ -904,6 +911,8 @@ async function genKarta(){
     const jm=raw.match(/\{[\s\S]*\}/);if(jm)raw=jm[0];
     const d=JSON.parse(raw);
     renderKartaResult(d,((Date.now()-start)/1000).toFixed(1));
+    document.getElementById('k-nav-result').style.display='block';
+    document.getElementById('k-results').style.display='block';
     inp.value='';inp.style.height='';
   }catch(e){showErr('k-results',e.message);}
   document.getElementById('k-send').disabled=false;
@@ -1480,6 +1489,18 @@ function renderCalcResult(d,time){
 }
 
 // ================================================================
+function kartaNewCall(){
+  document.getElementById('k-welcome').style.display='flex';
+  document.getElementById('k-results').style.display='none';
+  document.getElementById('k-nav-result').style.display='block';
+  document.getElementById('k-inp').value='';
+  document.getElementById('k-inp').style.height='';
+}
+function kartaShowResult(){
+  document.getElementById('k-welcome').style.display='none';
+  document.getElementById('k-results').style.display='block';
+}
+
 function resetCalc(){
   document.getElementById('c-welcome').style.display='flex';
   document.getElementById('c-results').innerHTML='';
