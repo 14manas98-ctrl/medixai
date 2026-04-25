@@ -89,7 +89,7 @@ const aiLimiter = rateLimit({
   message: { error: 'Слишком много AI запросов. Подождите 1 минуту.' },
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : req.ip,
+  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : (req.headers['x-forwarded-for'] || req.ip),
 });
 
 // Лимит для карты вызова: 10 запросов в минуту по user_id или IP
@@ -174,17 +174,39 @@ app.post('/api/ai', aiLimiter, async (req, res) => {
   console.log('Request /api/ai from user_id:', user_id || req.ip);
 
   try {
-    const data = await callAnthropic({
-      model: 'claude-sonnet-4-6',
-      max_tokens: max_tokens || 1500,
-      system: system,
-      messages: messages,
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }]
+    const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: max_tokens || 1500,
+        stream: true,
+        system: system,
+        messages: messages,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }]
+      })
     });
-    res.json(data);
+
+    const reader = response.body.getReader();
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      res.write(value);
+    }
+    res.end();
+
   } catch (e) {
     console.error('Error /api/ai:', e.message);
-    res.status(500).json({ error: e.message });
+    if (!res.headersSent) res.status(500).json({ error: e.message });
   }
 });
 
@@ -220,7 +242,12 @@ const TelegramBot = require('node-telegram-bot-api');
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
 if (BOT_TOKEN) {
-  const bot = new TelegramBot(BOT_TOKEN, { polling: true });
+  const bot = new TelegramBot(BOT_TOKEN, { webHook: { port: false } });
+bot.setWebHook(`https://medixai-production.up.railway.app/bot${BOT_TOKEN}`);
+app.post(`/bot${BOT_TOKEN}`, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
 
   bot.onText(/\/start/, async function(msg) {
 

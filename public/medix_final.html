@@ -1323,15 +1323,52 @@ async function genAI(){
   const loadId=appendLoading('ai-msgs');
   scrollMid('ai-mid');
   try{
-    const r=await apiCall({system:aiSystemPrompt(),messages:aiHistory,max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}]});
-    let fullText='';
-    r.content.forEach(b=>{if(b.type==='text')fullText+=b.text;});
-    aiHistory.push({role:'assistant',content:r.content});
+    let userId=window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+    if(!userId){userId=localStorage.getItem('medix_uid');if(!userId){userId='u_'+Math.random().toString(36).slice(2);localStorage.setItem('medix_uid',userId);}}
+    const resp=await fetch('https://medixai-production.up.railway.app/api/ai',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system:aiSystemPrompt(),messages:aiHistory,max_tokens:1500,user_id:userId,tools:[{type:'web_search_20250305',name:'web_search'}]})
+    });
     removeLoading(loadId);
-    appendAIMsg(fullText,'ai-msgs');
+    const msgDiv=appendAIMsgStream('ai-msgs');
+    const reader=resp.body.getReader();
+    const decoder=new TextDecoder();
+    let fullText='';
+    let buffer='';
+    while(true){
+      const{done,value}=await reader.read();
+      if(done) break;
+      buffer+=decoder.decode(value,{stream:true});
+      const lines=buffer.split('\n');
+      buffer=lines.pop();
+      for(const line of lines){
+        if(!line.startsWith('data:')) continue;
+        const data=line.slice(5).trim();
+        if(data==='[DONE]') break;
+        try{
+          const ev=JSON.parse(data);
+          if(ev.type==='content_block_delta'&&ev.delta?.type==='text_delta'){
+            fullText+=ev.delta.text;
+            msgDiv.querySelector('.stream-text').innerHTML=formatAIText(fullText);
+            scrollMid('ai-mid');
+          }
+        }catch(e){}
+      }
+    }
+    aiHistory.push({role:'assistant',content:[{type:'text',text:fullText}]});
+    msgDiv.querySelector('.msg-footer').style.display='flex';
+    msgDiv.querySelector('.copy-btn').onclick=function(){cpBtn(this,fullText);};
   }catch(e){removeLoading(loadId);appendErrMsg(e.message,'ai-msgs');}
   document.getElementById('ai-send').disabled=false;
   scrollMid('ai-mid');
+}
+
+function appendAIMsgStream(contId){
+  const wrap=document.getElementById(contId);
+  const div=document.createElement('div');div.className='msg ai';
+  div.innerHTML=`<div class="msg-avatar">🤖</div><div class="msg-bubble"><div class="stream-text"></div><div class="msg-footer" style="display:none"><button class="copy-btn">${t('copy')}</button><span style="font-size:10px;color:var(--time-color)">${now()}</span></div></div>`;
+  wrap.appendChild(div);return div;
 }
 
 function appendUserMsg(txt,contId){
