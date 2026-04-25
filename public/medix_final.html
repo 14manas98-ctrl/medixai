@@ -1279,36 +1279,8 @@ function openJournal(type){
   }
 }
 
-  const overlay=document.getElementById('journal-overlay');
-  const titleEl=document.getElementById('journal-title');
-  const cont=document.getElementById('journal-content');
-  overlay.classList.add('show');
-  if(type==='ostatki'){
-    titleEl.textContent=t('jBtnO');
-    if(!ostatkiJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Қалдық жоқ':'Остатков нет'}</div>`;return;}
-    const byId={};
-    ostatkiJournal.forEach(j=>{byId[j.id]={name:j.name,dose:j.dose,qty:j.qty,time:j.time};});
-    cont.innerHTML=Object.values(byId).map(g=>`<div class="ientry"><div class="ientry-top"><div class="ientry-name">${g.name}</div><div class="ientry-qty">${g.qty} шт</div></div><div class="ientry-meta">${g.dose} · ${g.time}</div></div>`).join('');
-    return;
-  }
-  if(type==='rashod'){
-    titleEl.textContent=t('jBtnR');
-    if(!rashodJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Шығыс жоқ':'Расходов нет'}</div>`;return;}
-    const byId={};
-    rashodJournal.forEach(j=>{if(!byId[j.id]) byId[j.id]={name:j.name,dose:j.dose,entries:[]};byId[j.id].entries.push(j);});
-    cont.innerHTML=Object.values(byId).map(g=>{
-      const total=g.entries.reduce((s,e)=>s+(parseInt(e.qty)||0),0);
-      const rows=g.entries.map(e=>`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)"><span style="font-size:11px;color:var(--sub)">${e.call?'№ '+e.call:'—'} · ${e.time}</span><span style="font-size:12px;font-weight:700;color:var(--warn)">${e.qty} шт</span></div>`).join('');
-      return `<div class="jentry"><div class="jentry-top"><div class="jentry-name">${g.name}</div><div class="jentry-qty">${lang==='kz'?'Барлығы':'Итого'}: ${total}</div></div><div class="jentry-meta">${g.dose}</div>${rows}</div>`;
-    }).join('');
-  } else {
-    titleEl.textContent=t('jBtnP');
-    if(!prihodJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Кіріс жоқ':'Приходов нет'}</div>`;return;}
-    const byId={};
-    prihodJournal.forEach(j=>{if(!byId[j.id]) byId[j.id]={name:j.name,dose:j.dose,total:0};byId[j.id].total++;});
-    cont.innerHTML=Object.values(byId).map(g=>`<div class="ientry"><div class="ientry-top"><div class="ientry-name">${g.name}</div><div class="ientry-qty">+${g.total}</div></div><div class="ientry-meta">${g.dose}</div></div>`).join('');
-  }
-}
+  
+
 function closeJournal(){document.getElementById('journal-overlay').classList.remove('show');}
 function closeJournalBg(e){if(e.target===document.getElementById('journal-overlay'))closeJournal();}
 
