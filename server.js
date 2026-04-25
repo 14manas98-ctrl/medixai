@@ -21,19 +21,28 @@ app.use((req, res, next) => {
 // ─────────────────────────────────────────
 // СЧЁТЧИК УНИКАЛЬНЫХ ПОЛЬЗОВАТЕЛЕЙ
 // ─────────────────────────────────────────
-const uniqueUsers = new Set();
+const { Redis } = require('@upstash/redis');
 
-function trackUser(req) {
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
+
+async function trackUser(req) {
   const userId = req.body?.user_id;
-  if (userId) uniqueUsers.add(String(userId));
+  if (userId) {
+    await redis.sadd('medix:unique_users', String(userId));
+  }
 }
 
-app.get('/api/stats', (req, res) => {
+app.get('/api/stats', async (req, res) => {
+  const count = await redis.scard('medix:unique_users');
   res.json({
-    unique_users: uniqueUsers.size,
+    unique_users: count,
     uptime_hours: Math.floor(process.uptime() / 3600)
   });
 });
+
 
 // ─────────────────────────────────────────
 // RATE LIMITING — защита от злоупотреблений
