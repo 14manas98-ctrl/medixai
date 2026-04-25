@@ -194,10 +194,12 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 if (BOT_TOKEN) {
   const bot = new TelegramBot(BOT_TOKEN, { polling: true });
 
-  bot.onText(/\/start/, function(msg) {
+  bot.onText(/\/start/, async function(msg) {
+
     const chatId = msg.chat.id;
     const name = msg.from.first_name;
-    uniqueUsers.add(String(msg.from.id));
+    await redis.sadd('medix:unique_users', String(msg.from.id));
+
     bot.sendMessage(chatId, 'Салем ' + name + '! Мен Medix AI!', {
       reply_markup: {
         inline_keyboard: [[
