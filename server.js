@@ -28,20 +28,39 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-async function trackUser(req) {
+async function trackUser(req, endpoint) {
   const userId = req.body?.user_id;
   if (userId) {
     await redis.sadd('medix:unique_users', String(userId));
+    await redis.incr('medix:total_requests');
+    if (endpoint) await redis.incr('medix:endpoint:' + endpoint);
+    const day = new Date().toISOString().slice(0, 10);
+    await redis.incr('medix:day:' + day);
   }
 }
 
+
 app.get('/api/stats', async (req, res) => {
-  const count = await redis.scard('medix:unique_users');
+  const day = new Date().toISOString().slice(0, 10);
+  const [users, total, karta, ai, calc, today] = await Promise.all([
+    redis.scard('medix:unique_users'),
+    redis.get('medix:total_requests'),
+    redis.get('medix:endpoint:karta'),
+    redis.get('medix:endpoint:ai'),
+    redis.get('medix:endpoint:calc'),
+    redis.get('medix:day:' + day),
+  ]);
   res.json({
-    unique_users: count,
+    unique_users: users || 0,
+    total_requests: total || 0,
+    karta: karta || 0,
+    ai: ai || 0,
+    calc: calc || 0,
+    today: today || 0,
     uptime_hours: Math.floor(process.uptime() / 3600)
   });
 });
+
 
 
 // ─────────────────────────────────────────
@@ -112,8 +131,9 @@ async function callAnthropic(body) {
 // ─────────────────────────────────────────
 app.post('/api/karta', kartaLimiter, async (req, res) => {
   const { prompt, system, messages, user_id } = req.body;
-  trackUser(req);
+  trackUser(req, 'karta');
   console.log('Request /api/karta from user_id:', user_id || req.ip);
+
   try {
     let body;
     if (messages) {
@@ -144,8 +164,9 @@ app.post('/api/karta', kartaLimiter, async (req, res) => {
 // ─────────────────────────────────────────
 app.post('/api/ai', aiLimiter, async (req, res) => {
   const { system, messages, max_tokens, user_id } = req.body;
-  trackUser(req);
+  trackUser(req, 'ai');
   console.log('Request /api/ai from user_id:', user_id || req.ip);
+
   try {
     const data = await callAnthropic({
       model: 'claude-sonnet-4-6',
@@ -167,8 +188,9 @@ app.post('/api/ai', aiLimiter, async (req, res) => {
 // ─────────────────────────────────────────
 app.post('/api/calc', aiLimiter, async (req, res) => {
   const { system, messages, max_tokens, tools, user_id } = req.body;
-  trackUser(req);
+  trackUser(req, 'calc');
   console.log('Request /api/calc from user_id:', user_id || req.ip);
+
   try {
     const body = {
       model: 'claude-haiku-4-5-20251001',

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medix AI — Админ</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0f172a; color: #e2e8f0; font-family: sans-serif; padding: 24px; }
+    h1 { color: #38bdf8; margin-bottom: 24px; font-size: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .card { background: #1e293b; border-radius: 12px; padding: 20px; }
+    .card .label { color: #94a3b8; font-size: 13px; margin-bottom: 8px; }
+    .card .value { font-size: 36px; font-weight: bold; color: #38bdf8; }
+    .card .sub { color: #64748b; font-size: 12px; margin-top: 4px; }
+    h2 { color: #94a3b8; margin-bottom: 12px; font-size: 16px; }
+    .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .bar-label { width: 100px; font-size: 13px; color: #cbd5e1; }
+    .bar-bg { flex: 1; background: #1e293b; border-radius: 6px; height: 24px; }
+    .bar-fill { height: 24px; border-radius: 6px; background: #38bdf8; transition: width 0.5s; }
+    .bar-count { width: 40px; text-align: right; font-size: 13px; color: #94a3b8; }
+    .refresh { margin-top: 24px; color: #64748b; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>🚑 Medix AI — Статистика</h1>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">👥 Уникальных пользователей</div>
+      <div class="value" id="users">—</div>
+    </div>
+    <div class="card">
+      <div class="label">📊 Всего запросов</div>
+      <div class="value" id="total">—</div>
+    </div>
+    <div class="card">
+      <div class="label">⏱ Uptime сервера</div>
+      <div class="value" id="uptime">—</div>
+      <div class="sub">часов</div>
+    </div>
+    <div class="card">
+      <div class="label">📅 Сегодня запросов</div>
+      <div class="value" id="today">—</div>
+    </div>
+  </div>
+
+  <h2>Использование по разделам</h2>
+  <div id="bars">
+    <div class="bar-row">
+      <div class="bar-label">🗂 Карта</div>
+      <div class="bar-bg"><div class="bar-fill" id="bar-karta" style="width:0%"></div></div>
+      <div class="bar-count" id="cnt-karta">—</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">🤖 AI чат</div>
+      <div class="bar-bg"><div class="bar-fill" id="bar-ai" style="width:0%"></div></div>
+      <div class="bar-count" id="cnt-ai">—</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">🧮 Калькулятор</div>
+      <div class="bar-bg"><div class="bar-fill" id="bar-calc" style="width:0%"></div></div>
+      <div class="bar-count" id="cnt-calc">—</div>
+    </div>
+  </div>
+
+  <div class="refresh" id="refreshed"></div>
+
+  <script>
+    async function load() {
+      const res = await fetch('/api/stats');
+      const d = await res.json();
+
+      document.getElementById('users').textContent = d.unique_users ?? '—';
+      document.getElementById('total').textContent = d.total_requests ?? '—';
+      document.getElementById('uptime').textContent = d.uptime_hours ?? '—';
+      document.getElementById('today').textContent = d.today ?? '—';
+
+      const karta = d.karta || 0;
+      const ai = d.ai || 0;
+      const calc = d.calc || 0;
+      const max = Math.max(karta, ai, calc, 1);
+
+      document.getElementById('cnt-karta').textContent = karta;
+      document.getElementById('cnt-ai').textContent = ai;
+      document.getElementById('cnt-calc').textContent = calc;
+      document.getElementById('bar-karta').style.width = (karta/max*100) + '%';
+      document.getElementById('bar-ai').style.width = (ai/max*100) + '%';
+      document.getElementById('bar-calc').style.width = (calc/max*100) + '%';
+
+      document.getElementById('refreshed').textContent = 'Обновлено: ' + new Date().toLocaleTimeString();
+    }
+
+    load();
+    setInterval(load, 30000);
+  </script>
+</body>
+</html>
