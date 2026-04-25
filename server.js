@@ -99,7 +99,7 @@ const kartaLimiter = rateLimit({
   message: { error: 'Слишком много запросов карты. Подождите 1 минуту.' },
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : req.ip,
+  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : (req.headers['x-forwarded-for'] || req.ip),
 });
 
 // Применяем общий лимит ко всем /api маршрутам
@@ -267,7 +267,7 @@ app.post(`/bot${BOT_TOKEN}`, (req, res) => {
     });
   });
 
-  bot.on('polling_error', function(error) {
+  bot.on('error', function(error) {
     console.log('Bot error:', error.message);
   });
 
