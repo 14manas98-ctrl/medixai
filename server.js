@@ -41,25 +41,31 @@ async function trackUser(req, endpoint) {
 
 
 app.get('/api/stats', async (req, res) => {
-  const day = new Date().toISOString().slice(0, 10);
-  const [users, total, karta, ai, calc, today] = await Promise.all([
-    redis.scard('medix:unique_users'),
-    redis.get('medix:total_requests'),
-    redis.get('medix:endpoint:karta'),
-    redis.get('medix:endpoint:ai'),
-    redis.get('medix:endpoint:calc'),
-    redis.get('medix:day:' + day),
-  ]);
-  res.json({
-    unique_users: users || 0,
-    total_requests: total || 0,
-    karta: karta || 0,
-    ai: ai || 0,
-    calc: calc || 0,
-    today: today || 0,
-    uptime_hours: Math.floor(process.uptime() / 3600)
-  });
+  try {
+    const day = new Date().toISOString().slice(0, 10);
+    const [users, total, karta, ai, calc, today] = await Promise.all([
+      redis.scard('medix:unique_users'),
+      redis.get('medix:total_requests'),
+      redis.get('medix:endpoint:karta'),
+      redis.get('medix:endpoint:ai'),
+      redis.get('medix:endpoint:calc'),
+      redis.get('medix:day:' + day),
+    ]);
+    res.json({
+      unique_users: users || 0,
+      total_requests: total || 0,
+      karta: karta || 0,
+      ai: ai || 0,
+      calc: calc || 0,
+      today: today || 0,
+      uptime_hours: Math.floor(process.uptime() / 3600)
+    });
+  } catch(e) {
+    console.error('Redis error:', e.message);
+    res.json({unique_users: 0, total_requests: 0, karta: 0, ai: 0, calc: 0, today: 0, uptime_hours: Math.floor(process.uptime() / 3600), redis_error: e.message});
+  }
 });
+
 
 
 
