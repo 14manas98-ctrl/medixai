@@ -347,8 +347,15 @@ if (ACCESS_BOT_TOKEN) {
     else if (state.step === 'city') {
       userState[chatId].city = text;
       userState[chatId].step = 'done';
+      const hasUsername = msg.from.username;
+      const whatsappNote = hasUsername ? '' : (isKaz
+        ? `\n\n⚠️ Сізде Telegram username жоқ.\n24 сағат ішінде жауап болмаса — WhatsApp-қа жазыңыз:\n📞 +7 771 043 1073`
+        : `\n\n⚠️ У вас нет Telegram username.\nЕсли в течение 24 часов не получите ответ —\nнапишите в WhatsApp:\n📞 +7 771 043 1073`);
+
       accessBot.sendMessage(chatId,
-        isKaz ? `✅ *Өтінішіңіз қабылданды!*\n\n⏳ Жақын арада байланысамыз!` : `✅ *Заявка принята!*\n\n⏳ Скоро свяжемся с вами!`,
+        isKaz
+          ? `✅ *Өтінішіңіз қабылданды!*\n\n⏳ Жақын арада байланысамыз!${whatsappNote}`
+          : `✅ *Заявка принята!*\n\n⏳ Скоро свяжемся с вами!${whatsappNote}`,
         { parse_mode: 'Markdown' }
       );
       if (ADMIN_CHAT_ID) {
