@@ -255,16 +255,23 @@ app.post(`/bot${BOT_TOKEN}`, (req, res) => {
     const name = msg.from.first_name;
     await redis.sadd('medix:unique_users', String(msg.from.id));
 
-    bot.sendMessage(chatId, 'Салем ' + name + '! Мен Medix AI!', {
-      reply_markup: {
-        inline_keyboard: [[
-          {
-            text: '🚑 Medix AI ашу',
-            web_app: { url: 'https://medixai-production.up.railway.app/medix_final.html' }
-          }
-        ]]
+    bot.sendMessage(chatId,
+      `👋 Сәлем, ${name}!\n\n🏥 *Medix AI* — скорой жәрдем бригадалары үшін цифрлық көмекші\n\n👨‍⚕️ *Кімдерге арналған:*\n• Фельдшерлер\n• Дәрігерлер\n• Медбикелер\n• Студенттер\n\n📋 Карта вызова\n💊 Дәрі есебі\n🤖 AI ассистент\n🧮 Калькулятор\n\n👇 Қолданбаны ашыңыз:`,
+      {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '🚑 Ашу / Открыть', web_app: { url: 'https://medixai-production.up.railway.app/medix_final.html' } },
+              { text: '❌ Жабу', callback_data: 'cancel' }
+            ],
+            [
+              { text: '🌐 Сайт', url: 'https://14manas98-ctrl.github.io/medixai_landing/' }
+            ]
+          ]
+        }
       }
-    });
+    );
   });
 
   bot.on('error', function(error) {
