@@ -277,6 +277,87 @@ app.post(`/bot${BOT_TOKEN}`, (req, res) => {
 }
 
 // ─────────────────────────────────────────
+// ACCESS BOT — приём заявок на Medix AI
+// ─────────────────────────────────────────
+const ACCESS_BOT_TOKEN = process.env.ACCESS_BOT_TOKEN;
+const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID;
+
+if (ACCESS_BOT_TOKEN) {
+  const accessBot = new TelegramBot(ACCESS_BOT_TOKEN, { polling: true });
+  const userState = {};
+
+  accessBot.onText(/\/start/, (msg) => {
+    const chatId = msg.chat.id;
+    userState[chatId] = { step: 'language' };
+    accessBot.sendMessage(chatId,
+      `👋 Сәлем! / Привет!\n\n🏥 *Medix AI* — скорой жәрдем бригадалары үшін цифрлық көмекші\n\nТілді таңдаңыз / Выберите язык:`,
+      { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[
+        { text: '🇰🇿 Қазақша', callback_data: 'lang_kaz' },
+        { text: '🇷🇺 Русский', callback_data: 'lang_rus' }
+      ]]}}
+    );
+  });
+
+  accessBot.on('callback_query', (query) => {
+    const chatId = query.message.chat.id;
+    const data = query.data;
+    if (!userState[chatId]) userState[chatId] = {};
+    accessBot.answerCallbackQuery(query.id);
+
+    if (data === 'lang_kaz' || data === 'lang_rus') {
+      userState[chatId].lang = data === 'lang_kaz' ? 'kaz' : 'rus';
+      userState[chatId].step = 'name';
+      const isKaz = userState[chatId].lang === 'kaz';
+      accessBot.sendMessage(chatId, isKaz ? '✅ Қазақ тілі!\n\nАтыңызды жазыңыз 👇' : '✅ Русский язык!\n\nНапишите ваше имя 👇');
+    }
+    else if (data.startsWith('prof_')) {
+      userState[chatId].profession = data.replace('prof_', '');
+      userState[chatId].step = 'city';
+      const isKaz = userState[chatId].lang === 'kaz';
+      accessBot.sendMessage(chatId, isKaz ? '🏙 Қалаңызды жазыңыз 👇' : '🏙 Напишите ваш город 👇');
+    }
+  });
+
+  accessBot.on('message', (msg) => {
+    const chatId = msg.chat.id;
+    const text = msg.text;
+    if (!text || text.startsWith('/')) return;
+    if (!userState[chatId]) return;
+    const state = userState[chatId];
+    const isKaz = state.lang === 'kaz';
+
+    if (state.step === 'name') {
+      userState[chatId].name = text;
+      userState[chatId].step = 'profession';
+      accessBot.sendMessage(chatId,
+        isKaz ? `Сәлем, *${text}*! 👋\n\nМамандығыңызды таңдаңыз:` : `Привет, *${text}*! 👋\n\nВыберите профессию:`,
+        { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [
+          [{ text: '🚑 Фельдшер', callback_data: 'prof_Фельдшер' }, { text: '👨‍⚕️ Врач', callback_data: 'prof_Врач' }],
+          [{ text: '🎓 Студент', callback_data: 'prof_Студент' }, { text: '👩‍⚕️ Медсестра', callback_data: 'prof_Медсестра' }]
+        ]}}
+      );
+    }
+    else if (state.step === 'city') {
+      userState[chatId].city = text;
+      userState[chatId].step = 'done';
+      accessBot.sendMessage(chatId,
+        isKaz ? `✅ *Өтінішіңіз қабылданды!*\n\n⏳ Жақын арада байланысамыз!` : `✅ *Заявка принята!*\n\n⏳ Скоро свяжемся с вами!`,
+        { parse_mode: 'Markdown' }
+      );
+      if (ADMIN_CHAT_ID) {
+        accessBot.sendMessage(ADMIN_CHAT_ID,
+          `🔔 *Новая заявка!*\n\n👤 ${state.name}\n💼 ${state.profession}\n🏙 ${text}\n🌐 ${isKaz ? 'Казахский' : 'Русский'}\n📱 @${msg.from.username || 'нет'}\n🆔 ${chatId}`,
+          { parse_mode: 'Markdown' }
+        );
+      }
+    }
+  });
+  console.log('Access bot started!');
+} else {
+  console.log('ACCESS_BOT_TOKEN not found');
+}
+
+// ─────────────────────────────────────────
 // Запуск сервера
 // ─────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
