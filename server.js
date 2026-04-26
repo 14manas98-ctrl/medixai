@@ -348,15 +348,15 @@ if (ACCESS_BOT_TOKEN) {
       userState[chatId].city = text;
       userState[chatId].step = 'done';
       const hasUsername = msg.from.username;
-      const whatsappNote = hasUsername ? '' : (isKaz
-        ? `\n\n⚠️ Сізде Telegram username жоқ.\n24 сағат ішінде жауап болмаса — WhatsApp-қа жазыңыз:\n📞 +7 771 043 1073`
-        : `\n\n⚠️ У вас нет Telegram username.\nЕсли в течение 24 часов не получите ответ —\nнапишите в WhatsApp:\n📞 +7 771 043 1073`);
+      const replyMarkup = hasUsername ? {} : { inline_keyboard: [[
+        { text: isKaz ? '✍️ Админге жазу' : '✍️ Написать админу', url: 'https://t.me/ManasAlpysbayev' }
+      ]]};
 
       accessBot.sendMessage(chatId,
         isKaz
-          ? `✅ *Өтінішіңіз қабылданды!*\n\n⏳ Жақын арада байланысамыз!${whatsappNote}`
-          : `✅ *Заявка принята!*\n\n⏳ Скоро свяжемся с вами!${whatsappNote}`,
-        { parse_mode: 'Markdown' }
+          ? `✅ *Өтінішіңіз қабылданды!*\n\n⏳ Жақын арада доступ жіберіледі!${hasUsername ? '' : '\n\n━━━━━━━━━━━━━━━\n⚠️ *Сізде Telegram username жоқ*\nСондықтан біз сізге жаза алмаймыз.\n\n👇 Төмендегі батырманы басып, админге өзіңіз жазыңыз — ол сізге доступ жіберіледі.'}`
+          : `✅ *Заявка принята!*\n\n⏳ Скоро отправим вам доступ!${hasUsername ? '' : '\n\n━━━━━━━━━━━━━━━\n⚠️ *У вас нет Telegram username*\nПоэтому мы не можем написать вам первыми.\n\n👇 Нажмите кнопку ниже и напишите админу — он отправит вам доступ лично.'}`,
+        { parse_mode: 'Markdown', reply_markup: replyMarkup }
       );
       if (ADMIN_CHAT_ID) {
         accessBot.sendMessage(ADMIN_CHAT_ID,
