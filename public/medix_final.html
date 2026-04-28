@@ -1262,21 +1262,6 @@ function renderPrihodList(){
     const val=medsState[item.id]?.p||0;
     const row=document.createElement('div');
     row.className='income-row';row.style.animationDelay=(i*0.02)+'s';
-    function setP(id,val){
-  const num=Math.max(0,parseInt(val)||0);
-  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
-  const old=medsState[id].p||0;
-  medsState[id].p=num;
-  saveMedsState();
-  if(num!==old){
-    const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
-    if(item){
-      prihodJournal=prihodJournal.filter(j=>j.id!==id);
-      if(num>0) prihodJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});
-      saveJournal('medix_pjour_v3',prihodJournal);
-    }
-  }
-}
     cont.appendChild(row);
   });
 }
@@ -1292,10 +1277,17 @@ function changeP(id,delta){
 function setP(id,val){
   const num=Math.max(0,parseInt(val)||0);
   if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
+  const old=medsState[id].p||0;
   medsState[id].p=num;
   saveMedsState();
-  const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
-  if(item){prihodJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});saveJournal('medix_pjour_v3',prihodJournal);}
+  if(num!==old){
+    const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
+    if(item){
+      prihodJournal=prihodJournal.filter(j=>j.id!==id);
+      if(num>0) prihodJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});
+      saveJournal('medix_pjour_v3',prihodJournal);
+    }
+  }
 }
 
 function openJournal(type){
