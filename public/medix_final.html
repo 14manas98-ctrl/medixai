@@ -646,7 +646,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <div onclick="closeOnboard()" id="ob-btn-skip" style="flex:1;padding:11px;border-radius:12px;background:rgba(255,255,255,0.05);color:#4a6a8a;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.09);">Пропустить</div>
       </div>
     </div>
-    <div id="onboard-instr" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
+    <div id="onboard-instr" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden;">
       <div class="modal-hdr">
         <div class="modal-title">Инструкция по работе</div>
         <div class="modal-close" onclick="closeOnboard()">✕</div>
@@ -1419,7 +1419,7 @@ function updateInstrCards(isKaz){
 }
 function showInstructions(){
   document.getElementById('onboard-welcome').style.display='none';
-  document.getElementById('onboard-instr').style.display='block';
+  document.getElementById('onboard-instr').style.display='flex';
 }
 function closeOnboard(){
   document.getElementById('onboard-overlay').classList.remove('show');
