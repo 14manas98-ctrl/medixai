@@ -638,12 +638,12 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
     <div id="onboard-welcome" >
       <div style="text-align:center;padding:8px 0 16px;">
         <div style="font-size:28px;font-weight:800;letter-spacing:0.06em;background:linear-gradient(135deg,#fff,#a0f0e8,#70d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">MEDIX AI</div>
-        <div style="font-size:11px;color:#3a5570;margin-top:4px;">Добро пожаловать!</div>
+        <div id="ob-welcome-sub" style="font-size:11px;color:#3a5570;margin-top:4px;">Добро пожаловать!</div>
       </div>
-      <div style="font-size:13px;color:#4a6a8a;line-height:1.6;margin-bottom:16px;">Перед началом рекомендуем прочитать краткую инструкцию по работе — это займёт 1 минуту.</div>
+      <div id="ob-welcome-text" style="font-size:13px;color:#4a6a8a;line-height:1.6;margin-bottom:16px;">Перед началом рекомендуем прочитать краткую инструкцию по работе — это займёт 1 минуту.</div>
       <div style="display:flex;gap:8px;">
-        <div onclick="showInstructions()" style="flex:1;padding:11px;border-radius:12px;background:linear-gradient(135deg,#00c9a7,#0088ee);color:#fff;font-size:13px;font-weight:700;text-align:center;cursor:pointer;">Читать</div>
-        <div onclick="closeOnboard()" style="flex:1;padding:11px;border-radius:12px;background:rgba(255,255,255,0.05);color:#4a6a8a;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.09);">Пропустить</div>
+        <div onclick="showInstructions()" id="ob-btn-read" style="flex:1;padding:11px;border-radius:12px;background:linear-gradient(135deg,#00c9a7,#0088ee);color:#fff;font-size:13px;font-weight:700;text-align:center;cursor:pointer;">Читать</div>
+        <div onclick="closeOnboard()" id="ob-btn-skip" style="flex:1;padding:11px;border-radius:12px;background:rgba(255,255,255,0.05);color:#4a6a8a;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.09);">Пропустить</div>
       </div>
     </div>
     <div id="onboard-instr" style="display:none;">
@@ -654,27 +654,27 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div class="modal-scroll">
         <div style="display:flex;flex-direction:column;gap:10px;padding-bottom:8px;">
           <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 13px;">
-            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Цель</div>
-            <div style="font-size:12.5px;line-height:1.65;color:var(--text2);"><span style="color:var(--text1);font-weight:600;">Medix AI берёт на себя 70–80% рутины бригады СМП</span> — заполнение карты вызова, расчёт доз, учёт медикаментов. Остальное — ваш профессиональный контроль.</div>
+            <div data-label="goal" style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Цель</div>
+            <div data-text="goal" style="font-size:12.5px;line-height:1.65;color:var(--text2);"><span style="color:var(--text1);font-weight:600;">Medix AI берёт на себя 70–80% рутины бригады СМП</span> — заполнение карты вызова, расчёт доз, учёт медикаментов. Остальное — ваш профессиональный контроль.</div>
           </div>
           <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 13px;">
-            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Карта вызова</div>
-            <div style="font-size:12.5px;line-height:1.65;color:var(--text2);">Давайте <span style="color:var(--text1);font-weight:600;">точное описание вызова</span> — жалобы, симптомы, время начала. Пока AI составляет карту, вы оказываете помощь пациенту или вносите данные в основную программу «Көмек».</div>
+            <div data-label="karta" style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Карта вызова</div>
+            <div data-text="karta" style="font-size:12.5px;line-height:1.65;color:var(--text2);">Давайте <span style="color:var(--text1);font-weight:600;">точное описание вызова</span> — жалобы, симптомы, время начала. Пока AI составляет карту, вы оказываете помощь пациенту или вносите данные в основную программу «Көмек».</div>
           </div>
           <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 13px;">
-            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Для 2-го фельдшера</div>
-            <div style="font-size:12.5px;line-height:1.65;color:var(--text2);">Раздел <span style="color:var(--text1);font-weight:600;">«Учёт медикаментов»</span> создан специально для вас — списывайте расход прямо в приложении, не нужно носить с собой бумажный журнал. Всё фиксируется за смену.</div>
+            <div data-label="second" style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Для 2-го фельдшера</div>
+            <div data-text="second" style="font-size:12.5px;line-height:1.65;color:var(--text2);">Раздел <span style="color:var(--text1);font-weight:600;">«Учёт медикаментов»</span> создан специально для вас — списывайте расход прямо в приложении, не нужно носить с собой бумажный журнал. Всё фиксируется за смену.</div>
           </div>
           <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 13px;">
-            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--danger);margin-bottom:6px;">Важно</div>
-            <div style="font-size:12.5px;line-height:1.65;color:var(--text2);">Всегда <span style="color:var(--text1);font-weight:600;">самостоятельно проверяйте</span> результат и при необходимости корректируйте — AI может ошибаться. Вы несёте профессиональную ответственность за карту.</div>
+            <div data-label="warning" style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--danger);margin-bottom:6px;">Важно</div>
+            <div data-text="warning" style="font-size:12.5px;line-height:1.65;color:var(--text2);">Всегда <span style="color:var(--text1);font-weight:600;">самостоятельно проверяйте</span> результат и при необходимости корректируйте — AI может ошибаться. Вы несёте профессиональную ответственность за карту.</div>
           </div>
           <div style="background:var(--shift-bg);border:1px solid var(--shift-border);border-radius:12px;padding:12px 13px;display:flex;gap:10px;">
             <div style="font-size:16px;flex-shrink:0;color:var(--accent);">★</div>
-            <div style="font-size:12px;line-height:1.6;color:var(--text2);">Быстрые ответы по стандартам МЗ РК, дозы, протоколы — всё в одном месте. Наша цель — меньше рутины, больше знаний.</div>
+            <div data-text="star" style="font-size:12px;line-height:1.6;color:var(--text2);">Быстрые ответы по стандартам МЗ РК, дозы, протоколы — всё в одном месте. Наша цель — меньше рутины, больше знаний.</div>
           </div>
-          <div style="text-align:center;padding:6px 0;font-size:12px;color:var(--sub);font-style:italic;">Удачи на смене! Вы делаете важное дело 🚑</div>
-          <div onclick="closeOnboard()" style="padding:12px;border-radius:12px;background:linear-gradient(135deg,#00c9a7,#0088ee);color:#fff;font-size:13px;font-weight:700;text-align:center;cursor:pointer;">Понятно, начать работу</div>
+          <div data-wish style="text-align:center;padding:6px 0;font-size:12px;color:var(--sub);font-style:italic;">Удачи на смене! Вы делаете важное дело 🚑</div>
+          <div data-done onclick="closeOnboard()" style="padding:12px;border-radius:12px;background:linear-gradient(135deg,#00c9a7,#0088ee);color:#fff;font-size:13px;font-weight:700;text-align:center;cursor:pointer;">Понятно, начать работу</div>
         </div>
       </div>
     </div>
@@ -1358,6 +1358,22 @@ function closeJournal(){document.getElementById('journal-overlay').classList.rem
 function openOnboard(forceInstr){
   const ov=document.getElementById('onboard-overlay');
   ov.classList.add('show');
+  const isKaz=lang==='kz';
+  // welcome экран
+  const sub=document.getElementById('ob-welcome-sub');
+  const txt=document.getElementById('ob-welcome-text');
+  const btnRead=document.getElementById('ob-btn-read');
+  const btnSkip=document.getElementById('ob-btn-skip');
+  if(sub) sub.textContent=isKaz?'Қош келдіңіз!':'Добро пожаловать!';
+  if(txt) txt.textContent=isKaz?'Бастамас бұрын қысқаша нұсқаулықты оқуды ұсынамыз — бұл 1 минут алады.':'Перед началом рекомендуем прочитать краткую инструкцию по работе — это займёт 1 минуту.';
+  if(btnRead) btnRead.textContent=isKaz?'Оқу':'Читать';
+  if(btnSkip) btnSkip.textContent=isKaz?'Өткізіп жіберу':'Пропустить';
+  // инструкция
+  const instrTitle=document.querySelector('#onboard-instr .modal-title');
+  if(instrTitle) instrTitle.textContent=isKaz?'Жұмыс нұсқаулығы':'Инструкция по работе';
+  const cards=document.querySelectorAll('#onboard-instr .rcard-like-label');
+  // обновляем карточки инструкции
+  updateInstrCards(isKaz);
   if(forceInstr){
     document.getElementById('onboard-welcome').style.display='none';
     document.getElementById('onboard-instr').style.display='block';
@@ -1365,6 +1381,34 @@ function openOnboard(forceInstr){
     document.getElementById('onboard-welcome').style.display='block';
     document.getElementById('onboard-instr').style.display='none';
   }
+}
+function updateInstrCards(isKaz){
+  const instr=document.getElementById('onboard-instr');
+  if(!instr) return;
+  const labels=instr.querySelectorAll('[data-label]');
+  const texts=instr.querySelectorAll('[data-text]');
+  const wish=instr.querySelector('[data-wish]');
+  const btnDone=instr.querySelector('[data-done]');
+  const instrTitle=instr.querySelector('.modal-title');
+  if(instrTitle) instrTitle.textContent=isKaz?'Жұмыс нұсқаулығы':'Инструкция по работе';
+  const labelsData={
+    goal:    isKaz?'Мақсат':'Цель',
+    karta:   isKaz?'Шақыру картасы':'Карта вызова',
+    second:  isKaz?'2-ші фельдшер үшін':'Для 2-го фельдшера',
+    warning: isKaz?'Маңызды':'Важно',
+    star:    isKaz?'★':'★',
+  };
+  const textsData={
+    goal:    isKaz?'<span style="color:var(--text1);font-weight:600;">Medix AI бригада жұмысының 70–80% мойнына алады</span> — шақыру картасын толтыру, дозаларды есептеу, дәрілерді есепке алу. Қалғаны — сіздің кәсіби бақылауыңыз.':'<span style="color:var(--text1);font-weight:600;">Medix AI берёт на себя 70–80% рутины бригады СМП</span> — заполнение карты вызова, расчёт доз, учёт медикаментов. Остальное — ваш профессиональный контроль.',
+    karta:   isKaz?'<span style="color:var(--text1);font-weight:600;">Шақырудың нақты сипаттамасын</span> беріңіз — шағымдар, белгілер, басталу уақыты. AI карта жасап жатқанда сіз науқасқа көмек көрсетесіз немесе «Көмек» бағдарламасына деректер енгізесіз.':'Давайте <span style="color:var(--text1);font-weight:600;">точное описание вызова</span> — жалобы, симптомы, время начала. Пока AI составляет карту, вы оказываете помощь пациенту или вносите данные в основную программу «Көмек».',
+    second:  isKaz?'<span style="color:var(--text1);font-weight:600;">«Дәрілер есебі»</span> бөлімі арнайы сіз үшін жасалды — шығысты тікелей қосымшада жазыңыз, қағаз журналды өзіңізбен алып жүрудің қажеті жоқ. Барлығы кезең бойы тіркеледі.':'Раздел <span style="color:var(--text1);font-weight:600;">«Учёт медикаментов»</span> создан специально для вас — списывайте расход прямо в приложении, не нужно носить с собой бумажный журнал. Всё фиксируется за смену.',
+    warning: isKaz?'Нәтижені <span style="color:var(--text1);font-weight:600;">өзіңіз тексеріңіз</span> және қажет болса түзетіңіз — AI қате жасауы мүмкін. Карта үшін кәсіби жауапкершілік сізде.':'Всегда <span style="color:var(--text1);font-weight:600;">самостоятельно проверяйте</span> результат и при необходимости корректируйте — AI может ошибаться. Вы несёте профессиональную ответственность за карту.',
+    star:    isKaz?'ҚР ДСМ стандарттары бойынша жылдам жауаптар, дозалар, хаттамалар — барлығы бір жерде. Біздің мақсат — аз рутина, көп білім.':'Быстрые ответы по стандартам МЗ РК, дозы, протоколы — всё в одном месте. Наша цель — меньше рутины, больше знаний.',
+  };
+  labels.forEach(el=>{const key=el.getAttribute('data-label');if(labelsData[key]) el.textContent=labelsData[key];});
+  texts.forEach(el=>{const key=el.getAttribute('data-text');if(textsData[key]) el.innerHTML=textsData[key];});
+  if(wish) wish.textContent=isKaz?'Кезеңде сәттілік! Сіз маңызды іс жасайсыз 🚑':'Удачи на смене! Вы делаете важное дело 🚑';
+  if(btnDone) btnDone.textContent=isKaz?'Түсінікті, жұмысты бастау':'Понятно, начать работу';
 }
 function showInstructions(){
   document.getElementById('onboard-welcome').style.display='none';
