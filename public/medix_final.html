@@ -300,6 +300,9 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 .search-inp::placeholder{color:var(--text3);}
 .search-box{position:relative;}
 .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+.search-clear{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:13px;cursor:pointer;color:var(--sub);padding:2px 4px;border-radius:4px;}
+.search-clear:hover{color:var(--text1);}
+.search-inp{padding-right:32px;}
 
 /* ============================================================
    MODAL
@@ -469,21 +472,21 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
     <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
       <div class="pane active" id="pane-rashod">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="rashod-stabs"></div></div>
-        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="rashod-search" type="text" placeholder="Поиск..." oninput="filterList('rashod',this.value)"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="rashod-search" type="text" placeholder="Поиск..." oninput="filterList('rashod',this.value)"><span class="search-clear" id="rashod-clear" onclick="clearSearch('rashod')" style="display:none">✕</span></div></div>
         <div class="list-scroll" id="rashod-list"></div>
         <div class="journal-btn" onclick="openJournal('rashod')" id="m-jbtn-r"></div>
         <div class="reset-btn" onclick="confirmReset()" id="m-reset"></div>
       </div>
       <div class="pane" id="pane-prihod">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="prihod-stabs"></div></div>
-        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="prihod-search" type="text" placeholder="Поиск..." oninput="filterList('prihod',this.value)"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="prihod-search" type="text" placeholder="Поиск..." oninput="filterList('prihod',this.value)"><span class="search-clear" id="prihod-clear" onclick="clearSearch('prihod')" style="display:none">✕</span></div></div>
         <div class="list-scroll" id="prihod-list"></div>
         <div class="journal-btn" onclick="openJournal('prihod')" id="m-jbtn-p"></div>
         <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0">🗑️ Очистить приход</div>
       </div>
       <div class="pane" id="pane-ostatki">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="ostatki-stabs"></div></div>
-        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="ostatki-search" type="text" placeholder="Поиск..." oninput="filterList('ostatki',this.value)"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="ostatki-search" type="text" placeholder="Поиск..." oninput="filterList('ostatki',this.value)"><span class="search-clear" id="ostatki-clear" onclick="clearSearch('ostatki')" style="display:none">✕</span></div></div>
         <div class="list-scroll" id="ostatki-list"></div>
         <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o">📋 Журнал остатков</div>
         <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o">🗑️ Очистить остатки</div>
@@ -1689,7 +1692,15 @@ if (!userId) {
 // ================================================================
 // MISC HELPERS
 // ================================================================
+function clearSearch(section){
+  const inp=document.getElementById(section+'-search');
+  const clear=document.getElementById(section+'-clear');
+  if(inp){inp.value='';filterList(section,'');}
+  if(clear) clear.style.display='none';
+}
 function filterList(section,query){
+  const clear=document.getElementById(section+'-clear');
+  if(clear) clear.style.display=query?'block':'none';
   const q=query.toLowerCase().trim();
   const cont=document.getElementById(section+'-list');
   if(!cont) return;
