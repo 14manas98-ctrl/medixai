@@ -343,16 +343,14 @@ if (ACCESS_BOT_TOKEN) {
     else if (state.step === 'city') {
       userState[chatId].city = text;
       userState[chatId].step = 'done';
-      const hasUsername = msg.from.username;
-      const replyMarkup = hasUsername ? {} : { inline_keyboard: [[
-        { text: isKaz ? '✍️ Админге жазу' : '✍️ Написать админу', url: 'https://t.me/ManasAlpysbayev' }
-      ]]};
 
       accessBot.sendMessage(chatId,
         isKaz
-          ? `✅ *Өтінішіңіз қабылданды!*\n\n⏳ Жақын арада доступ жіберіледі!${hasUsername ? '' : '\n\n━━━━━━━━━━━━━━━\n⚠️ *Сізде Telegram username жоқ*\nСондықтан біз сізге жаза алмаймыз.\n\n👇 Төмендегі батырманы басып, админге өзіңіз жазыңыз — ол сізге доступ жіберіледі.'}`
-          : `✅ *Заявка принята!*\n\n⏳ Скоро отправим вам доступ!${hasUsername ? '' : '\n\n━━━━━━━━━━━━━━━\n⚠️ *У вас нет Telegram username*\nПоэтому мы не можем написать вам первыми.\n\n👇 Нажмите кнопку ниже и напишите админу — он отправит вам доступ лично.'}`,
-        { parse_mode: 'Markdown', reply_markup: replyMarkup }
+          ? `✅ *Өтінішіңіз қабылданды!*\n\n🚑 Medix AI-ды қазір ашыңыз 👇`
+          : `✅ *Заявка принята!*\n\n🚑 Открывай Medix AI прямо сейчас 👇`,
+        { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [[
+          { text: '🚑 Открыть Medix AI', url: 'https://t.me/iikomek_bot' }
+        ]]}}
       );
       if (ADMIN_CHAT_ID) {
         accessBot.sendMessage(ADMIN_CHAT_ID,
