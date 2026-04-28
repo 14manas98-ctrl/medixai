@@ -634,7 +634,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
      ONBOARDING MODAL
 ================================================================ -->
 <div class="overlay" id="onboard-overlay">
-  <div class="modal" style="max-height:90vh;">
+  <div class="modal" style="max-height:92vh;padding-bottom:env(safe-area-inset-bottom,20px);">
     <div id="onboard-welcome" >
       <div style="text-align:center;padding:8px 0 16px;">
         <div style="font-size:28px;font-weight:800;letter-spacing:0.06em;background:linear-gradient(135deg,#fff,#a0f0e8,#70d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">MEDIX AI</div>
@@ -652,7 +652,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <div class="modal-close" onclick="closeOnboard()">✕</div>
       </div>
       <div class="modal-scroll">
-        <div style="display:flex;flex-direction:column;gap:10px;padding-bottom:8px;">
+        <div style="display:flex;flex-direction:column;gap:10px;padding-bottom:32px;">
           <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 13px;">
             <div data-label="goal" style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Цель</div>
             <div data-text="goal" style="font-size:12.5px;line-height:1.65;color:var(--text2);"><span style="color:var(--text1);font-weight:600;">Medix AI берёт на себя 70–80% рутины бригады СМП</span> — заполнение карты вызова, расчёт доз, учёт медикаментов. Остальное — ваш профессиональный контроль.</div>
