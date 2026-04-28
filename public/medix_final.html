@@ -515,6 +515,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <div class="ex-label" id="ai-ex-label"></div>
         <div class="chips" id="ai-chips"></div>
       </div>
+      <div id="ai-back-btn" onclick="resetAI()" style="display:none;margin:0 0 8px;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--card);text-align:center;font-size:12px;font-weight:600;color:var(--sub);cursor:pointer;flex-shrink:0;">← Назад к примерам</div>
       <div class="msg-wrap" id="ai-msgs" style="display:none;"></div>
     </div>
     <div class="bottom">
@@ -1398,6 +1399,7 @@ async function genAI(){
   const txt=inp.value.trim();if(!txt) return;
   document.getElementById('ai-welcome').style.display='none';
   document.getElementById('ai-msgs').style.display='flex';
+  document.getElementById('ai-back-btn').style.display='block';
   aiHistory.push({role:'user',content:txt});
   appendUserMsg(txt,'ai-msgs');
   inp.value='';inp.style.height='';
@@ -1620,6 +1622,15 @@ function kartaShowResult(){
   document.getElementById('k-results').style.display='block';
 }
 
+function resetAI(){
+  document.getElementById('ai-welcome').style.display='flex';
+  document.getElementById('ai-msgs').style.display='none';
+  document.getElementById('ai-msgs').innerHTML='';
+  document.getElementById('ai-back-btn').style.display='none';
+  document.getElementById('ai-inp').value='';
+  document.getElementById('ai-inp').style.height='';
+  aiHistory=[];
+}
 function resetCalc(){
   document.getElementById('c-welcome').style.display='flex';
   document.getElementById('c-results').innerHTML='';
