@@ -924,7 +924,7 @@ function renderKartaResult(d,time){
     {l:t('sMorbi'),dot:'db',body:d.anamnesis_morbi},
     {l:t('sVitae'),dot:'dgr',body:d.anamnesis_vitae},
     {l:t('sStatus'),dot:'dg',sp:'status',body:d.status_localis},
-    {l:t('sInstr'),dot:'dgr',sp:'tags',body:d.instruments,ecg:d.ecg},
+    {l:t('sInstr'),dot:'dgr',sp:'tags',body:d.instruments,ecg:d.ecg,copyText:(d.instruments||[]).join(', ')+(d.ecg?'\nЭКГ: '+d.ecg:'')},
     {l:t('sDiag'),dot:'dy',body:d.diagnosis},
     {l:t('sMkb'),dot:'dp',sp:'mkb',body:d.mkb},
     {l:t('sTreat'),dot:'dm',body:d.treatment},
@@ -932,7 +932,7 @@ function renderKartaResult(d,time){
   ];
   let html='';
   secs.forEach((s,i)=>{
-    const rawTxt=typeof s.body==='string'?s.body:JSON.stringify(s.body);
+    const rawTxt=s.copyText||(typeof s.body==='string'?s.body:JSON.stringify(s.body));
     let b='';
     if(s.sp==='status') b=`<div class="status-box">${s.body}</div>`;
     else if(s.sp==='tags') b=`<div style="font-size:12.5px;line-height:1.9;color:var(--text2)">${(s.body||[]).map(x=>`${x}`).join('<br>')}</div>${s.ecg?`<div style="margin-top:8px;font-size:12px;color:var(--text2)">ЭКГ: ${s.ecg}</div>`:''}`;
