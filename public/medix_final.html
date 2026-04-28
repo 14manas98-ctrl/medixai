@@ -389,6 +389,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <button class="lb on" id="h-kz" onclick="setLang('kz')">ҚАЗ</button>
         <button class="lb" id="h-ru" onclick="setLang('ru')">РУС</button>
       </div>
+      <div onclick="openOnboard(true)" style="width:32px;height:32px;border-radius:10px;background:rgba(0,200,167,0.1);border:1px solid rgba(0,200,167,0.25);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;font-weight:700;color:#00c9a7;">?</div>
       <div class="tog" onclick="toggleTheme()">
         <div class="tt"><div class="ti"><span>🌙</span><span>☀️</span></div><div class="tk" id="h-tk"></div></div>
       </div>
@@ -622,6 +623,53 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
             <input class="inp" id="sh-bp" type="number" placeholder="АД сист. (мм рт.ст.)" style="min-height:44px;padding:10px 14px;">
           </div>
           <button class="send" onclick="calcShock()" style="height:96px;width:50px;align-self:stretch;"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     ONBOARDING MODAL
+================================================================ -->
+<div class="overlay" id="onboard-overlay">
+  <div class="modal" style="max-height:90vh;">
+    <div id="onboard-welcome" >
+      <div style="text-align:center;padding:8px 0 16px;">
+        <div style="font-size:28px;font-weight:800;letter-spacing:0.06em;background:linear-gradient(135deg,#fff,#a0f0e8,#70d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">MEDIX AI</div>
+        <div style="font-size:11px;color:#3a5570;margin-top:4px;">Добро пожаловать!</div>
+      </div>
+      <div style="font-size:13px;color:#4a6a8a;line-height:1.6;margin-bottom:16px;">Перед началом рекомендуем прочитать краткую инструкцию по работе — это займёт 1 минуту.</div>
+      <div style="display:flex;gap:8px;">
+        <div onclick="showInstructions()" style="flex:1;padding:11px;border-radius:12px;background:linear-gradient(135deg,#00c9a7,#0088ee);color:#fff;font-size:13px;font-weight:700;text-align:center;cursor:pointer;">Читать</div>
+        <div onclick="closeOnboard()" style="flex:1;padding:11px;border-radius:12px;background:rgba(255,255,255,0.05);color:#4a6a8a;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.09);">Пропустить</div>
+      </div>
+    </div>
+    <div id="onboard-instr" style="display:none;">
+      <div class="modal-hdr">
+        <div class="modal-title">Инструкция по работе</div>
+        <div class="modal-close" onclick="closeOnboard()">✕</div>
+      </div>
+      <div class="modal-scroll">
+        <div style="display:flex;flex-direction:column;gap:10px;padding-bottom:8px;">
+          <div style="background:rgba(12,18,32,0.97);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 13px;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#00c9a7;margin-bottom:6px;">Цель</div>
+            <div style="font-size:12.5px;line-height:1.65;color:#4a6a8a;"><span style="color:#d0ddf0;font-weight:600;">Medix AI берёт на себя 70–80% рутины</span> — заполнение карты, расчёт доз, учёт медикаментов. Остальное — ваш профессиональный контроль.</div>
+          </div>
+          <div style="background:rgba(12,18,32,0.97);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 13px;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#00c9a7;margin-bottom:6px;">Карта вызова</div>
+            <div style="font-size:12.5px;line-height:1.65;color:#4a6a8a;">Давайте <span style="color:#d0ddf0;font-weight:600;">точное описание вызова</span> — жалобы, симптомы, время. Пока AI печатает карту, вы оказываете помощь или вносите данные в основную программу «Көмек».</div>
+          </div>
+          <div style="background:rgba(12,18,32,0.97);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 13px;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#00c9a7;margin-bottom:6px;">Важно</div>
+            <div style="font-size:12.5px;line-height:1.65;color:#4a6a8a;">Всегда <span style="color:#d0ddf0;font-weight:600;">самостоятельно проверяйте</span> результат и при необходимости корректируйте — AI может ошибаться.</div>
+          </div>
+          <div style="background:rgba(0,200,167,0.07);border:1px solid rgba(0,200,167,0.2);border-radius:12px;padding:12px 13px;display:flex;gap:10px;">
+            <div style="font-size:16px;flex-shrink:0;">★</div>
+            <div style="font-size:12px;line-height:1.6;color:#4a8a78;">Быстрые ответы по стандартам МЗ РК, дозы, протоколы — всё в одном месте. Наша цель — дать вам больше знаний с быстрым ответом.</div>
+          </div>
+          <div style="text-align:center;padding:6px 0;font-size:12px;color:#3a5570;font-style:italic;">Удачи на смене! Вы делаете важное дело 🚑</div>
+          <div onclick="closeOnboard()" style="padding:12px;border-radius:12px;background:linear-gradient(135deg,#00c9a7,#0088ee);color:#fff;font-size:13px;font-weight:700;text-align:center;cursor:pointer;">Понятно, начать работу</div>
         </div>
       </div>
     </div>
@@ -1302,6 +1350,25 @@ function openJournal(type){
   
 
 function closeJournal(){document.getElementById('journal-overlay').classList.remove('show');}
+function openOnboard(forceInstr){
+  const ov=document.getElementById('onboard-overlay');
+  ov.classList.add('show');
+  if(forceInstr){
+    document.getElementById('onboard-welcome').style.display='none';
+    document.getElementById('onboard-instr').style.display='block';
+  } else {
+    document.getElementById('onboard-welcome').style.display='block';
+    document.getElementById('onboard-instr').style.display='none';
+  }
+}
+function showInstructions(){
+  document.getElementById('onboard-welcome').style.display='none';
+  document.getElementById('onboard-instr').style.display='block';
+}
+function closeOnboard(){
+  document.getElementById('onboard-overlay').classList.remove('show');
+  localStorage.setItem('medix_onboard_done','1');
+}
 function closeJournalBg(e){if(e.target===document.getElementById('journal-overlay'))closeJournal();}
 
 function confirmReset(){
@@ -1731,6 +1798,9 @@ function now(){return new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:
 // ================================================================
 applyTheme();
 renderAll();
+if(!localStorage.getItem('medix_onboard_done')){
+  setTimeout(()=>openOnboard(false),800);
+}
 </script>
 </body>
 </html>
