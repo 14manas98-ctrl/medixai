@@ -108,6 +108,9 @@ app.use('/api', generalLimiter);
 // ─────────────────────────────────────────
 // Статика
 // ─────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.redirect('https://14manas98-ctrl.github.io/medixai_landing/');
+});
 app.use(express.static('public'));
 
 // ─────────────────────────────────────────
