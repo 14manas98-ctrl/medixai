@@ -1262,7 +1262,21 @@ function renderPrihodList(){
     const val=medsState[item.id]?.p||0;
     const row=document.createElement('div');
     row.className='income-row';row.style.animationDelay=(i*0.02)+'s';
-    row.innerHTML=`<div class="income-name"><div class="income-title">${item.name}</div><div class="income-dose">${item.dose}</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="cnt-btn m" onclick="changeP('${item.id}',-1)">−</div><input type="number" min="0" value="${val}" style="width:44px;text-align:center;font-size:14px;font-weight:700;background:var(--inp);border:1px solid var(--border2);border-radius:8px;color:var(--success);padding:4px 2px;font-family:'Inter',sans-serif;outline:none;" id="pv-${item.id}" oninput="setP('${item.id}',this.value)"><div class="cnt-btn p" onclick="changeP('${item.id}',+1)">+</div></div>`;
+    function setP(id,val){
+  const num=Math.max(0,parseInt(val)||0);
+  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
+  const old=medsState[id].p||0;
+  medsState[id].p=num;
+  saveMedsState();
+  if(num!==old){
+    const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
+    if(item){
+      prihodJournal=prihodJournal.filter(j=>j.id!==id);
+      if(num>0) prihodJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});
+      saveJournal('medix_pjour_v3',prihodJournal);
+    }
+  }
+}
     cont.appendChild(row);
   });
 }
