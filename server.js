@@ -356,13 +356,27 @@ if (ACCESS_BOT_TOKEN) {
         ]]}}
       );
       if (ADMIN_CHAT_ID) {
+        const username = msg.from.username;
+        const userLink = username
+          ? `@${username}`
+          : `[Написать](tg://user?id=${chatId})`;
+        const noUsernameNote = username ? '' : '\n⚠️ У пользователя нет username — используй кнопку ниже';
         accessBot.sendMessage(ADMIN_CHAT_ID,
-          `🔔 *Новая заявка!*\n\n👤 ${state.name}\n💼 ${state.profession}\n🏙 ${text}\n🌐 ${isKaz ? 'Казахский' : 'Русский'}\n📱 @${msg.from.username || 'нет'}\n🆔 ${chatId}`,
-          { parse_mode: 'Markdown' }
+          `🔔 *Новая заявка!*\n\n👤 ${state.name}\n💼 ${state.profession}\n🏙 ${text}\n🌐 ${isKaz ? 'Казахский' : 'Русский'}\n📱 ${userLink}\n🆔 \`${chatId}\`${noUsernameNote}`,
+          {
+            parse_mode: 'Markdown',
+            reply_markup: username ? undefined : {
+              inline_keyboard: [[
+                { text: '💬 Написать пользователю', url: `tg://user?id=${chatId}` }
+              ]]
+            }
+          }
         );
       }
     }
   });
+
+  accessBot.on('message', (msg) => {
   console.log('Access bot started!');
 } else {
   console.log('ACCESS_BOT_TOKEN not found');
