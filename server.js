@@ -376,7 +376,6 @@ if (ACCESS_BOT_TOKEN) {
     }
   });
 
-  accessBot.on('message', (msg) => {
   console.log('Access bot started!');
 } else {
   console.log('ACCESS_BOT_TOKEN not found');
