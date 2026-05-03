@@ -483,14 +483,14 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="prihod-search" type="text" placeholder="Поиск..." oninput="filterList('prihod',this.value)"><span class="search-clear" id="prihod-clear" onclick="clearSearch('prihod')" style="display:none">✕</span></div></div>
         <div class="list-scroll" id="prihod-list"></div>
         <div class="journal-btn" onclick="openJournal('prihod')" id="m-jbtn-p"></div>
-        <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0">🗑️ Очистить приход</div>
+        <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0">🗑️ Кірісті тазалау</div>
       </div>
       <div class="pane" id="pane-ostatki">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="ostatki-stabs"></div></div>
         <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="ostatki-search" type="text" placeholder="Поиск..." oninput="filterList('ostatki',this.value)"><span class="search-clear" id="ostatki-clear" onclick="clearSearch('ostatki')" style="display:none">✕</span></div></div>
         <div class="list-scroll" id="ostatki-list"></div>
-        <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o">📋 Журнал остатков</div>
-        <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o">🗑️ Очистить остатки</div>
+        <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o">📋 Қалдық журналы</div>
+        <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o">🗑️ Қалдықты тазалау</div>
       </div>
     </div>
   </div>
@@ -1342,7 +1342,7 @@ function openJournal(type){
     cont.innerHTML=html;
 
   } else if(type==='ostatki'){
-    titleEl.textContent=lang==='kz'?'📋 Қалдық журналы':'📋 Журнал остатков';
+    titleEl.textContent=lang==='kz'?'📋 Қалдық журналы':'📋 Қалдық журналы';
     if(!ostatkiJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Қалдық жоқ':'Остатков нет'}</div>`;return;}
     let html='';
     groups.forEach(g=>{
@@ -1410,7 +1410,7 @@ function updateInstrCards(isKaz){
     karta:   isKaz?'<span style="color:var(--text1);font-weight:600;">Шақырудың нақты сипаттамасын</span> беріңіз — шағымдар, белгілер, басталу уақыты. AI карта жасаған кезде сіз науқасқа көмек көрсетесіз немесе «Көмек» бағдарламасына деректер енгізесіз.':'Давайте <span style="color:var(--text1);font-weight:600;">точное описание вызова</span> — жалобы, симптомы, время начала. Пока AI составляет карту, вы оказываете помощь пациенту или вносите данные в основную программу «Көмек».',
     second:  isKaz?'<span style="color:var(--text1);font-weight:600;">«Дәрілер есебі»</span> бөлімі арнайы сіз үшін жасалды — шығысты тікелей қосымшада жазыңыз, қағаз журналды өзіңізбен алып жүрудің қажеті жоқ. Барлығы ауысым бойы тіркеледі.':'Раздел <span style="color:var(--text1);font-weight:600;">«Учёт медикаментов»</span> создан специально для вас — списывайте расход прямо в приложении, не нужно носить с собой бумажный журнал. Всё фиксируется за смену.',
     warning: isKaz?'Нәтижені <span style="color:var(--text1);font-weight:600;">өзіңіз тексеріңіз</span> және қажет болса түзетіңіз — AI қате жасауы мүмкін. Карта үшін кәсіби жауапкершілік сізде.':'Всегда <span style="color:var(--text1);font-weight:600;">самостоятельно проверяйте</span> результат и при необходимости корректируйте — AI может ошибаться. Вы несёте профессиональную ответственность за карту.',
-    star:    isKaz?'ҚР ДСМ стандарттары бойынша жылдам жауаптар, дозалар, хаттамалар — барлығы бір жерде. Біздің мақсат — аз рутина, көп білім.':'Быстрые ответы по стандартам МЗ РК, дозы, протоколы — всё в одном месте. Наша цель — меньше рутины, больше знаний.',
+    star:    isKaz?'ҚР ДСМ стандарттары бойынша жылдам жауаптар, дозалар, хаттамалар — барлығы бір жерде. Біздің мақсат — аз күнделікті жұмыс, көп білім.':'Быстрые ответы по стандартам МЗ РК, дозы, протоколы — всё в одном месте. Наша цель — меньше рутины, больше знаний.',
   };
   labels.forEach(el=>{const key=el.getAttribute('data-label');if(labelsData[key]) el.textContent=labelsData[key];});
   texts.forEach(el=>{const key=el.getAttribute('data-text');if(textsData[key]) el.innerHTML=textsData[key];});
