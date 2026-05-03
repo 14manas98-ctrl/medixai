@@ -244,7 +244,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 /* ============================================================
    SCREEN MEDS
 ============================================================ */
-.tabs-wrap{flex-shrink:0;padding:10px 14px 0;position:relative;z-index:2;}
+.tabs-wrap{flex-shrink:0;padding:10px 14px 0;}
 .tabs{display:flex;flex-wrap:wrap;gap:6px;background:var(--stab-bg);border-radius:14px;padding:4px;border:1px solid var(--border);}
 .mtab{flex:1;min-width:calc(25% - 5px);padding:7px 2px;border-radius:10px;text-align:center;font-size:10px;font-weight:700;cursor:pointer;transition:all 0.25s;color:var(--sub);}
 .mtab.on{background:linear-gradient(135deg,rgba(0,200,167,0.18),rgba(0,136,238,0.18));color:var(--accent);border:1px solid rgba(0,200,167,0.25);}
@@ -649,11 +649,12 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 </div>
 
 
+
+
     <!-- Панель: Нормы детей -->
     <div class="pane" id="cpane-norms">
       <div class="mid" id="norms-mid" style="padding:10px 14px;">
         <div style="font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ex-label);margin-bottom:10px;" id="norms-title-lbl"></div>
-        <!-- Таблица норм -->
         <div style="border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px;">
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:var(--tag-bg);padding:7px 10px;border-bottom:1px solid var(--border);">
             <div style="font-size:9px;font-weight:700;color:var(--sub);" id="norms-col-age"></div>
@@ -666,18 +667,15 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <div style="font-size:10px;color:var(--sub);line-height:1.6;padding:4px 2px;" id="norms-note"></div>
       </div>
     </div>
-
     <!-- Панель: Беременность -->
     <div class="pane" id="cpane-preg">
       <div class="mid" id="preg-mid" style="padding:10px 14px;">
         <div style="font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ex-label);margin-bottom:10px;" id="preg-title-lbl"></div>
-        <!-- Поле ввода ПМ -->
         <div style="margin-bottom:12px;">
           <div style="font-size:11px;font-weight:600;color:var(--text1);margin-bottom:6px;" id="preg-lmp-label"></div>
           <input type="date" id="preg-lmp-input" style="width:100%;padding:10px 14px;border-radius:11px;background:var(--inp);border:1.5px solid var(--border2);color:var(--text1);font-size:13px;font-family:'Inter',sans-serif;outline:none;" oninput="calcPreg()">
         </div>
         <div id="preg-results" style="display:none;">
-          <!-- Срок -->
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
             <div class="param-box" style="text-align:center;">
               <div class="param-label" id="preg-weeks-lbl"></div>
@@ -688,24 +686,22 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
               <div class="param-val" id="preg-months" style="color:var(--accent);font-size:24px;"></div>
             </div>
           </div>
-          <!-- ПДР -->
           <div style="padding:10px 13px;border-radius:11px;background:var(--card);border:1px solid var(--border);margin-bottom:8px;">
             <div style="font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);margin-bottom:4px;" id="preg-pdr-lbl"></div>
             <div style="font-size:16px;font-weight:700;color:var(--text1);" id="preg-pdr"></div>
           </div>
-          <!-- Нормы по сроку -->
           <div style="padding:10px 13px;border-radius:11px;background:var(--card);border:1px solid var(--border);margin-bottom:8px;">
             <div style="font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);margin-bottom:8px;" id="preg-norms-lbl"></div>
             <div id="preg-norms-rows" style="display:flex;flex-direction:column;gap:6px;"></div>
           </div>
-          <!-- Предупреждение -->
           <div id="preg-warn" style="display:none;" class="warn-item">
             <span class="warn-icon">⚠️</span>
             <span class="warn-text" id="preg-warn-text"></span>
           </div>
         </div>
-        <div id="preg-empty" style="text-align:center;padding:30px 0;color:var(--sub);font-size:13px;" id="preg-empty-lbl"></div>
+        <div id="preg-empty" style="text-align:center;padding:30px 0;color:var(--sub);font-size:13px;"></div>
       </div>
+    </div>
     </div>
 
 <!-- ================================================================
