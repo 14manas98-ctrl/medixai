@@ -265,7 +265,7 @@ app.post(`/bot${BOT_TOKEN}`, (req, res) => {
         reply_markup: {
           inline_keyboard: [
             [
-              { text: '🚑 Открыть Medix AI', web_app: { url: 'https://medixai-production.up.railway.app/medix_final.html' } }
+              { text: '🚑 Открыть Medix AI', web_app: { url: 'https://www.medixai.kz/medix_final.html' } }
             ]
           ]
         }
