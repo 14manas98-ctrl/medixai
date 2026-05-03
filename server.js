@@ -353,7 +353,7 @@ if (ACCESS_BOT_TOKEN) {
           : `✅ *Заявка принята!*\n\n🚑 Открывай Medix AI прямо сейчас 👇`,
         { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [
           [{ text: '🚑 Открыть Medix AI', url: 'https://t.me/iikomek_bot?start=open' }],
-          [{ text: '🌐 Открыть в браузере', url: 'https://medixai-production.up.railway.app/medix_final.html' }]
+          
         ]}}
       );
       if (ADMIN_CHAT_ID) {
