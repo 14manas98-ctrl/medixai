@@ -244,7 +244,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 /* ============================================================
    SCREEN MEDS
 ============================================================ */
-.tabs-wrap{flex-shrink:0;padding:10px 14px 0;}
+.tabs-wrap{flex-shrink:0;padding:10px 14px 0;position:static;}
 .tabs{display:flex;flex-wrap:wrap;gap:6px;background:var(--stab-bg);border-radius:14px;padding:4px;border:1px solid var(--border);}
 .mtab{flex:1;min-width:calc(25% - 5px);padding:7px 2px;border-radius:10px;text-align:center;font-size:10px;font-weight:700;cursor:pointer;transition:all 0.25s;color:var(--sub);}
 .mtab.on{background:linear-gradient(135deg,rgba(0,200,167,0.18),rgba(0,136,238,0.18));color:var(--accent);border:1px solid rgba(0,200,167,0.25);}
@@ -548,7 +548,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 ================================================================ -->
 <div class="screen" id="s-calc">
   <div class="blob b1"></div>
-  <div class="inner">
+  <div class="inner" style="overflow:hidden;">
     <div class="hdr">
       <div class="back-btn" onclick="goTo('home')">←</div>
       <div class="hdr-info"><div class="hdr-title" id="c-title"></div><div class="hdr-sub" id="c-sub"></div></div>
