@@ -659,7 +659,14 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
           <div id="norms-rows"></div>
         </div>
         <div style="font-size:10px;color:var(--sub);line-height:1.6;padding:4px 2px;" id="norms-note"></div>
-        <div style="font-size:10px;color:var(--accent);line-height:1.6;padding:4px 2px;margin-top:4px;" id="norms-rodnik"></div>
+        <div style="margin-top:8px;border-radius:10px;overflow:hidden;border:1px solid var(--border);">
+          <div style="background:var(--tag-bg);padding:6px 10px;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);" id="norms-rodnik-title"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;padding:6px 10px;border-bottom:1px solid var(--border);"><span style="font-size:11px;color:var(--text1);">0–3 мес</span><span style="font-size:11px;font-weight:700;color:var(--accent);">2.5–3.0 см</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;padding:6px 10px;border-bottom:1px solid var(--border);"><span style="font-size:11px;color:var(--text1);">3–6 мес</span><span style="font-size:11px;font-weight:700;color:var(--accent);">2.0–2.5 см</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;padding:6px 10px;border-bottom:1px solid var(--border);"><span style="font-size:11px;color:var(--text1);">6–9 мес</span><span style="font-size:11px;font-weight:700;color:var(--accent);">1.5–2.0 см</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;padding:6px 10px;border-bottom:1px solid var(--border);"><span style="font-size:11px;color:var(--text1);">9–12 мес</span><span style="font-size:11px;font-weight:700;color:var(--warn);">0.5–1.0 см</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;padding:6px 10px;"><span style="font-size:11px;color:var(--text1);">12–18 мес</span><span style="font-size:11px;font-weight:700;color:var(--success);">закрыт</span></div>
+        </div>
       </div>
     </div>
     <!-- Панель: Беременность -->
@@ -2094,7 +2101,8 @@ function renderNormsPanel(){
   if(colAge) colAge.textContent = t('normsColAge');
   if(noteEl) noteEl.textContent = t('normsNote');
   const rodnikEl = document.getElementById('norms-rodnik');
-  if(rodnikEl) rodnikEl.textContent = '🔵 ' + (t('normsRodnik')||'');
+  const rodnikTitle = document.getElementById('norms-rodnik-title');
+  if(rodnikTitle) rodnikTitle.textContent = isKz ? 'ҮЛКЕН НҮКТЕ (БОЛЬШОЙ РОДНИЧОК)' : 'БОЛЬШОЙ РОДНИЧОК';
   const rows = document.getElementById('norms-rows');
   if(!rows) return;
   rows.innerHTML = CHILD_NORMS.map((r,i)=>`
