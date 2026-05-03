@@ -374,6 +374,21 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 .warn-item:last-child{margin-bottom:0;}
 .warn-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
 .warn-text{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* ============================================================
+   TEMPLATES MODULE
+============================================================ */
+.tmpl-card{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:13px;margin-bottom:7px;background:var(--card);border:1px solid var(--border);animation:fadeUp 0.35s cubic-bezier(.22,1,.36,1) both;cursor:pointer;transition:all 0.2s;}
+.tmpl-card:hover{border-color:var(--card-hover-border);transform:translateX(3px);}
+.tmpl-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:linear-gradient(135deg,rgba(0,200,167,0.15),rgba(0,136,238,0.15));border:1px solid rgba(0,200,167,0.2);}
+.tmpl-info{flex:1;min-width:0;}
+.tmpl-name{font-size:13px;font-weight:600;color:var(--text1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tmpl-meta{font-size:10.5px;color:var(--sub);margin-top:2px;}
+.tmpl-del{width:30px;height:30px;border-radius:8px;background:var(--med-minus-bg);border:1px solid var(--med-minus-border);color:var(--danger);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:opacity 0.2s;}
+.tmpl-del:hover{opacity:0.7;}
+.save-tmpl-btn{display:flex;align-items:center;justify-content:center;gap:7px;margin:8px 0 0;padding:11px;border-radius:13px;border:1px solid rgba(0,200,167,0.25);background:rgba(0,200,167,0.07);color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.save-tmpl-btn:hover{background:rgba(0,200,167,0.13);}
+.ci5{background:linear-gradient(135deg,#0d200a,#1a3a12);}
 </style>
 </head>
 <body>
@@ -407,6 +422,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div class="hcard" onclick="goTo('meds')"><div class="ci ci2">💊</div><div class="cinfo"><div class="ctit" id="h-t2"></div><div class="cdsc" id="h-d2"></div></div><div class="carr">›</div></div>
       <div class="hcard" onclick="goTo('ai')"><div class="ci ci3">🤖</div><div class="cinfo"><div class="ctit" id="h-t3"></div><div class="cdsc" id="h-d3"></div></div><div class="carr">›</div></div>
       <div class="hcard" onclick="goTo('calc')"><div class="ci ci4">🧮</div><div class="cinfo"><div class="ctit" id="h-t4"></div><div class="cdsc" id="h-d4"></div></div><div class="carr">›</div></div>
+      <div class="hcard" onclick="goTo('templates')"><div class="ci ci5">📁</div><div class="cinfo"><div class="ctit" id="h-t5"></div><div class="cdsc" id="h-d5"></div></div><div class="carr">›</div></div>
     </div>
     <div class="hfoot" id="h-foot"></div>
   </div>
@@ -682,6 +698,24 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 </div>
 
 <!-- ================================================================
+     SCREEN: TEMPLATES
+================================================================ -->
+<div class="screen" id="s-templates">
+  <div class="blob b1"></div>
+  <div class="inner">
+    <div class="hdr">
+      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="hdr-info"><div class="hdr-title" id="tmpl-title"></div><div class="hdr-sub" id="tmpl-sub"></div></div>
+    </div>
+    <div class="mid" id="tmpl-mid">
+      <div id="tmpl-empty" class="empty-state" style="display:none;padding:60px 20px;"></div>
+      <div id="tmpl-list"></div>
+    </div>
+    <div class="reset-btn" onclick="confirmClearTemplates()" id="tmpl-clear-btn" style="margin:0 14px 18px;display:none;"></div>
+  </div>
+</div>
+
+<!-- ================================================================
      JOURNAL MODAL
 ================================================================ -->
 <div class="overlay" id="journal-overlay" onclick="closeJournalBg(event)">
@@ -718,6 +752,12 @@ const T = {
     t3:'Медициналық AI',d3:'ҚР ДСМ хаттамалары, сұрақтар',
     t4:'Калькулятор',d4:'Балалар дозасы · Шок-индекс',
     hFoot:'MEDIX AI · ЖМЖ Қазақстан',
+    t5:'Үлгілер',d5:'Сақталған шақыру карталары',
+    saveTmpl:'Үлгі ретінде сақтау',
+    tmplTitle:'Үлгілер',tmplSub:'Сақталған карталар · Оффлайн',
+    tmplEmpty:'Үлгілер жоқ. Карта жасап, үлгі ретінде сақтаңыз.',
+    tmplClear:'Барлық үлгілерді тазалау',
+    tmplSavePlh:'Үлгі атауы (мысалы: ОКС, Анафилаксия)',
 
     kTitle:'Шақыру картасы',kSub:'Карта вызова ЖМЖ',
     kExLabel:'МЫСАЛДАР',
@@ -758,6 +798,12 @@ kChipsChild:[{i:'🌡️',t:'Маған карта жаз: ұл бала 4 жа�
     t3:'Медицинский AI',d3:'Протоколы МЗ РК и быстрые ответы',
     t4:'Калькулятор',d4:'Дозы детям · Шок-индекс Альговера',
     hFoot:'MEDIX AI · СМП Казахстан',
+    t5:'Шаблоны',d5:'Сохранённые карты вызова',
+    saveTmpl:'Сохранить как шаблон',
+    tmplTitle:'Шаблоны',tmplSub:'Сохранённые карты · Оффлайн',
+    tmplEmpty:'Шаблонов нет. Создайте карту и сохраните как шаблон.',
+    tmplClear:'Очистить все шаблоны',
+    tmplSavePlh:'Название шаблона (например: ОКС, Анафилаксия)',
     kTitle:'Карта вызова',kSub:'Карта вызова СМП',
     kExLabel:'ПРИМЕРЫ',
     kChips:[{i:'❤️',t:'Напиши мне карту: мужчина 58 лет, боль в груди 40 мин, отдаёт в левую руку, потливость, ЭКГ — подъём ST'},{i:'🧠',t:'Напиши мне карту: женщина 67 лет, внезапная слабость левой руки и ноги, речь невнятная, 1 час назад'},{i:'💉',t:'Напиши мне карту: мужчина 34 года, после укола антибиотика — потеря сознания, АД 60/40, сыпь'}],
@@ -828,7 +874,11 @@ function renderAll(){
   setText('h-t2',t('t2'));setText('h-d2',t('d2'));
   setText('h-t3',t('t3'));setText('h-d3',t('d3'));
   setText('h-t4',t('t4'));setText('h-d4',t('d4'));
+  setText('h-t5',t('t5'));setText('h-d5',t('d5'));
   setText('h-foot',t('hFoot'));
+  setText('tmpl-title',t('tmplTitle'));setText('tmpl-sub',t('tmplSub'));
+  const cb=document.getElementById('tmpl-clear-btn');if(cb)cb.textContent='🗑️ '+t('tmplClear');
+  renderTemplatesList();
   // lang buttons
   ['h-kz','k-kz','ai-kz','c-kz'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('on',lang==='kz');});
   ['h-ru','k-ru','ai-ru','c-ru'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('on',lang==='ru');});
@@ -889,6 +939,7 @@ function goTo(screen){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+screen).classList.add('active');
   if(screen==='meds'){renderMedSubTabs();renderRashodList();renderPrihodList();updateShiftTime();}
+  if(screen==='templates'){renderTemplatesList();}
 }
 
 // ================================================================
@@ -996,8 +1047,10 @@ function renderKartaResult(d,time){
     else b=s.body;
     html+=`<div class="rcard" style="animation-delay:${i*0.04}s"><div class="rcard-head"><div class="rcard-label"><span class="dot ${s.dot}"></span>${s.l}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(rawTxt)}')">${t('copy')}</button></div><div class="rcard-body">${b}</div></div>`;
   });
+  html+=`<div class="save-tmpl-btn" onclick="openSaveTemplate()">📁 <span id="k-save-tmpl-lbl"></span></div>`;
   html+=`<div class="time-info">${time} сек · </div>`;
   document.getElementById('k-results').innerHTML=html;
+  setText('k-save-tmpl-lbl', t('saveTmpl'));
 }
 
 // ================================================================
@@ -1876,6 +1929,66 @@ function showErr(contId,msg){document.getElementById(contId).innerHTML=`<div cla
 function scrollMid(id){const el=document.getElementById(id);if(el)setTimeout(()=>el.scrollTop=el.scrollHeight,50);}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function now(){return new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});}
+
+// ================================================================
+// TEMPLATES
+// ================================================================
+let savedTemplates=[];
+function loadTemplates(){try{return JSON.parse(localStorage.getItem('medix_templates_v1')||'[]');}catch(e){return[];}}
+function saveTemplatesData(){localStorage.setItem('medix_templates_v1',JSON.stringify(savedTemplates));}
+savedTemplates=loadTemplates();
+
+function openSaveTemplate(){
+  const name=prompt(t('tmplSavePlh'));
+  if(!name||!name.trim()) return;
+  const resultsEl=document.getElementById('k-results');
+  const tmpl={id:Date.now(),name:name.trim(),lang:lang,ptype:ptype,html:resultsEl.innerHTML,date:new Date().toLocaleDateString('ru',{day:'2-digit',month:'2-digit',year:'2-digit'})};
+  savedTemplates.unshift(tmpl);
+  if(savedTemplates.length>50) savedTemplates=savedTemplates.slice(0,50);
+  saveTemplatesData();
+  alert(lang==='kz'?'Үлгі сақталды!':'Шаблон сохранён!');
+}
+
+function renderTemplatesList(){
+  const list=document.getElementById('tmpl-list');
+  const empty=document.getElementById('tmpl-empty');
+  const clearBtn=document.getElementById('tmpl-clear-btn');
+  if(!list) return;
+  savedTemplates=loadTemplates();
+  if(!savedTemplates.length){
+    list.innerHTML='';
+    if(empty){empty.style.display='block';empty.textContent=t('tmplEmpty');}
+    if(clearBtn) clearBtn.style.display='none';
+    return;
+  }
+  if(empty) empty.style.display='none';
+  if(clearBtn) clearBtn.style.display='flex';
+  list.innerHTML=savedTemplates.map((tmpl,i)=>`<div class="tmpl-card" onclick="openTemplate(${i})"><div class="tmpl-icon">📋</div><div class="tmpl-info"><div class="tmpl-name">${tmpl.name}</div><div class="tmpl-meta">${tmpl.lang==='kz'?'ҚАЗ':'РУС'} · ${tmpl.date}</div></div><div class="tmpl-del" onclick="event.stopPropagation();deleteTemplate(${i})">✕</div></div>`).join('');
+}
+
+function openTemplate(idx){
+  const tmpl=savedTemplates[idx];
+  if(!tmpl) return;
+  goTo('karta');
+  document.getElementById('k-welcome').style.display='none';
+  document.getElementById('k-results').innerHTML=tmpl.html;
+  document.getElementById('k-results').style.display='block';
+  setText('k-save-tmpl-lbl',t('saveTmpl'));
+}
+
+function deleteTemplate(idx){
+  if(!confirm(lang==='kz'?'Үлгіні жою?':'Удалить шаблон?')) return;
+  savedTemplates.splice(idx,1);
+  saveTemplatesData();
+  renderTemplatesList();
+}
+
+function confirmClearTemplates(){
+  if(!confirm(lang==='kz'?'Барлық үлгілерді тазалауды растайсыз ба?':'Удалить все шаблоны?')) return;
+  savedTemplates=[];
+  saveTemplatesData();
+  renderTemplatesList();
+}
 
 // ================================================================
 // INIT
