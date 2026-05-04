@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>MEDIX AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Inter',sans-serif;overflow:hidden;}
+
+/* ============================================================
+   DARK THEME (default)
+============================================================ */
+:root{
+  --bg:#060810; --bg2:#0c1221; --bg3:rgba(12,18,32,0.97);
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
+  --text1:#d0ddf0; --text2:#4a6a8a; --text3:#1a2535;
+  --accent:#00c9a7; --accent2:#0088ee;
+  --danger:#f87171; --warn:#fbbf24; --success:#4ade80;
+  --card:rgba(12,18,32,0.97); --sub:#3a5570; --inp:rgba(11,17,30,0.95);
+  --hdr-border:rgba(255,255,255,0.06);
+  --chip-bg:rgba(255,255,255,0.05); --chip-border:rgba(255,255,255,0.1); --chip-color:#c0cce0;
+  --scroll:rgba(255,255,255,0.07);
+  --send-border:rgba(255,255,255,0.13);
+  --back-bg:rgba(255,255,255,0.05); --back-border:rgba(255,255,255,0.09); --back-color:#fff;
+  --ex-label:#1a2a3a;
+  --rcard-head-bg:transparent;
+  --time-color:#1a2535;
+  --copy-color:#4a6a8a; --copy-bg:rgba(255,255,255,0.04); --copy-border:rgba(255,255,255,0.09);
+  --tag-bg:rgba(255,255,255,0.04); --tag-border:rgba(255,255,255,0.07); --tag-color:#2a4060;
+  --status-bg:rgba(255,255,255,0.02);
+  --src-bg:rgba(0,136,238,0.07); --src-border:rgba(0,136,238,0.2); --src-color:#60a8d8;
+  --warn-box:rgba(248,113,113,0.07); --warn-box-border:rgba(248,113,113,0.2);
+  --result-num:#00c9a7;
+  --lseg-bg:#0c1221; --lseg-border:rgba(255,255,255,0.1); --lb-off:rgba(255,255,255,0.35);
+  --tog-bg:#0c1221; --tog-border:rgba(255,255,255,0.08);
+  --tk-bg:linear-gradient(135deg,#00c9a7,#0088ee); --tk-shadow:rgba(0,200,167,0.6); --tk-x:4px;
+  --badge-bg:rgba(0,255,130,0.05); --badge-border:rgba(0,255,130,0.18); --badge-color:#4ade80;
+  --hsub:#3d5570; --hcap:#1e2e40; --slbl:#16253a; --foot:#0c1622; --dv:rgba(255,255,255,0.04);
+  --htitle-a:#ffffff; --htitle-b:#a0f0e8; --htitle-c:#70d4ff;
+  --card-hover-border:rgba(0,200,167,0.35); --card-hover-shadow:rgba(0,200,167,0.1);
+  --carr:#162030; --carr-hover:#00c9a7;
+  --ci1a:#051428; --ci1b:#0a2860; --ci2a:#041510; --ci2b:#093522;
+  --ci3a:#150828; --ci3b:#261055; --ci4a:#180f00; --ci4b:#342005;
+  --ci-border:rgba(255,255,255,0.07);
+  --med-plus-bg:rgba(0,200,167,0.1); --med-plus-border:rgba(0,200,167,0.3);
+  --med-minus-bg:rgba(248,113,113,0.1); --med-minus-border:rgba(248,113,113,0.3);
+  --med-zero:#1e2e40; --shift-color:#00c9a7;
+  --shift-bg:rgba(0,200,167,0.07); --shift-border:rgba(0,200,167,0.2);
+  --stab-bg:rgba(12,18,32,0.9);
+  --exp-inp-bg:rgba(11,17,30,0.9);
+  --modal-bg:#0c1221;
+  --msg-user-bg:linear-gradient(135deg,rgba(0,200,167,0.18),rgba(0,136,238,0.15));
+  --msg-user-border:rgba(0,200,167,0.25);
+  --msg-ai-bg:rgba(12,18,32,0.97); --msg-ai-border:rgba(255,255,255,0.07);
+}
+
+/* ============================================================
+   LIGHT THEME
+============================================================ */
+body.lt{
+  --bg:#eef1f7; --bg2:#ffffff; --bg3:#ffffff;
+  --border:rgba(0,0,0,0.07); --border2:rgba(0,0,0,0.12);
+  --text1:#0f172a; --text2:#64748b; --text3:#99aabb;
+  --card:#ffffff; --sub:#8899aa; --inp:#ffffff;
+  --hdr-border:rgba(0,0,0,0.07);
+  --chip-bg:#ffffff; --chip-border:rgba(0,0,0,0.1); --chip-color:#334155;
+  --scroll:rgba(0,0,0,0.08);
+  --send-border:rgba(0,0,0,0.1);
+  --back-bg:rgba(0,0,0,0.05); --back-border:rgba(0,0,0,0.09); --back-color:#333;
+  --ex-label:#99aabb;
+  --rcard-head-bg:rgba(0,0,0,0.02);
+  --time-color:#aab4be;
+  --copy-color:#8899aa; --copy-bg:rgba(0,0,0,0.03); --copy-border:rgba(0,0,0,0.08);
+  --tag-bg:rgba(0,0,0,0.04); --tag-border:rgba(0,0,0,0.08); --tag-color:#64748b;
+  --status-bg:rgba(74,222,128,0.04);
+  --src-bg:rgba(0,100,200,0.06); --src-border:rgba(0,100,200,0.18); --src-color:#0066bb;
+  --warn-box:rgba(248,113,113,0.05); --warn-box-border:rgba(248,113,113,0.18);
+  --result-num:#009977;
+  --lseg-bg:#d0d8e8; --lseg-border:#b8c4d4; --lb-off:rgba(255,255,255,0.55);
+  --tog-bg:#d0d8e8; --tog-border:#b8c4d4;
+  --tk-bg:linear-gradient(135deg,#f59e0b,#ef4444); --tk-shadow:rgba(245,158,11,0.5); --tk-x:28px;
+  --badge-bg:#f0fdf4; --badge-border:#86efac; --badge-color:#16a34a;
+  --hsub:#5a7090; --hcap:#8899aa; --slbl:#99aabb; --foot:#bcc8d4; --dv:rgba(0,0,0,0.07);
+  --htitle-a:#006688; --htitle-b:#006688; --htitle-c:#00aa88;
+  --card-hover-border:rgba(0,150,200,0.3); --card-hover-shadow:rgba(0,150,200,0.1);
+  --carr:#c5d0dc; --carr-hover:#0088cc;
+  --ci1a:#dbeafe; --ci1b:#bfdbfe; --ci2a:#dcfce7; --ci2b:#bbf7d0;
+  --ci3a:#ede9fe; --ci3b:#ddd6fe; --ci4a:#fef3c7; --ci4b:#fde68a;
+  --ci-border:rgba(0,0,0,0.06);
+  --med-plus-bg:rgba(0,200,167,0.08); --med-plus-border:rgba(0,200,167,0.25);
+  --med-minus-bg:rgba(248,113,113,0.08); --med-minus-border:rgba(248,113,113,0.25);
+  --med-zero:#c5d0dc; --shift-color:#009966;
+  --shift-bg:rgba(0,150,100,0.07); --shift-border:rgba(0,150,100,0.2);
+  --stab-bg:#ffffff;
+  --exp-inp-bg:#f1f5f9;
+  --modal-bg:#ffffff;
+  --msg-user-bg:linear-gradient(135deg,rgba(0,200,167,0.12),rgba(0,136,238,0.1));
+  --msg-user-border:rgba(0,200,167,0.3);
+  --msg-ai-bg:#ffffff; --msg-ai-border:rgba(0,0,0,0.07);
+}
+
+body{background:var(--bg);color:var(--text1);transition:background 0.35s,color 0.35s;}
+
+/* ============================================================
+   SCREENS
+============================================================ */
+.screen{position:fixed;inset:0;display:none;flex-direction:column;background:var(--bg);transition:background 0.35s;}
+.screen.active{display:flex;}
+
+/* bg blobs */
+.blob{position:absolute;pointer-events:none;border-radius:50%;filter:blur(75px);z-index:0;}
+.b1{width:300px;height:200px;top:-60px;left:50%;transform:translateX(-50%);background:radial-gradient(circle,#00c9a7,#0055ff);opacity:0.11;}
+.b2{width:200px;height:200px;bottom:100px;right:-50px;background:radial-gradient(circle,#00c9a7,transparent);opacity:0.05;}
+.b3{width:150px;height:150px;bottom:200px;left:-40px;background:radial-gradient(circle,#0066ff,transparent);opacity:0.04;}
+body.lt .blob{opacity:0.04!important;}
+.inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;}
+
+/* ============================================================
+   SHARED: HEADER
+============================================================ */
+.hdr{display:flex;align-items:center;gap:12px;padding:16px 18px 13px;border-bottom:1px solid var(--hdr-border);flex-shrink:0;position:relative;z-index:2;}
+.back-btn{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;background:var(--back-bg);border:1px solid var(--back-border);color:var(--back-color);transition:opacity 0.2s;flex-shrink:0;}
+.back-btn:hover{opacity:0.7;}
+.hdr-info{flex:1;}
+.hdr-title{font-size:15px;font-weight:700;color:var(--text1);}
+.hdr-sub{font-size:11px;color:var(--sub);margin-top:1px;}
+
+/* ============================================================
+   SHARED: LANG + TOGGLE
+============================================================ */
+.lseg{display:flex;padding:4px;border-radius:14px;gap:3px;background:var(--lseg-bg);border:1px solid var(--lseg-border);}
+.lb{padding:7px 16px;font-size:12px;font-weight:700;letter-spacing:0.06em;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.3s;color:var(--lb-off);background:transparent;}
+.lb.on{background:linear-gradient(135deg,#00c9a7,#0088ee);color:#fff!important;font-weight:800;box-shadow:0 0 16px rgba(0,200,167,0.5);}
+.lb:not(.on):hover{color:rgba(255,255,255,0.7);}
+body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
+
+.tog{width:60px;height:32px;cursor:pointer;flex-shrink:0;}
+.tog .tt{width:100%;height:100%;border-radius:16px;position:relative;background:var(--tog-bg);border:1px solid var(--tog-border);transition:all 0.3s;}
+.tog .ti{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding:0 8px;font-size:12px;pointer-events:none;z-index:1;}
+.tog .tk{position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;transition:transform 0.4s cubic-bezier(.34,1.56,.64,1),background 0.3s,box-shadow 0.3s;z-index:2;background:var(--tk-bg);box-shadow:0 0 14px var(--tk-shadow);transform:translateX(var(--tk-x));}
+
+/* ============================================================
+   SHARED: MID SCROLL
+============================================================ */
+.mid{flex:1;overflow-y:auto;padding:14px 14px 8px;position:relative;z-index:1;}
+.mid::-webkit-scrollbar{width:3px;}
+.mid::-webkit-scrollbar-thumb{background:var(--scroll);border-radius:2px;}
+
+/* ============================================================
+   SHARED: WELCOME + CHIPS
+============================================================ */
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:14px;padding:0 8px;}
+.ex-label{font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ex-label);}
+.chips{display:flex;flex-direction:column;gap:8px;width:100%;}
+.chip{padding:12px 16px;border-radius:13px;cursor:pointer;font-size:13px;font-weight:500;text-align:left;line-height:1.45;background:var(--chip-bg);border:1px solid var(--chip-border);color:var(--chip-color);transition:all 0.22s;display:flex;align-items:flex-start;gap:10px;}
+.chip-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.chip:hover{border-color:rgba(0,200,167,0.35);transform:translateX(3px);}
+.chip:active{transform:scale(0.98);}
+
+/* ============================================================
+   SHARED: RESULT CARDS
+============================================================ */
+.rcard{border-radius:14px;margin-bottom:8px;overflow:hidden;animation:fadeUp 0.4s cubic-bezier(.22,1,.36,1) both;background:var(--card);border:1px solid var(--border);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.rcard-head{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border-bottom:1px solid var(--border);background:var(--rcard-head-bg);}
+.rcard-label{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);}
+.dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.db{background:#38bdf8;}.dg{background:#4ade80;}.dy{background:#fbbf24;}
+.dr{background:#f87171;}.dm{background:#00c9a7;}.dgr{background:#475569;}.dp{background:#a78bfa;}
+.copy-btn{font-size:10px;font-weight:600;border-radius:6px;padding:3px 9px;cursor:pointer;transition:all 0.2s;color:var(--copy-color);background:var(--copy-bg);border:1px solid var(--copy-border);}
+.copy-btn:hover{color:var(--accent)!important;border-color:rgba(0,200,167,0.3)!important;}
+.copy-btn.ok{color:#4ade80!important;border-color:rgba(74,222,128,0.3)!important;}
+.rcard-body{padding:11px 13px;font-size:12.5px;line-height:1.75;color:var(--text2);}
+.status-box{border-left:2px solid #4ade80;border-radius:0 6px 6px 0;padding:9px 12px;background:var(--status-bg);color:var(--text2);}
+.mkb-list{display:flex;flex-direction:column;gap:5px;}
+.mkb-item{display:flex;align-items:flex-start;gap:8px;border-radius:7px;padding:7px 10px;background:var(--tag-bg);}
+.mkb-code{font-family:monospace;font-size:11px;font-weight:700;color:#38bdf8;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
+.mkb-name{font-size:12px;line-height:1.4;padding-top:1px;color:var(--sub);}
+.tags{display:flex;flex-wrap:wrap;gap:5px;}
+.tag{font-size:11px;padding:3px 9px;border-radius:5px;background:var(--tag-bg);border:1px solid var(--tag-border);color:var(--tag-color);}
+.time-info{font-size:10px;text-align:right;padding:2px 2px 8px;color:var(--time-color);}
+.loading-card{border-radius:14px;padding:32px;text-align:center;background:var(--card);border:1px solid var(--border);}
+.spinner{width:34px;height:34px;border:2px solid rgba(0,200,160,0.15);border-top-color:#00c9a7;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:12px;color:var(--sub);}
+@keyframes cin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============================================================
+   SHARED: BOTTOM INPUT
+============================================================ */
+.bottom{flex-shrink:0;padding:10px 14px 18px;border-top:1px solid var(--hdr-border);background:var(--bg);position:relative;z-index:2;}
+.inp-row{display:flex;gap:10px;align-items:flex-end;}
+.inp{flex:1;border-radius:14px;padding:13px 16px;font-size:13.5px;font-family:'Inter',sans-serif;line-height:1.55;resize:none;outline:none;min-height:50px;max-height:130px;background:var(--inp);border:1.5px solid var(--border2);color:var(--text1);transition:border-color 0.3s;}
+.inp:focus{border-color:rgba(0,200,167,0.4);}
+.inp::placeholder{color:var(--text3);}
+.send{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all 0.2s;border:1.5px solid var(--send-border);background:var(--inp);}
+.send:hover{opacity:0.8;}.send:active{transform:scale(0.93);}.send:disabled{opacity:0.3;cursor:not-allowed;}
+.send svg{width:26px;height:26px;fill:var(--text1);}
+
+/* ============================================================
+   SCREEN HOME
+============================================================ */
+.hero{padding:12px 20px 22px;text-align:center;flex-shrink:0;}
+.htitle{font-size:34px;font-weight:800;letter-spacing:0.06em;line-height:1;margin-bottom:8px;background:linear-gradient(135deg,var(--htitle-a) 0%,var(--htitle-b) 50%,var(--htitle-c) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hsub{font-size:13px;margin-bottom:16px;line-height:1.5;color:var(--hsub);}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:24px;font-size:11.5px;font-weight:600;letter-spacing:0.05em;margin-bottom:14px;background:var(--badge-bg);border:1px solid var(--badge-border);color:var(--badge-color);}
+.bdot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:bdot 2s ease-in-out infinite;}
+@keyframes bdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(1.7)}}
+.hcap{font-size:12px;line-height:1.7;color:var(--hcap);}
+.dv{height:1px;margin:8px 20px;background:var(--dv);}
+.slbl{font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;padding:14px 20px 10px;color:var(--slbl);}
+.home-cards{padding:0 14px;display:flex;flex-direction:column;gap:9px;overflow-y:auto;flex:1;padding-bottom:16px;}
+.home-cards::-webkit-scrollbar{width:3px;}
+.home-cards::-webkit-scrollbar-thumb{background:var(--scroll);border-radius:2px;}
+.hcard{display:flex;align-items:center;gap:14px;padding:15px 16px;border-radius:18px;cursor:pointer;opacity:0;animation:cin 0.5s cubic-bezier(.22,1,.36,1) forwards;transition:transform 0.3s cubic-bezier(.34,1.56,.64,1),box-shadow 0.3s,border-color 0.3s;background:var(--card);border:1px solid var(--border);}
+.hcard:nth-child(1){animation-delay:0.06s}.hcard:nth-child(2){animation-delay:0.13s}.hcard:nth-child(3){animation-delay:0.20s}.hcard:nth-child(4){animation-delay:0.27s}
+.hcard:hover{transform:translateY(-4px);border-color:var(--card-hover-border);box-shadow:0 10px 32px var(--card-hover-shadow);}
+.hcard:active{transform:scale(0.97)!important;transition:transform 0.1s!important;}
+.ci{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid var(--ci-border);}
+.ci1{background:linear-gradient(135deg,var(--ci1a),var(--ci1b));}
+.ci2{background:linear-gradient(135deg,var(--ci2a),var(--ci2b));}
+.ci3{background:linear-gradient(135deg,var(--ci3a),var(--ci3b));}
+.ci4{background:linear-gradient(135deg,var(--ci4a),var(--ci4b));}
+.cinfo{flex:1;min-width:0;}
+.ctit{font-size:14px;font-weight:600;margin-bottom:3px;color:var(--text1);}
+.cdsc{font-size:11.5px;line-height:1.4;color:var(--sub);}
+.carr{font-size:22px;font-weight:300;transition:color 0.3s,transform 0.3s;flex-shrink:0;color:var(--carr);}
+.hcard:hover .carr{transform:translateX(4px);color:var(--carr-hover);}
+.hfoot{text-align:center;padding:20px;font-size:9.5px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:var(--foot);flex-shrink:0;}
+
+/* ============================================================
+   SCREEN KARTA — patient type toggle
+============================================================ */
+.ptype{display:flex;gap:8px;padding:10px 14px 0;flex-shrink:0;position:relative;z-index:1;}
+.ptype-btn{flex:1;padding:9px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.25s;text-align:center;font-family:'Inter',sans-serif;}
+.ptype-btn.on{background:linear-gradient(135deg,rgba(0,200,167,0.15),rgba(0,136,238,0.15));border-color:rgba(0,200,167,0.4);color:var(--accent);}
+
+/* ============================================================
+   SCREEN MEDS
+============================================================ */
+.tabs-wrap{flex-shrink:0;padding:10px 14px 0;position:relative;z-index:2;}
+.tabs{display:flex;gap:6px;background:var(--stab-bg);border-radius:14px;padding:4px;border:1px solid var(--border);}
+.mtab{flex:1;padding:8px 4px;border-radius:10px;text-align:center;font-size:11px;font-weight:700;letter-spacing:0.04em;cursor:pointer;transition:all 0.25s;color:var(--sub);}
+.mtab.on{background:linear-gradient(135deg,rgba(0,200,167,0.18),rgba(0,136,238,0.18));color:var(--accent);border:1px solid rgba(0,200,167,0.25);}
+.sub-tabs-wrap{padding:10px 14px 6px;flex-shrink:0;}
+.sub-tabs{display:flex;gap:5px;}
+.stab{padding:7px 14px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;transition:all 0.2s;color:var(--sub);background:var(--card);border:1px solid var(--border);font-family:'Inter',sans-serif;}
+.stab.on{background:linear-gradient(135deg,rgba(0,200,167,0.12),rgba(0,136,238,0.12));color:var(--accent);border-color:rgba(0,200,167,0.3);}
+.pane{display:none;flex-direction:column;flex:1;overflow:hidden;}
+.pane.active{display:flex;}
+.list-scroll{flex:1;overflow-y:auto;padding:6px 14px 16px;}
+.list-scroll::-webkit-scrollbar{width:3px;}
+.list-scroll::-webkit-scrollbar-thumb{background:var(--scroll);border-radius:2px;}
+.sec-label{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);padding:14px 2px 6px;}
+.item-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:13px;margin-bottom:6px;background:var(--card);border:1px solid var(--border);animation:fadeUp 0.35s cubic-bezier(.22,1,.36,1) both;}
+.item-name{flex:1;min-width:0;}
+.item-title{font-size:13px;font-weight:600;color:var(--text1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.item-dose{font-size:10.5px;color:var(--sub);margin-top:1px;}
+.counter{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.cnt-btn{width:30px;height:30px;border-radius:9px;border:1px solid;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;font-weight:700;transition:all 0.18s;line-height:1;flex-shrink:0;font-family:'Inter',sans-serif;}
+.cnt-btn.p{background:var(--med-plus-bg);border-color:var(--med-plus-border);color:var(--accent);}
+.cnt-btn.m{background:var(--med-minus-bg);border-color:var(--med-minus-border);color:var(--danger);}
+.cnt-btn:hover{opacity:0.7;transform:scale(0.94);}
+.cnt-val{min-width:26px;text-align:center;font-size:14px;font-weight:700;color:var(--text1);}
+.cnt-val.zero{color:var(--med-zero);}
+.exp-row{flex-direction:column;align-items:stretch;gap:0;padding:12px 14px;}
+.exp-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.exp-entries{display:flex;flex-direction:column;gap:6px;}
+.exp-entry{display:flex;gap:6px;align-items:center;}
+.exp-inp{flex:1;padding:7px 10px;border-radius:9px;background:var(--exp-inp-bg);border:1px solid var(--border2);color:var(--text1);font-size:12px;font-family:'Inter',sans-serif;outline:none;}
+.exp-inp:focus{border-color:rgba(0,200,167,0.4);}
+.exp-inp::placeholder{color:var(--text3);}
+.exp-inp.num{width:60px;flex:none;}
+.exp-del{width:28px;height:28px;border-radius:8px;background:var(--warn-box);border:1px solid var(--warn-box-border);color:var(--danger);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:opacity 0.2s;}
+.exp-del:hover{opacity:0.7;}
+.exp-add-line{display:flex;align-items:center;gap:6px;padding:5px 0 2px;cursor:pointer;color:var(--accent);font-size:11px;font-weight:600;opacity:0.7;transition:opacity 0.2s;}
+.exp-add-line:hover{opacity:1;}
+.income-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:13px;margin-bottom:6px;background:var(--card);border:1px solid var(--border);}
+.income-name{flex:1;min-width:0;}
+.income-title{font-size:13px;font-weight:600;color:var(--text1);}
+.income-dose{font-size:10.5px;color:var(--sub);margin-top:1px;}
+.income-val{min-width:26px;text-align:center;font-size:14px;font-weight:700;color:var(--success);}
+.income-val.zero{color:var(--med-zero);}
+.shift-badge{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;background:var(--shift-bg);border:1px solid var(--shift-border);flex-shrink:0;}
+.shift-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:bdot 2s infinite;}
+.shift-time{font-size:10px;font-weight:700;color:var(--shift-color);letter-spacing:0.05em;}
+.journal-btn{display:flex;align-items:center;justify-content:center;gap:7px;margin:8px 14px 4px;padding:12px;border-radius:13px;border:1px solid rgba(0,200,167,0.2);background:rgba(0,200,167,0.05);color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;flex-shrink:0;}
+.journal-btn:hover{background:rgba(0,200,167,0.1);}
+.reset-btn{display:flex;align-items:center;justify-content:center;gap:7px;margin:4px 14px 10px;padding:12px;border-radius:13px;border:1px solid rgba(248,113,113,0.2);background:rgba(248,113,113,0.05);color:var(--danger);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;flex-shrink:0;}
+.reset-btn:hover{background:rgba(248,113,113,0.1);}
+.search-wrap{padding:8px 14px 0;flex-shrink:0;}
+.search-inp{width:100%;padding:9px 14px 9px 36px;border-radius:11px;background:var(--inp);border:1.5px solid var(--border2);color:var(--text1);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.3s;}
+.search-inp:focus{border-color:rgba(0,200,167,0.4);}
+.search-inp::placeholder{color:var(--text3);}
+.search-box{position:relative;}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+
+/* ============================================================
+   MODAL
+============================================================ */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:200;display:none;align-items:flex-end;backdrop-filter:blur(4px);}
+.overlay.show{display:flex;}
+.modal{width:100%;background:var(--modal-bg);border-radius:22px 22px 0 0;padding:22px 18px 30px;max-height:85vh;display:flex;flex-direction:column;animation:slideUp 0.3s cubic-bezier(.22,1,.36,1);}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-shrink:0;}
+.modal-title{font-size:15px;font-weight:700;color:var(--text1);}
+.modal-close{width:30px;height:30px;border-radius:8px;background:var(--chip-bg);border:1px solid var(--border);color:var(--sub);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.modal-scroll{flex:1;overflow-y:auto;}
+.modal-scroll::-webkit-scrollbar{width:3px;}
+.jentry,.ientry{padding:11px 13px;border-radius:11px;margin-bottom:7px;background:var(--inp);border:1px solid var(--border);}
+.jentry-top,.ientry-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.jentry-name,.ientry-name{font-size:13px;font-weight:600;color:var(--text1);}
+.jentry-qty,.ientry-qty{font-size:13px;font-weight:700;color:var(--warn);}
+.ientry-qty{color:var(--success);}
+.jentry-meta,.ientry-meta{font-size:10.5px;color:var(--sub);}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text3);font-size:13px;}
+
+/* ============================================================
+   SCREEN AI CHAT
+============================================================ */
+.msg-wrap{display:flex;flex-direction:column;gap:12px;}
+.msg{display:flex;gap:10px;animation:fadeUp 0.35s cubic-bezier(.22,1,.36,1) both;}
+.msg.user{flex-direction:row-reverse;}
+.msg-avatar{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:2px;}
+.msg.user .msg-avatar{background:linear-gradient(135deg,#00c9a7,#0088ee);}
+.msg.ai .msg-avatar{background:var(--chip-bg);border:1px solid var(--border);}
+.msg-bubble{max-width:88%;border-radius:16px;padding:12px 14px;font-size:13px;line-height:1.75;}
+.msg.user .msg-bubble{background:var(--msg-user-bg);border:1px solid var(--msg-user-border);color:var(--text1);border-radius:16px 4px 16px 16px;}
+.msg.ai .msg-bubble{background:var(--msg-ai-bg);border:1px solid var(--msg-ai-border);color:var(--text2);border-radius:4px 16px 16px 16px;}
+.ai-section{margin-bottom:10px;}
+.ai-section:last-child{margin-bottom:0;}
+.ai-section-title{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:5px;}
+.ai-section-body{font-size:12.5px;line-height:1.75;color:var(--text2);}
+.ai-section-body strong{color:var(--text1);font-weight:700;}
+.ai-section-body p{margin-bottom:4px;}
+.ai-section-body ul{padding-left:16px;margin-top:4px;}
+.ai-section-body ul li{margin-bottom:3px;}
+.sources{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.src-tag{font-size:10px;padding:3px 9px;border-radius:5px;background:var(--src-bg);border:1px solid var(--src-border);color:var(--src-color);font-weight:600;}
+.msg-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:7px;border-top:1px solid var(--border);}
+.loading-bubble{background:var(--msg-ai-bg);border:1px solid var(--msg-ai-border);border-radius:4px 16px 16px 16px;padding:14px 16px;display:flex;align-items:center;gap:10px;max-width:88%;}
+.dots{display:flex;gap:4px;}
+.dot-anim{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:dotP 1.2s ease-in-out infinite;}
+.dot-anim:nth-child(2){animation-delay:0.2s;}.dot-anim:nth-child(3){animation-delay:0.4s;}
+@keyframes dotP{0%,80%,100%{opacity:0.2;transform:scale(0.8)}40%{opacity:1;transform:scale(1)}}
+
+/* ============================================================
+   SCREEN CALC — drug result rows
+============================================================ */
+.params-row{display:flex;gap:10px;}
+.param-box{flex:1;padding:10px 12px;border-radius:10px;background:var(--chip-bg);border:1px solid var(--border);}
+.param-label{font-size:9.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--sub);margin-bottom:4px;}
+.param-val{font-size:17px;font-weight:800;color:var(--text1);line-height:1.2;}
+.drug-row{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);}
+.drug-row:last-child{border-bottom:none;padding-bottom:0;}
+.drug-left{flex:1;min-width:0;}
+.drug-name{font-size:13px;font-weight:700;color:var(--text1);margin-bottom:2px;}
+.drug-note{font-size:11px;color:var(--sub);}
+.drug-right{text-align:right;flex-shrink:0;margin-left:12px;}
+.drug-dose{font-size:22px;font-weight:800;color:var(--result-num);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+.drug-unit{font-size:12px;font-weight:600;color:var(--sub);margin-top:1px;}
+.drug-conc{font-size:10.5px;color:var(--sub);margin-top:2px;}
+.warn-item{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:8px;margin-bottom:5px;background:var(--warn-box);border:1px solid var(--warn-box-border);}
+.warn-item:last-child{margin-bottom:0;}
+.warn-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
+.warn-text{font-size:12px;color:var(--text2);line-height:1.5;}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     SCREEN: HOME
+================================================================ -->
+<div class="screen active" id="s-home">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="inner">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 20px 14px;position:relative;z-index:2;flex-shrink:0;">
+      <div class="lseg">
+        <button class="lb on" id="h-kz" onclick="setLang('kz')">ҚАЗ</button>
+        <button class="lb" id="h-ru" onclick="setLang('ru')">РУС</button>
+      </div>
+      <div class="tog" onclick="toggleTheme()">
+        <div class="tt"><div class="ti"><span>🌙</span><span>☀️</span></div><div class="tk" id="h-tk"></div></div>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="htitle">MEDIX AI</div>
+      <div class="hsub" id="h-sub"></div>
+      <div class="badge"><span class="bdot"></span><span id="h-st"></span></div>
+      <div class="hcap" id="h-cap"></div>
+    </div>
+    <div class="dv"></div>
+    <div class="slbl" id="h-mod"></div>
+    <div class="home-cards">
+      <div class="hcard" onclick="goTo('karta')"><div class="ci ci1">📋</div><div class="cinfo"><div class="ctit" id="h-t1"></div><div class="cdsc" id="h-d1"></div></div><div class="carr">›</div></div>
+      <div class="hcard" onclick="goTo('meds')"><div class="ci ci2">💊</div><div class="cinfo"><div class="ctit" id="h-t2"></div><div class="cdsc" id="h-d2"></div></div><div class="carr">›</div></div>
+      <div class="hcard" onclick="goTo('ai')"><div class="ci ci3">🤖</div><div class="cinfo"><div class="ctit" id="h-t3"></div><div class="cdsc" id="h-d3"></div></div><div class="carr">›</div></div>
+      <div class="hcard" onclick="goTo('calc')"><div class="ci ci4">🧮</div><div class="cinfo"><div class="ctit" id="h-t4"></div><div class="cdsc" id="h-d4"></div></div><div class="carr">›</div></div>
+    </div>
+    <div class="hfoot" id="h-foot"></div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN: KARTA
+================================================================ -->
+<div class="screen" id="s-karta">
+  <div class="blob b1"></div>
+  <div class="inner">
+    <div class="hdr">
+      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="hdr-info"><div class="hdr-title" id="k-title"></div><div class="hdr-sub" id="k-sub"></div></div>
+      <div class="lseg" style="transform:scale(0.9);transform-origin:right;">
+        <button class="lb" id="k-kz" onclick="setLang('kz')">ҚАЗ</button>
+        <button class="lb on" id="k-ru" onclick="setLang('ru')">РУС</button>
+      </div>
+    </div>
+    <div class="ptype">
+      <button class="ptype-btn on" id="pt-adult" onclick="setPtype('adult')"></button>
+      <button class="ptype-btn" id="pt-child" onclick="setPtype('child')"></button>
+      <button class="ptype-btn" id="pt-preg" onclick="setPtype('preg')"></button>
+    </div>
+    <div class="mid" id="k-mid">
+      <div class="welcome" id="k-welcome">
+        <div class="ex-label" id="k-ex-label"></div>
+        <div class="chips" id="k-chips"></div>
+      </div>
+      <div id="k-results"></div>
+    </div>
+    <div class="bottom">
+      <div class="inp-row">
+        <textarea class="inp" id="k-inp" rows="1" oninput="ar(this)" onkeydown="kKey(event,'k')"></textarea>
+        <button class="send" id="k-send" onclick="genKarta()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN: MEDS
+================================================================ -->
+<div class="screen" id="s-meds">
+  <div class="blob b1"></div>
+  <div class="inner">
+    <div class="hdr">
+      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="hdr-info"><div class="hdr-title" id="m-title"></div><div class="hdr-sub" id="m-sub"></div></div>
+      <div class="shift-badge"><div class="shift-dot"></div><div class="shift-time" id="shift-time">0 ч 0 мин</div></div>
+    </div>
+    <div class="tabs-wrap">
+      <div class="tabs">
+        <div class="mtab on" onclick="switchMTab('rashod')" id="mt-rashod"></div>
+        <div class="mtab" onclick="switchMTab('prihod')" id="mt-prihod"></div>
+        <div class="mtab" onclick="switchMTab('ostatki')" id="mt-ostatki"></div>
+      </div>
+    </div>
+    <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+      <div class="pane active" id="pane-rashod">
+        <div class="sub-tabs-wrap"><div class="sub-tabs" id="rashod-stabs"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="rashod-search" type="text" placeholder="Поиск..." oninput="filterList('rashod',this.value)"></div></div>
+        <div class="list-scroll" id="rashod-list"></div>
+        <div class="journal-btn" onclick="openJournal('rashod')" id="m-jbtn-r"></div>
+        <div class="reset-btn" onclick="confirmReset()" id="m-reset"></div>
+      </div>
+      <div class="pane" id="pane-prihod">
+        <div class="sub-tabs-wrap"><div class="sub-tabs" id="prihod-stabs"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="prihod-search" type="text" placeholder="Поиск..." oninput="filterList('prihod',this.value)"></div></div>
+        <div class="list-scroll" id="prihod-list"></div>
+        <div class="journal-btn" onclick="openJournal('prihod')" id="m-jbtn-p"></div>
+        <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0">🗑️ Очистить приход</div>
+      </div>
+      <div class="pane" id="pane-ostatki">
+        <div class="sub-tabs-wrap"><div class="sub-tabs" id="ostatki-stabs"></div></div>
+        <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="ostatki-search" type="text" placeholder="Поиск..." oninput="filterList('ostatki',this.value)"></div></div>
+        <div class="list-scroll" id="ostatki-list"></div>
+        <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o">📋 Журнал остатков</div>
+        <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o">🗑️ Очистить остатки</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN: AI CHAT
+================================================================ -->
+<div class="screen" id="s-ai">
+  <div class="blob b1"></div>
+  <div class="inner">
+    <div class="hdr">
+      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="hdr-info"><div class="hdr-title" id="ai-title"></div><div class="hdr-sub" id="ai-sub"></div></div>
+      <div class="lseg" style="transform:scale(0.9);transform-origin:right;">
+        <button class="lb" id="ai-kz" onclick="setLang('kz')">ҚАЗ</button>
+        <button class="lb on" id="ai-ru" onclick="setLang('ru')">РУС</button>
+      </div>
+    </div>
+    <div class="mid" id="ai-mid">
+      <div class="welcome" id="ai-welcome">
+        <div class="ex-label" id="ai-ex-label"></div>
+        <div class="chips" id="ai-chips"></div>
+      </div>
+      <div class="msg-wrap" id="ai-msgs" style="display:none;"></div>
+    </div>
+    <div class="bottom">
+      <div class="inp-row">
+        <textarea class="inp" id="ai-inp" rows="1" oninput="ar(this)" onkeydown="kKey(event,'ai')"></textarea>
+        <button class="send" id="ai-send" onclick="genAI()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN: CALC
+================================================================ -->
+<div class="screen" id="s-calc">
+  <div class="blob b1"></div>
+  <div class="inner">
+    <div class="hdr">
+      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="hdr-info"><div class="hdr-title" id="c-title"></div><div class="hdr-sub" id="c-sub"></div></div>
+      <div class="lseg" style="transform:scale(0.9);transform-origin:right;">
+        <button class="lb" id="c-kz" onclick="setLang('kz')">ҚАЗ</button>
+        <button class="lb on" id="c-ru" onclick="setLang('ru')">РУС</button>
+      </div>
+    </div>
+    <!-- Вкладки калькулятора -->
+    <div class="tabs-wrap" style="padding-top:10px;">
+      <div class="tabs">
+        <div class="mtab on" id="ct-dose" onclick="switchCalcTab('dose')" id="ct-dose">💊 <span id="ct-dose-lbl"></span></div>
+        <div class="mtab" id="ct-shock" onclick="switchCalcTab('shock')">⚡ <span id="ct-shock-lbl"></span></div>
+      </div>
+    </div>
+    <!-- Панель: Дозы детям -->
+    <div class="pane active" id="cpane-dose">
+      <div class="mid" id="c-mid">
+        <div class="welcome" id="c-welcome">
+          <div class="ex-label" id="c-ex-label"></div>
+          <!-- Шпаргалка веса -->
+          <div style="width:100%;margin-bottom:8px;">
+            <div style="font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ex-label);margin-bottom:6px;">ВЕС ПО ВОЗРАСТУ</div>
+            <div style="display:flex;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:0;">
+              <div class="wtab on" id="wt1" onclick="showWTab(1)" style="flex:1;padding:6px 2px;text-align:center;font-size:10px;font-weight:700;cursor:pointer;border-right:1px solid var(--border);">0–1 год</div>
+              <div class="wtab" id="wt2" onclick="showWTab(2)" style="flex:1;padding:6px 2px;text-align:center;font-size:10px;color:var(--sub);cursor:pointer;border-right:1px solid var(--border);">1–5 лет</div>
+              <div class="wtab" id="wt3" onclick="showWTab(3)" style="flex:1;padding:6px 2px;text-align:center;font-size:10px;color:var(--sub);cursor:pointer;border-right:1px solid var(--border);">5–10 лет</div>
+              <div class="wtab" id="wt4" onclick="showWTab(4)" style="flex:1;padding:6px 2px;text-align:center;font-size:10px;color:var(--sub);cursor:pointer;">10–15 лет</div>
+            </div>
+            <div id="wtab1" style="border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">
+              <div onclick="pickWeight('3 месяца, 6 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">3 месяца</span><span style="font-size:12px;font-weight:700;color:var(--success);">6 кг</span></div>
+              <div onclick="pickWeight('6 месяцев, 8 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">6 месяцев</span><span style="font-size:12px;font-weight:700;color:var(--success);">8 кг</span></div>
+              <div onclick="pickWeight('9 месяцев, 9 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">9 месяцев</span><span style="font-size:12px;font-weight:700;color:var(--success);">9 кг</span></div>
+              <div onclick="pickWeight('12 месяцев, 10 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;cursor:pointer;"><span style="font-size:12px;color:var(--text1);">12 месяцев</span><span style="font-size:12px;font-weight:700;color:var(--success);">10 кг</span></div>
+            </div>
+            <div id="wtab2" style="display:none;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">
+              <div onclick="pickWeight('1 год, 10 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">1 год</span><span style="font-size:12px;font-weight:700;color:var(--success);">10 кг</span></div>
+              <div onclick="pickWeight('2 года, 12 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">2 года</span><span style="font-size:12px;font-weight:700;color:var(--success);">12 кг</span></div>
+              <div onclick="pickWeight('3 года, 14 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">3 года</span><span style="font-size:12px;font-weight:700;color:var(--success);">14 кг</span></div>
+              <div onclick="pickWeight('4 года, 16 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">4 года</span><span style="font-size:12px;font-weight:700;color:var(--success);">16 кг</span></div>
+              <div onclick="pickWeight('5 лет, 18 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;cursor:pointer;"><span style="font-size:12px;color:var(--text1);">5 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">18 кг</span></div>
+            </div>
+            <div id="wtab3" style="display:none;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">
+              <div onclick="pickWeight('5 лет, 18 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">5 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">18 кг</span></div>
+              <div onclick="pickWeight('6 лет, 20 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">6 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">20 кг</span></div>
+              <div onclick="pickWeight('7 лет, 22 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">7 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">22 кг</span></div>
+              <div onclick="pickWeight('8 лет, 26 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">8 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">26 кг</span></div>
+              <div onclick="pickWeight('9 лет, 28 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">9 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">28 кг</span></div>
+              <div onclick="pickWeight('10 лет, 32 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;cursor:pointer;"><span style="font-size:12px;color:var(--text1);">10 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">32 кг</span></div>
+            </div>
+            <div id="wtab4" style="display:none;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">
+              <div onclick="pickWeight('11 лет, 36 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">11 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">36 кг</span></div>
+              <div onclick="pickWeight('12 лет, 40 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">12 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">40 кг</span></div>
+              <div onclick="pickWeight('13 лет, 43 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">13 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">43 кг</span></div>
+              <div onclick="pickWeight('14 лет, 47 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--border);cursor:pointer;"><span style="font-size:12px;color:var(--text1);">14 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">47 кг</span></div>
+              <div onclick="pickWeight('15 лет, 50 кг')" style="display:flex;justify-content:space-between;padding:7px 12px;cursor:pointer;"><span style="font-size:12px;color:var(--text1);">15 лет</span><span style="font-size:12px;font-weight:700;color:var(--success);">50 кг</span></div>
+            </div>
+          </div>
+          <div class="chips" id="c-chips"></div>
+        </div>
+  
+
+        <div id="c-results"></div>
+        <div id="c-back-btn" onclick="resetCalc()" style="display:none;margin:0 14px 8px;padding:11px;border-radius:13px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;text-align:center;flex-shrink:0;">← Назад к примерам</div>
+
+      </div>
+      <div class="bottom">
+        <div class="inp-row">
+          <textarea class="inp" id="c-inp" rows="1" oninput="ar(this)" onkeydown="kKey(event,'c')" ></textarea>
+          <button class="send" id="c-send" onclick="genCalc()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <!-- Панель: Шок-индекс -->
+    <div class="pane" id="cpane-shock">
+      <div class="mid" id="sh-mid">
+        <div class="welcome" id="sh-welcome">
+          <div class="ex-label" id="sh-ex-label"></div>
+          <div class="chips" id="sh-chips"></div>
+        </div>
+        <div id="sh-results"></div>
+        <div id="sh-back-btn" onclick="resetShock()" style="display:none;margin:0 14px 8px;padding:11px;border-radius:13px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-size:12px;font-weight:600;cursor:pointer;text-align:center;flex-shrink:0;">← Назад к примерам</div>
+
+      </div>
+      <div class="bottom">
+        <div class="inp-row" style="gap:8px;">
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+            <input class="inp" id="sh-hr" type="number" placeholder="ЧСС (уд/мин)" style="min-height:44px;padding:10px 14px;">
+            <input class="inp" id="sh-bp" type="number" placeholder="АД сист. (мм рт.ст.)" style="min-height:44px;padding:10px 14px;">
+          </div>
+          <button class="send" onclick="calcShock()" style="height:96px;width:50px;align-self:stretch;"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     JOURNAL MODAL
+================================================================ -->
+<div class="overlay" id="journal-overlay" onclick="closeJournalBg(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title" id="journal-title"></div>
+      <div class="modal-close" onclick="closeJournal()">✕</div>
+    </div>
+    <div class="modal-scroll" id="journal-content"></div>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// GLOBAL STATE
+// ================================================================
+let lang = localStorage.getItem('medix_lang') || 'kz';
+let dark = localStorage.getItem('medix_theme') !== 'light';
+let ptype = 'adult';
+let aiHistory = [];
+let medsRashodTab = 1;
+let medsIncomeTab = 1;
+let medsOstatkiTab = 1;
+
+// ================================================================
+// TRANSLATIONS
+// ================================================================
+const T = {
+  kz:{
+    hSub:'Цифрлық ассистент ЖМЖ бригадалары үшін',hSt:'Онлайн · Дайын',
+    hCap:'Жылдам көмек · Дәл нәтиже<br>Аз уақыт · Жоғары дәлдік',hMod:'МОДУЛЬДЕР',
+    t1:'Шақыру картасы',d1:'ЖМЖ картасын жылдам толтыру',
+    t2:'Дәрілер есебі',d2:'Кезеңдегі кіріс және шығыс',
+    t3:'Медициналық AI',d3:'ҚР ДСМ хаттамалары, сұрақтар',
+    t4:'Калькулятор',d4:'Балалар дозасы · Шок-индекс',
+    hFoot:'MEDIX AI · ЖМЖ Қазақстан',
+
+    kTitle:'Шақыру картасы',kSub:'Карта вызова ЖМЖ',
+    kExLabel:'МЫСАЛДАР',
+    kChips:[{i:'❤️',t:'ЖІМ, кеуде ауырсынуы 40 мин, тер басты, ЭКГ — ST жоғарылады'},{i:'🧠',t:'Инсульт, сол жақ парез, сөйлеу бұзылды, 1 сағат бұрын'},{i:'💉',t:'Анафилаксия, естен танды, АД 60/40, тері бөртпесі'}],
+kChipsPreg:[{i:'🤰',t:'Жиырылу 10 минут сайын, мерзімі 38 апта, бірінші туу'},{i:'🩸',t:'Жыныс жолдарынан қан кету, мерзімі 32 апта, ауырсыну жоқ'},{i:'💊',t:'АД 160/100, аяқ ісінуі, бас ауыруы, мерзімі 36 апта'}],
+kChipsChild:[{i:'🌡️',t:'Бала 4 жас, температура 39.5, 2 минут тырысу, бірінші рет'},{i:'😮‍💨',t:'Бала 6 жас, демікпе ұстамасы, ысқырықты тыныс, бронхиалды демікпе'},{i:'💉',t:'Бала 2 жас, антибиотикке аллергия, бөртпе, ерін ісінуі'}],
+    kPh:'Шақыру сипаттамасын жазыңыз...',ptA:'👤 Ересек',ptC:'👶 Бала',ptP:'🤰 Жүкті',
+    sComplaints:'Шағымдар',sMorbi:'Аурудың анамнезі',sVitae:'Өмірінің анамнезі',
+    sStatus:'Status Localis',sInstr:'Инструментальды',sDiag:'Диагноз ЖМЖ',
+    sMkb:'МКБ-10',sTreat:'Көрсетілген көмек',sTactics:'Тактика',
+    copy:'Көшіру',copied:'✓ Көшірілді',loading:'Карта жасалуда...',
+    mTitle:'Дәрілер есебі',mSub:'Кезеңдегі медикамент есебі',
+    tabRashod:'📤 Шығыс',tabPrihod:'📥 Кіріс',tabOstatki:'📦 Қалдық',
+    stab1:'💊 Таблетка',stab2:'💉 Ампула',stab3:'⭐ Қымбат',stab4:'🩹 Бұйымдар',
+    jBtnR:'📋 Шығыс журналы',jBtnP:'📋 Кіріс журналы',
+    resetBtn:'🔄 Кезеңді жабу',jUsed:'Жұмсалды',jInc:'Кіріс',
+    addCall:'+ шақыру қосу',
+    aiTitle:'Медициналық AI',aiSub:'ҚР ДСМ хаттамалары · Өзекті деректер',
+    aiExLabel:'СҰРАҚТАР МЫСАЛДАРЫ',
+    aiChips:[{i:'❤️',t:'ЖІМ кезіндегі көмек алгоритмі: дозалар мен реттілік ҚР ДСМ'},{i:'🤰',t:'Жүкті преэклампсия: АД 160/100, ем және ЖМЖ тактикасы'},{i:'👶',t:'3 жасар балада тырысу: диазепам, дозасы және енгізу'}],
+    aiPh:'Медициналық сұрақ жазыңыз...',aiLoad:'Өзекті деректер іздеуде...',
+    cTitle:'Доза калькуляторы',cSub:'Жас пен салмаққа қарай есептеу',
+    cExLabel:'СҰРАҚ МЫСАЛДАРЫ',
+    shockChips:[{i:'🩸',t:'ЧСС 110, АД 90 — гиповолемиялық шок (қан кету, диарея)'},{i:'🚗',t:'ЧСС 120, АД 80 — жарақаттық шок (ДТО, жарақат)'},{i:'🔥',t:'ЧСС 130, АД 70 — күйік шогы'}],
+    cChips:[{i:'💉',t:'5 жасар бала, 18 кг — церукал в/м неше мл'},{i:'👶',t:'3 жасар бала, 14 кг — анафилаксия, адреналин в/м'},{i:'🌡️',t:'7 жасар бала, 22 кг — тырысу, диазепам в/в'}],
+  
+
+    cPh:'Жасты, салмақты және жағдайды жазыңыз...',
+    cLoad1:'🔍 ҚР ДСМ хаттамаларын іздеуде...',cLoad2:'⚗️ Дозалар тексерілуде...',cLoad3:'🧮 Салмақ бойынша есептеуде...',
+    sParams:'Науқас параметрлері',sDoses:'Доза есебі',sWarn:'Маңызды',sRoute:'Енгізу жолдары',
+    wLabel:'САЛМАҚ',ageLabel:'ЖАС',sitLabel:'ЖАҒДАЙ',
+  },
+  ru:{
+    hSub:'Цифровой ассистент для бригад СМП',hSt:'Онлайн · Готов к работе',
+    hCap:'Быстрая помощь на смене<br>Меньше рутины · Больше точности',hMod:'МОДУЛИ',
+    t1:'Карта вызова',d1:'Быстрое заполнение карты СМП',
+    t2:'Учёт медикаментов',d2:'Контроль прихода и расхода за смену',
+    t3:'Медицинский AI',d3:'Протоколы МЗ РК и быстрые ответы',
+    t4:'Калькулятор',d4:'Дозы детям · Шок-индекс Альговера',
+    hFoot:'MEDIX AI · СМП Казахстан',
+    kTitle:'Карта вызова',kSub:'Карта вызова СМП',
+    kExLabel:'ПРИМЕРЫ',
+    kChips:[{i:'❤️',t:'ОКС, боль в груди 40 мин, потливость, ЭКГ — подъём ST'},{i:'🧠',t:'Инсульт, левосторонний парез, нарушение речи, 1 час назад'},{i:'💉',t:'Анафилаксия, потеря сознания, АД 60/40, сыпь'}],
+kChipsPreg:[{i:'🤰',t:'Схватки каждые 10 минут, срок 38 недель, первые роды'},{i:'🩸',t:'Кровотечение из половых путей, срок 32 недели, боли нет'},{i:'💊',t:'АД 160/100, отёки ног, головная боль, срок 36 недель'}],
+kChipsChild:[{i:'🌡️',t:'Ребёнок 4 года, температура 39.5, судороги 2 минуты, впервые'},{i:'😮‍💨',t:'Ребёнок 6 лет, приступ удушья, свистящее дыхание, бронхиальная астма'},{i:'💉',t:'Ребёнок 2 года, аллергия на антибиотик, сыпь, отёк губ'}],
+    kPh:'Опишите вызов...',ptA:'👤 Взрослый',ptC:'👶 Ребёнок',ptP:'🤰 Беременная',
+    sComplaints:'Жалобы',sMorbi:'Анамнез заболевания',sVitae:'Анамнез жизни',
+    sStatus:'Status Localis',sInstr:'Инструментальные',sDiag:'Диагноз СМП',
+    sMkb:'МКБ-10',sTreat:'Оказанная помощь',sTactics:'Тактика',
+    copy:'Копировать',copied:'✓ Скопировано',loading:'Составляем карту...',
+    mTitle:'Учёт медикаментов',mSub:'Расход и приход за смену',
+    tabRashod:'📤 Расход',tabPrihod:'📥 Приход',tabOstatki:'📦 Остатки',
+    stab1:'💊 Таблетки',stab2:'💉 Ампулы',stab3:'⭐ Дорог.',stab4:'🩹 Изделия',
+    jBtnR:'📋 Журнал расхода',jBtnP:'📋 Журнал прихода',
+    resetBtn:'🔄 Закрыть смену',jUsed:'Использовано',jInc:'Приход',
+    addCall:'+ добавить вызов',
+    aiTitle:'Медицинский AI',aiSub:'Протоколы МЗ РК · Актуальные данные',
+    aiExLabel:'ПРИМЕРЫ ВОПРОСОВ',
+    aiChips:[{i:'❤️',t:'Алгоритм помощи при ОКС: дозировки и последовательность по МЗ РК'},{i:'🤰',t:'Преэклампсия у беременной: АД 160/100, лечение и тактика СМП'},{i:'👶',t:'Судороги у ребёнка 3 лет: диазепам, дозировка и введение'}],
+    aiPh:'Задайте медицинский вопрос...',aiLoad:'Ищу актуальные данные...',
+    cTitle:'Калькулятор',cSub:'Дозы детям · Шок-индекс Альговера',cTabDose:'💊 Дозы детям',cTabShock:'⚡ Шок-индекс',
+    cExLabel:'ПРИМЕРЫ ЗАПРОСОВ',
+    shockChips:[{i:'🩸',t:'ЧСС 110, АД 90 — гиповолемический шок (кровопотеря, рвота, диарея)'},{i:'🚗',t:'ЧСС 120, АД 80 — травматический шок (ДТП, травмы)'},{i:'🔥',t:'ЧСС 130, АД 70 — ожоговый шок'}],
+    
+cChips:[
+      {i:'💉',t:'Ребёнок 5 лет, 18 кг — церукал в/м сколько мл'},
+      {i:'👶',t:'Ребёнок 3 года, 14 кг — анафилаксия, адреналин в/м'},
+      {i:'🌡️',t:'Ребёнок 7 лет, 22 кг — судороги, диазепам в/в'}
+    ],
+  
+
+    cPh:'Укажите возраст, вес и ситуацию...',
+    cLoad1:'🔍 Ищу актуальные протоколы МЗ РК...',cLoad2:'⚗️ Проверяю дозировки...',cLoad3:'🧮 Считаю по весу и возрасту...',
+    sParams:'Параметры пациента',sDoses:'Расчёт доз',sWarn:'Важно',sRoute:'Пути введения',
+    wLabel:'ВЕС',ageLabel:'ВОЗРАСТ',sitLabel:'СИТУАЦИЯ',
+  }
+};
+function t(k){return T[lang][k]||T.ru[k]||'';}
+
+// ================================================================
+// THEME
+// ================================================================
+function applyTheme(){
+  document.body.classList.toggle('lt',!dark);
+  const tkEl = document.getElementById('h-tk');
+  if(tkEl) tkEl.textContent = dark?'🌙':'☀️';
+}
+function toggleTheme(){
+  dark=!dark;
+  localStorage.setItem('medix_theme',dark?'dark':'light');
+  applyTheme();
+}
+
+// ================================================================
+// LANG
+// ================================================================
+function setLang(l){
+  lang=l;
+  localStorage.setItem('medix_lang',l);
+  renderAll();
+}
+
+function renderAll(){
+  // HOME
+  setText('h-sub',t('hSub')); setHTML('h-cap',t('hCap'));
+  setText('h-st',t('hSt')); setText('h-mod',t('hMod'));
+  setText('h-t1',t('t1'));setText('h-d1',t('d1'));
+  setText('h-t2',t('t2'));setText('h-d2',t('d2'));
+  setText('h-t3',t('t3'));setText('h-d3',t('d3'));
+  setText('h-t4',t('t4'));setText('h-d4',t('d4'));
+  setText('h-foot',t('hFoot'));
+  // lang buttons
+  ['h-kz','k-kz','ai-kz','c-kz'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('on',lang==='kz');});
+  ['h-ru','k-ru','ai-ru','c-ru'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('on',lang==='ru');});
+  // KARTA
+  setText('k-title',t('kTitle'));setText('k-sub',t('kSub'));
+  setText('k-ex-label',t('kExLabel'));
+  setText('pt-adult',t('ptA'));setText('pt-child',t('ptC'));setText('pt-preg',t('ptP'));
+  setAttr('k-inp','placeholder',t('kPh'));
+  renderKartaChips();
+  // MEDS
+  setText('m-title',t('mTitle'));setText('m-sub',t('mSub'));
+  setText('mt-rashod',t('tabRashod'));setText('mt-prihod',t('tabPrihod'));setText('mt-ostatki',t('tabOstatki'));
+  setText('m-jbtn-r',t('jBtnR'));setText('m-jbtn-p',t('jBtnP'));
+  setText('m-reset',t('resetBtn'));
+  renderMedSubTabs();renderRashodList();renderPrihodList();updateShiftTime();
+  // AI
+  setText('ai-title',t('aiTitle'));setText('ai-sub',t('aiSub'));
+  setText('ai-ex-label',t('aiExLabel'));
+  setAttr('ai-inp','placeholder',t('aiPh'));
+  renderAiChips();
+  // CALC
+  setText('c-title',t('cTitle'));setText('c-sub',t('cSub'));
+  setText('ct-dose-lbl',t('cTabDose'));setText('ct-shock-lbl',t('cTabShock'));
+  setText('c-ex-label',t('cExLabel'));
+  setText('sh-ex-label',t('cExLabel'));
+  setAttr('c-inp','placeholder',t('cPh'));
+  renderChipsFor('c-chips',t('cChips'),'setCalcEx(this)');
+
+  renderChipsFor('sh-chips',t('shockChips'),'setShockEx(this)');
+}
+
+function renderChipsFor(contId, chips, onclick){
+  const el=document.getElementById(contId);
+  if(!el||!chips) return;
+  el.innerHTML=chips.map(c=>`<div class="chip" onclick="${onclick}"><span class="chip-icon">${c.i}</span><span>${c.t}</span></div>`).join('');
+}
+function setEx(inpId, chipEl){
+  const txt=chipEl.querySelector('span:last-child').textContent;
+  const inp=document.getElementById(inpId);
+  inp.value=txt;ar(inp);inp.focus();
+}
+function setCalcEx(chipEl){
+  const txt=chipEl.querySelector('span:last-child').textContent;
+  const inp=document.getElementById('c-inp');
+  inp.value=txt;ar(inp);inp.focus();
+  document.getElementById('c-welcome').style.display='none';
+  document.getElementById('c-back-btn').style.display='block';
+}
+
+function setText(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
+function setHTML(id,v){const el=document.getElementById(id);if(el)el.innerHTML=v;}
+function setAttr(id,attr,v){const el=document.getElementById(id);if(el)el.setAttribute(attr,v);}
+
+// ================================================================
+// NAVIGATION
+// ================================================================
+function goTo(screen){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+screen).classList.add('active');
+  if(screen==='meds'){renderMedSubTabs();renderRashodList();renderPrihodList();updateShiftTime();}
+}
+
+// ================================================================
+// UTILS
+// ================================================================
+function ar(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,130)+'px';}
+function kKey(e,prefix){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();if(prefix==='k')genKarta();else if(prefix==='ai')genAI();else genCalc();}}
+function cpBtn(btn,txt){
+  navigator.clipboard.writeText(txt).then(()=>{
+    btn.textContent=t('copied');btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent=t('copy');btn.classList.remove('ok');},2000);
+  });
+}
+function escA(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' ').replace(/"/g,'&quot;');}
+
+// ================================================================
+// KARTA
+// ================================================================
+function setPtype(pt){
+  ptype=pt;
+  document.getElementById('pt-adult').classList.toggle('on',pt==='adult');
+  document.getElementById('pt-child').classList.toggle('on',pt==='child');
+  document.getElementById('pt-preg').classList.toggle('on',pt==='preg');
+  renderKartaChips();
+}
+function renderKartaChips(){
+  let chips;
+  if(ptype==='preg') chips=t('kChipsPreg');
+  else if(ptype==='child') chips=t('kChipsChild');
+  else chips=t('kChips');
+  const cont=document.getElementById('k-chips');
+  if(!cont||!chips) return;
+  cont.innerHTML=chips.map(c=>`<div class="chip" onclick="setKartaEx(this)"><span class="chip-icon">${c.i}</span><span>${c.t}</span></div>`).join('');
+}
+function renderAiChips(){
+  const cont=document.getElementById('ai-chips');
+  const chips=t('aiChips');
+  if(!cont||!chips) return;
+  cont.innerHTML=chips.map(c=>`<div class="chip" onclick="setAiEx(this)"><span class="chip-icon">${c.i}</span><span>${c.t}</span></div>`).join('');
+}
+function setAiEx(chipEl){
+  const txt=chipEl.querySelector('span:last-child').textContent;
+  const inp=document.getElementById('ai-inp');
+  inp.value=txt;ar(inp);inp.focus();
+}
+function setKartaEx(chipEl){
+  const txt=chipEl.querySelector('span:last-child').textContent;
+  const inp=document.getElementById('k-inp');
+  inp.value=txt;ar(inp);inp.focus();
+}
+
+function kartaSystemPrompt(){
+  const isChild=ptype==='child';
+  if(lang==='kz'){
+    if(isChild) return `Сіз — 15 жылдық тәжірибесі бар ЖМЖ фельдшерісіз. Бала пациентіне арналған карта жасаңыз.\nӨмірінің анамнезі: "Анасының сөзімен бала диспансерлік есепте тұрмайды. Боткин ауруын жоққа шығарады. Аллергоанамнез ауырластырылмаған. Жұқпалы байланысты жоққа шығарады. Соңғы аптада қаладан тысқары шықпаған. Жарақат пен операцияларды өткермеген. Ауырған аурулардан: ЖРВИ, ЖРА."\nStatus Localis: АД/пульс/сатурациясыз. Жас нәрестеде: "Үлкен нүкте тегіс, шықпаған, шөгілмеген, өлшемі жас нормасына сәйкес."\nТек JSON, markdown жоқ:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия","Пальпация","Перкуссия","Термометрия","Аускультация","ЧСС","ЧДД"],"ecg":"синусовый ритм, ЧСС соответствует возрасту","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+    return `Сіз — 15 жылдық тәжірибесі бар ЖМЖ фельдшерісіз. Ересек пациентке карта жасаңыз.\nӨмірінің анамнезі: "Науқастың сөзімен созылмалы аурулар жоқ. Туберкулез, вирустық гепатит, ЖБ жоққа шығарады. Аллергиялық реакцияларды жоққа шығарады. Соңғы айда қаладан тысқары шықпаған. Жұқпалы науқастармен байланысы болмаған."\nStatus Localis: АД/пульс/сатурациясыз. FAST-тест нәтижесін жазыңыз.\nТек JSON, markdown жоқ:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия","Пальпация","Аускультация","АД","ЧСС","ЧДД","Термометрия","Запись ЭКГ"],"ecg":"синусовый ритм. ЧСС 80 уд/мин, данных за ОКС нет","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+  }
+  if(isChild) return `Ты — опытный фельдшер СМП Казахстана, 15 лет стажа. Заполни карту вызова для ребёнка.\nАнамнез жизни: "Со слов матери ребёнок на диспансерном учёте не состоит. Болезнь Боткина отрицает. Аллергоанамнез не отягощён. Инфекционный контакт отрицает. В течение последней недели за пределы города не выезжала. Травм и оперативных вмешательств не переносила. Из перенесённых заболеваний ОРВИ, ОРЗ."\nStatus Localis: БЕЗ АД/пульса/сатурации. Если грудной — упомяни большой родничок: "ровный, не выбухает, не западает, размер соответствует возрастной норме."\nОтвечай СТРОГО JSON без markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия","Пальпация","Перкуссия","Термометрия","Аускультация","ЧСС","ЧДД"],"ecg":"синусовый ритм, ЧСС соответствует возрасту","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+  if(ptype==='preg') return `Ты — опытный фельдшер СМП Казахстана, 15 лет стажа. Заполни карту вызова для беременной пациентки.\nАнамнез жизни: "Со слов пациента хронические заболевания отрицает. Состоит на диспансерном учете у гинеколога по беременности. Гинекологический анамнез: менархе с 12 лет, цикл 28 дней. Акушерский анамнез: заполни по ситуации. ТБЦ, болезнь Боткина отрицает. Аллергии отрицает. Эпидемиологический анамнез: за пределы города не выезжала, контактов с инфекционными больными не было."\nStatus Localis: опиши локальный статус. Обязательно: состояние живота, шевеление плода, сердцебиение плода (уд/мин), тонус матки, схватки (если есть — частота и длительность), ВДМ, окружность живота, выделения из половых путей. БЕЗ АД/ЧСС/ЧДД — они в инструментальных.\nОтвечай СТРОГО JSON без markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия: SpO2 ...%","АД ... мм рт.ст.","ЧСС ... уд/мин","ЧДД ... в мин","Термометрия: t ...°C","КТГ плода"],"ecg":"синусовый ритм. ЧСС 80 уд/мин","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+  return `Ты — опытный фельдшер СМП Казахстана, 15 лет стажа. Пиши карту вызова профессионально.\nАнамнез жизни: "Со слов пациента хронические заболевания отрицает. Туберкулёз, вирусный гепатит, ББ отрицает. Аллергические реакции отрицает. Эпидемиологический анамнез: в течение последнего месяца за пределы города не выезжал(а). Контактов с инфекционными больными не было."\nStatus Localis: опиши ТОЛЬКО локальный статус органов и систем (осмотр, пальпация, перкуссия, аускультация). БЕЗ АД, ЧСС, ЧДД, SpO2 — они в инструментальных.\nОтвечай СТРОГО JSON без markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия: SpO2 ...%","АД ... мм рт.ст.","ЧСС ... уд/мин","ЧДД ... в мин","Термометрия: t ...°C","Запись ЭКГ"],"ecg":"синусовый ритм. ЧСС 80 уд/мин, данных за ОКС нет","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
+}
+
+async function genKarta(){
+  const inp=document.getElementById('k-inp');
+  const txt=inp.value.trim();if(!txt)return;
+  document.getElementById('k-welcome').style.display='none';
+  document.getElementById('k-send').disabled=true;
+  document.getElementById('k-results').innerHTML=loadCard(t('loading'));
+  document.getElementById('k-mid').scrollTop=0;
+  const start=Date.now();
+  try{
+    const r=await apiCall({system:kartaSystemPrompt(),messages:[{role:'user',content:(lang==='kz'?'Шақыру:\n':'Вызов:\n')+txt}],max_tokens:2000});
+    let raw=r.content[0].text.replace(/```json|```/g,'').trim();
+    const jm=raw.match(/\{[\s\S]*\}/);if(jm)raw=jm[0];
+    const d=JSON.parse(raw);
+    renderKartaResult(d,((Date.now()-start)/1000).toFixed(1));
+    inp.value='';inp.style.height='';
+  }catch(e){showErr('k-results',e.message);}
+  document.getElementById('k-send').disabled=false;
+}
+
+function renderKartaResult(d,time){
+  const secs=[
+    {l:t('sComplaints'),dot:'db',body:(lang==='kz'?'Науқас мынадай шағымдар ұсынады: ':'На момент осмотра жалобы на ')+d.complaints},
+    {l:t('sMorbi'),dot:'db',body:d.anamnesis_morbi},
+    {l:t('sVitae'),dot:'dgr',body:d.anamnesis_vitae},
+    {l:t('sStatus'),dot:'dg',sp:'status',body:d.status_localis},
+    {l:t('sInstr'),dot:'dgr',sp:'tags',body:d.instruments,ecg:d.ecg},
+    {l:t('sDiag'),dot:'dy',body:d.diagnosis},
+    {l:t('sMkb'),dot:'dp',sp:'mkb',body:d.mkb},
+    {l:t('sTreat'),dot:'dm',body:d.treatment},
+    {l:t('sTactics'),dot:'dr',body:d.tactics},
+  ];
+  let html='';
+  secs.forEach((s,i)=>{
+    const rawTxt=typeof s.body==='string'?s.body:JSON.stringify(s.body);
+    let b='';
+    if(s.sp==='status') b=`<div class="status-box">${s.body}</div>`;
+    else if(s.sp==='tags') b=`<div style="font-size:12.5px;line-height:1.9;color:var(--text2)">${(s.body||[]).map(x=>`${x}`).join('<br>')}</div>${s.ecg?`<div style="margin-top:8px;font-size:12px;color:var(--text2)">ЭКГ: ${s.ecg}</div>`:''}`;
+    else if(s.sp==='mkb') b=`<div class="mkb-list">${(s.body||[]).map(m=>`<div class="mkb-item"><span class="mkb-code">${m.code}</span><span class="mkb-name">${m.name}</span></div>`).join('')}</div>`;
+    else b=s.body;
+    html+=`<div class="rcard" style="animation-delay:${i*0.04}s"><div class="rcard-head"><div class="rcard-label"><span class="dot ${s.dot}"></span>${s.l}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(rawTxt)}')">${t('copy')}</button></div><div class="rcard-body">${b}</div></div>`;
+  });
+  html+=`<div class="time-info">${time} сек · </div>`;
+  document.getElementById('k-results').innerHTML=html;
+}
+
+// ================================================================
+// MEDS DATA
+// ================================================================
+const LIST1=[
+  {id:'l1_1',name:'Ацетилсалициловая к-та',dose:'500 мг, табл'},{id:'l1_2',name:'Бисопролол',dose:'5/10 мг, табл'},
+  {id:'l1_3',name:'Беродуал / Вентолин',dose:'раствор для инг.'},{id:'l1_4',name:'Кворекс',dose:'75 мг, табл'},
+  {id:'l1_5',name:'Брилинта',dose:'90 мг, табл'},{id:'l1_6',name:'Кетатоп',dose:'50 мг, табл'},
+  {id:'l1_7',name:'Лорноксикам',dose:'8 мг, табл'},{id:'l1_8',name:'Каптоприл',dose:'25 мг, табл'},
+  {id:'l1_9',name:'Ибупрофен / Биброн',dose:'200/400 мг, табл'},{id:'l1_10',name:'Лизиноприл',dose:'10 мг, табл'},
+  {id:'l1_11',name:'Коринфар / Нифедипин',dose:'10 мг, табл'},{id:'l1_12',name:'Спазерин / Меверин',dose:'135 мг, табл'},
+  {id:'l1_13',name:'Лоратал',dose:'10 мг, табл'},{id:'l1_14',name:'Цефекон',dose:'100 мг, свечи'},{id:'l1_14b',name:'Цефекон',dose:'250 мг, свечи'},
+  {id:'l1_15',name:'Парацетамол',dose:'80 мг, свечи'},{id:'l1_15b',name:'Парацетамол',dose:'250 мг, свечи'},{id:'l1_16',name:'Парацетамол',dose:'500 мг, табл'},
+  {id:'l1_17',name:'Фуросемид',dose:'40 мг, табл'},{id:'l1_18',name:'Физиотенз',dose:'0.2/0.4 мг, табл'},
+  {id:'l1_19',name:'БИ-тест',dose:'тест-полоска'},{id:'l1_22',name:'Тривентин',dose:'250 мг, табл'},
+  {id:'l1_23',name:'Сальбутамол',dose:'2.5 мг/2.5 мл, небулы'},{id:'l1_24',name:'Нитроминт / Нитрозимик',dose:'0.4 мг, спрей'},
+  {id:'l1_25',name:'Тест белок',dose:'тест-полоска'},{id:'l1_26',name:'Тест алкоголь',dose:'тест'},
+  {id:'l1_27',name:'Аммиак',dose:'10%, р-р'},{id:'l1_28',name:'Регидрон',dose:'пакет'},
+  {id:'l1_29',name:'Лидокаин спрей',dose:'10%, спрей'},{id:'l1_30',name:'Уголь активированный',dose:'250 мг, табл'},
+  {id:'l1_31',name:'Бефрон',dose:'суппозитории'},{id:'l1_32',name:'Пантенол',dose:'спрей'},{id:'l1_32b',name:'Гидрогель',dose:'гель'},
+  {id:'l1_33',name:'Перекись водорода',dose:'3%, р-р'},
+];
+const LIST2=[
+  {id:'l2_1',name:'Адреналин',dose:'0.1%, 1 мл'},{id:'l2_2',name:'Аллергопресс',dose:'1 мг/мл, 1 мл'},
+  {id:'l2_3',name:'Атропин',dose:'0.1%, 1 мл'},{id:'l2_4',name:'Аскорбиновая кислота',dose:'5%, 2 мл'},
+  {id:'l2_5',name:'Тиамин (В1)',dose:'5%, 1 мл'},{id:'l2_6',name:'Пиридоксин (В6)',dose:'5%, 1 мл'},
+  {id:'l2_7',name:'Глюкоза',dose:'40%, 20 мл'},{id:'l2_8',name:'Диклоген',dose:'75 мг/3 мл'},
+  {id:'l2_9',name:'Димедрол',dose:'1%, 1 мл'},{id:'l2_10',name:'Дротаверин',dose:'2%, 2 мл'},
+  {id:'l2_11',name:'Левомицетин',dose:'0.25%, 10 мл'},{id:'l2_12',name:'Лидокаин',dose:'2%, 2 мл'},
+  {id:'l2_13',name:'Калия хлорид',dose:'4%, 10 мл'},{id:'l2_14',name:'Магния сульфат',dose:'25%, 10 мл'},
+  {id:'l2_15',name:'Мезатон',dose:'1%, 1 мл'},{id:'l2_16',name:'Церулин',dose:'40 мкг/2 мл'},
+  {id:'l2_17',name:'Новокаин',dose:'0.5%, 5 мл'},{id:'l2_18',name:'Вода для инъекций',dose:'5 мл, амп'},
+  {id:'l2_19',name:'Дигоксин',dose:'0.025%, 1 мл'},{id:'l2_20',name:'Папаверин',dose:'2%, 2 мл'},
+  {id:'l2_21',name:'Платифиллин',dose:'0.2%, 1 мл'},{id:'l2_22',name:'Натрия хлорид 5.0',dose:'10%, 10 мл'},
+  {id:'l2_23',name:'Этамзилат',dose:'12.5%, 2 мл'},{id:'l2_24',name:'Эуфиллин',dose:'2.4%, 10 мл'},
+  {id:'l2_25',name:'Коргликон',dose:'0.06%, 1 мл'},{id:'l2_26',name:'Метопролол',dose:'1 мг/мл, 5 мл'},
+  {id:'l2_27',name:'Кальция хлорид',dose:'10%, 10 мл'},{id:'l2_28',name:'Эбрантил',dose:'25 мг/5 мл'},
+  {id:'l2_29',name:'Гидрогель',dose:'туба'},{id:'l2_30',name:'Повязка противоожоговая',dose:'стерильная'},
+  {id:'l2_31',name:'Зелёнка',dose:'1%, р-р'},
+];
+const LIST3=[
+  {id:'l3_1',name:'Преднизолон',dose:'30 мг/мл, 1 мл'},{id:'l3_2',name:'Дексаметазон',dose:'4 мг/мл, 1 мл'},
+  {id:'l3_3',name:'Феброфид',dose:'100 мг/мл, 2 мл'},{id:'l3_4',name:'Эналаприлат',dose:'1.25 мг/мл, 1 мл'},
+  {id:'l3_5',name:'Фуросемид',dose:'10 мг/мл, 2 мл'},{id:'l3_6',name:'Арикстра',dose:'2.5 мг/0.5 мл'},
+  {id:'l3_7',name:'Гелофузин',dose:'500 мл, фл'},{id:'l3_8',name:'Фраксипарин',dose:'0.3/0.4/0.6 мл'},
+  {id:'l3_9',name:'Беталок',dose:'1 мг/мл, 5 мл'},{id:'l3_10',name:'Кордарон',dose:'50 мг/мл, 3 мл'},
+  {id:'l3_11',name:'Допамин',dose:'40 мг/мл, 5 мл'},{id:'l3_12',name:'Изосорбид динитрат',dose:'1 мг/мл, 10 мл'},
+  {id:'l3_13',name:'Тиосульфат натрия',dose:'30%, 10 мл'},{id:'l3_14',name:'Окситоцин',dose:'5 МЕ/мл, 1 мл'},
+  {id:'l3_15',name:'ГЭК',dose:'6%, 500 мл'},{id:'l3_16',name:'Реополиглюкин 100',dose:'100 мл'},
+  {id:'l3_17',name:'Реополиглюкин 200',dose:'200 мл'},{id:'l3_18',name:'Дисоль',dose:'400 мл'},
+  {id:'l3_19',name:'Аминокапроновая к-та 5%',dose:'100 мл'},{id:'l3_20',name:'Физ. р-р 100 мл',dose:'0.9%, 100 мл'},
+  {id:'l3_21',name:'Физ. р-р 200 мл',dose:'0.9%, 200 мл'},{id:'l3_22',name:'Физ. р-р 400 мл',dose:'0.9%, 400 мл'},
+  {id:'l3_23',name:'Тропонин',dose:'экспресс-тест'},{id:'l3_24',name:'Д-димер',dose:'экспресс-тест'},
+  {id:'l3_25',name:'Глюкоза 5% 200 мл',dose:'5%, 200 мл'},
+];
+const LIST4=[
+  {id:'l4_1',name:'Бахилы',dose:'пар'},{id:'l4_2',name:'Бинт стерильный',dose:'рулон'},
+  {id:'l4_3',name:'Бинт нестерильный',dose:'рулон'},{id:'l4_4',name:'Вазофикс 14',dose:'14G'},
+  {id:'l4_5',name:'Вазофикс 16',dose:'16G'},{id:'l4_6',name:'Вазофикс 18',dose:'18G'},
+  {id:'l4_7',name:'Вазофикс 20',dose:'20G'},{id:'l4_8',name:'Вазофикс 22',dose:'22G'},
+  {id:'l4_9',name:'Вазофикс 24',dose:'24G'},{id:'l4_10',name:'Зажим пупочный',dose:'шт'},
+  {id:'l4_11',name:'Зонд жел. 20/12',dose:'Fr'},{id:'l4_12',name:'Зонд жел. 14/16',dose:'Fr'},
+  {id:'l4_13',name:'Зонд жел. 28/30',dose:'Fr'},{id:'l4_14',name:'Катетер Фолея / Нелатон',dose:'шт'},
+  {id:'l4_15',name:'Маски хирургические',dose:'шт'},{id:'l4_16',name:'Маски усиленные',dose:'FFP2/3'},
+  {id:'l4_17',name:'Лейкопластырь',dose:'рулон'},{id:'l4_18',name:'Транспортир',dose:'шт'},
+  {id:'l4_19',name:'Перчатки стерильные',dose:'пар'},{id:'l4_20',name:'Перчатки нестерильные',dose:'пар'},
+  {id:'l4_21',name:'Система в/в',dose:'шт'},{id:'l4_22',name:'Система БИО',dose:'шт'},
+  {id:'l4_23',name:'Шпатель',dose:'шт'},{id:'l4_24',name:'Спирт. салфетки',dose:'шт'},
+  {id:'l4_25',name:'Тест-полосы на сахар',dose:'шт'},{id:'l4_26',name:'Скарификаторы',dose:'шт'},
+  {id:'l4_27',name:'Инсул. шприц',dose:'1 мл'},{id:'l4_28',name:'Шприц Жане',dose:'150 мл'},
+  {id:'l4_29',name:'Шприц 2.0',dose:'2 мл'},{id:'l4_30',name:'Шприц 5.0',dose:'5 мл'},
+  {id:'l4_31',name:'Шприц 10.0',dose:'10 мл'},{id:'l4_32',name:'Шприц 20.0',dose:'20 мл'},
+];
+const LISTS=[null,LIST1,LIST2,LIST3,LIST4];
+
+function loadMedsState(){
+  const def={};[...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{def[d.id]={r:0,p:0,o:0};});
+  try{return JSON.parse(localStorage.getItem('medix_meds_v3')||'null')||def;}catch(e){return def;}
+}
+function saveMedsState(){localStorage.setItem('medix_meds_v3',JSON.stringify(medsState));}
+function loadJournal(key){try{return JSON.parse(localStorage.getItem(key)||'[]');}catch(e){return[];}}
+function saveJournal(key,arr){localStorage.setItem(key,JSON.stringify(arr));}
+function loadExpEntries(){try{return JSON.parse(localStorage.getItem('medix_exp_v3')||'{}');}catch(e){return{};}}
+function saveExpEntries(){localStorage.setItem('medix_exp_v3',JSON.stringify(expEntries));}
+
+let medsState=loadMedsState();
+let rashodJournal=loadJournal('medix_rjour_v3');
+let prihodJournal=loadJournal('medix_pjour_v3');
+let ostatkiJournal=loadJournal('medix_ojour_v3');
+let expEntries=loadExpEntries();
+let shiftStart=localStorage.getItem('medix_shift_v3')||new Date().toISOString();
+
+function updateShiftTime(){
+  const diff=Math.floor((Date.now()-new Date(shiftStart))/60000);
+  const h=Math.floor(diff/60),m=diff%60;
+  const el=document.getElementById('shift-time');
+  if(el) el.textContent=`${h} ч ${m} мин`;
+}
+setInterval(updateShiftTime,60000);
+
+function renderMedSubTabs(){
+  const rtabs=document.getElementById('rashod-stabs');
+  const ptabs=document.getElementById('prihod-stabs');
+  const otabs=document.getElementById('ostatki-stabs');
+  if(!rtabs||!ptabs) return;
+  const labels=[t('stab1'),t('stab2'),t('stab3'),t('stab4')];
+  rtabs.innerHTML=labels.map((l,i)=>`<div class="stab${medsRashodTab===i+1?' on':''}" onclick="switchMSubTab('r',${i+1})">${l}</div>`).join('');
+  ptabs.innerHTML=labels.map((l,i)=>`<div class="stab${medsIncomeTab===i+1?' on':''}" onclick="switchMSubTab('p',${i+1})">${l}</div>`).join('');
+  if(otabs) otabs.innerHTML=labels.map((l,i)=>`<div class="stab${medsOstatkiTab===i+1?' on':''}" onclick="switchMSubTab('o',${i+1})">${l}</div>`).join('');
+}
+function switchMTab(tab){
+  document.getElementById('pane-rashod').classList.toggle('active',tab==='rashod');
+  document.getElementById('pane-prihod').classList.toggle('active',tab==='prihod');
+  document.getElementById('pane-ostatki').classList.toggle('active',tab==='ostatki');
+  document.getElementById('mt-rashod').classList.toggle('on',tab==='rashod');
+  document.getElementById('mt-prihod').classList.toggle('on',tab==='prihod');
+  document.getElementById('mt-ostatki').classList.toggle('on',tab==='ostatki');
+  if(tab==='ostatki') renderOstatkiList();
+}
+function switchMSubTab(side,n){
+  if(side==='r'){medsRashodTab=n;renderRashodList();}
+  else if(side==='p'){medsIncomeTab=n;renderPrihodList();}
+  else{medsOstatkiTab=n;renderOstatkiList();}
+  renderMedSubTabs();
+}
+
+function renderRashodList(){
+  const cont=document.getElementById('rashod-list');
+  if(!cont) return;
+  cont.innerHTML='';
+  const list=LISTS[medsRashodTab];
+  if(medsRashodTab===3){renderList3(cont,list);}
+  else{
+    list.forEach((item,i)=>{
+      const val=medsState[item.id]?.r||0;
+      const row=document.createElement('div');
+      row.className='item-row';row.style.animationDelay=(i*0.02)+'s';
+      row.innerHTML=`<div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div><div class="counter"><div class="cnt-btn m" onclick="changeR('${item.id}',-1)">−</div><div class="cnt-val${val===0?' zero':''}" id="rv-${item.id}">${val}</div><div class="cnt-btn p" onclick="changeR('${item.id}',+1)">+</div></div>`;
+      cont.appendChild(row);
+    });
+  }
+}
+function changeR(id,delta){
+  if(!medsState[id]) medsState[id]={r:0,p:0};
+  medsState[id].r=Math.max(0,(medsState[id].r||0)+delta);
+  saveMedsState();
+  const el=document.getElementById('rv-'+id);
+  if(el){el.textContent=medsState[id].r;el.className='cnt-val'+(medsState[id].r===0?' zero':'');}
+  if(delta>0){
+    const item=[...LIST1,...LIST2,...LIST4].find(x=>x.id===id);
+    if(item){rashodJournal.push({id,name:item.name,dose:item.dose,qty:1,time:now()});saveJournal('medix_rjour_v3',rashodJournal);}
+  }
+}
+
+function renderList3(cont,list){
+  list.forEach((item,i)=>{
+    const entries=expEntries[item.id]||[{call:'',qty:''}];
+    const row=document.createElement('div');
+    row.className='item-row exp-row';row.style.animationDelay=(i*0.02)+'s';
+    const eh=entries.map((e,ei)=>`<div class="exp-entry"><input class="exp-inp" placeholder="${lang==='kz'?'№ шақыру':'№ вызова'}" value="${e.call||''}" oninput="upExp('${item.id}',${ei},'call',this.value)"><input class="exp-inp num" type="number" placeholder="${lang==='kz'?'мөл.':'кол.'}" value="${e.qty||''}" oninput="upExp('${item.id}',${ei},'qty',this.value)" min="0"><div class="exp-del" onclick="delExp('${item.id}',${ei})">✕</div></div>`).join('');
+    row.innerHTML=`<div class="exp-top"><div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div></div><div class="exp-entries" id="expE-${item.id}">${eh}</div><div class="exp-add-line" onclick="addExp('${item.id}')">＋ ${t('addCall')}</div>`;
+    cont.appendChild(row);
+  });
+}
+function upExp(itemId,idx,field,val){
+  if(!expEntries[itemId]) expEntries[itemId]=[{call:'',qty:''}];
+  expEntries[itemId][idx][field]=val;
+  saveExpEntries();
+  const item=LIST3.find(x=>x.id===itemId);
+  const entry=expEntries[itemId]?.[idx];
+  if(!item||!entry) return;
+  const key=itemId+'_'+idx;
+  const qty=parseInt(entry.qty)||0;
+  const ei=rashodJournal.findIndex(j=>j.key===key);
+  if(qty>0){
+    const rec={key,id:itemId,name:item.name,dose:item.dose,call:entry.call||'—',qty,time:now()};
+    if(ei>=0) rashodJournal[ei]=rec; else rashodJournal.push(rec);
+  } else {if(ei>=0) rashodJournal.splice(ei,1);}
+  saveJournal('medix_rjour_v3',rashodJournal);
+}
+function addExp(itemId){
+  if(!expEntries[itemId]) expEntries[itemId]=[{call:'',qty:''}];
+  expEntries[itemId].push({call:'',qty:''});
+  saveExpEntries();renderRashodList();
+}
+function delExp(itemId,idx){
+  if(!expEntries[itemId]||expEntries[itemId].length<=1) expEntries[itemId]=[{call:'',qty:''}];
+  else expEntries[itemId].splice(idx,1);
+  const key=itemId+'_'+idx;
+  rashodJournal=rashodJournal.filter(j=>j.key!==key);
+  saveExpEntries();saveJournal('medix_rjour_v3',rashodJournal);renderRashodList();
+}
+
+function renderOstatkiList(){
+  const cont=document.getElementById('ostatki-list');
+  if(!cont) return;
+  cont.innerHTML='';
+  const list=LISTS[medsOstatkiTab];
+  list.forEach((item,i)=>{
+    const val=medsState[item.id]?.o||0;
+    const row=document.createElement('div');
+    row.className='item-row';row.style.animationDelay=(i*0.02)+'s';
+    row.innerHTML=`<div class="item-name"><div class="item-title">${item.name}</div><div class="item-dose">${item.dose}</div></div><div class="counter"><div class="cnt-btn m" onclick="changeO('${item.id}',-1)">−</div><input type="number" min="0" value="${val}" style="width:44px;text-align:center;font-size:14px;font-weight:700;background:var(--inp);border:1px solid var(--border2);border-radius:8px;color:var(--text1);padding:4px 2px;font-family:'Inter',sans-serif;outline:none;" id="ov-${item.id}" oninput="setO('${item.id}',this.value)"><div class="cnt-btn p" onclick="changeO('${item.id}',+1)">+</div></div>`;
+   
+    cont.appendChild(row);
+  });
+}
+
+   function setO(id,val){
+  const num=Math.max(0,parseInt(val)||0);
+  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
+  medsState[id].o=num;
+  saveMedsState();
+  const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
+  if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
+}
+ function setO(id,val){
+  const num=Math.max(0,parseInt(val)||0);
+  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
+  medsState[id].o=num;
+  saveMedsState();
+  const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
+  if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
+}
+ function setO(id,val){
+ const num=Math.max(0,parseInt(val)||0);
+ if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
+ medsState[id].o=num;
+ saveMedsState();
+ const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
+ if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
+}function changeO(id,delta){
+  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
+  medsState[id].o=Math.max(0,(medsState[id].o||0)+delta);
+  saveMedsState();
+   const el=document.getElementById('ov-'+id);
+  if(el) el.value=medsState[id].o;
+  const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
+  if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:medsState[id].o,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
+}
+function confirmResetPrihod(){
+  if(!confirm(lang==='kz'?'Кірісті тазалауды растайсыз ба?':'Подтвердить очистку прихода?')) return;
+  [...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{if(medsState[d.id]) medsState[d.id].p=0;});
+  prihodJournal=[];
+  saveMedsState();saveJournal('medix_pjour_v3',prihodJournal);
+  renderPrihodList();
+}
+function confirmResetOstatki(){
+  if(!confirm(lang==='kz'?'Қалдықты тазалауды растайсыз ба?':'Подтвердить очистку остатков?')) return;
+  [...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{if(medsState[d.id]) medsState[d.id].o=0;});
+  ostatkiJournal=[];
+  saveMedsState();saveJournal('medix_ojour_v3',ostatkiJournal);
+  renderOstatkiList();
+}
+function renderPrihodList(){
+  const cont=document.getElementById('prihod-list');
+  if(!cont) return;
+  cont.innerHTML='';
+  const list=LISTS[medsIncomeTab];
+  list.forEach((item,i)=>{
+    const val=medsState[item.id]?.p||0;
+    const row=document.createElement('div');
+    row.className='income-row';row.style.animationDelay=(i*0.02)+'s';
+    row.innerHTML=`<div class="income-name"><div class="income-title">${item.name}</div><div class="income-dose">${item.dose}</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="cnt-btn m" onclick="changeP('${item.id}',-1)">−</div><div class="income-val${val===0?' zero':''}" id="pv-${item.id}">${val}</div><div class="cnt-btn p" onclick="changeP('${item.id}',+1)">+</div></div>`;
+    cont.appendChild(row);
+  });
+}
+function changeP(id,delta){
+  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
+  medsState[id].p=Math.max(0,(medsState[id].p||0)+delta);
+  saveMedsState();
+  const el=document.getElementById('pv-'+id);
+  if(el){el.textContent=medsState[id].p;el.className='income-val'+(medsState[id].p===0?' zero':'');}
+  const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
+  if(item&&delta>0){prihodJournal.push({id,name:item.name,dose:item.dose,qty:1,time:now()});saveJournal('medix_pjour_v3',prihodJournal);}
+}
+
+function openJournal(type){
+  const overlay=document.getElementById('journal-overlay');
+  const titleEl=document.getElementById('journal-title');
+  const cont=document.getElementById('journal-content');
+  overlay.classList.add('show');
+
+  const groups=[
+    {key:'1',label:lang==='kz'?'💊 Таблетка':'💊 Таблетки',ids:LIST1.map(x=>x.id)},
+    {key:'2',label:lang==='kz'?'💉 Ампула':'💉 Ампулы',ids:LIST2.map(x=>x.id)},
+    {key:'3',label:lang==='kz'?'⭐ Қымбат':'⭐ Дорогостоящие',ids:LIST3.map(x=>x.id)},
+    {key:'4',label:lang==='kz'?'🩹 Бұйымдар':'🩹 Изделия',ids:LIST4.map(x=>x.id)},
+  ];
+  const allItems=[...LIST1,...LIST2,...LIST3,...LIST4];
+
+  if(type==='rashod'){
+    titleEl.textContent=t('jBtnR');
+    if(!rashodJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Шығыс жоқ':'Расходов нет'}</div>`;return;}
+    let html='';
+    groups.forEach(g=>{
+      const items=rashodJournal.filter(j=>g.ids.includes(j.id));
+      if(!items.length) return;
+      const byId={};
+      items.forEach(j=>{if(!byId[j.id]) byId[j.id]={name:j.name,dose:j.dose,entries:[]};byId[j.id].entries.push(j);});
+      const total=items.reduce((s,e)=>s+(parseInt(e.qty)||0),0);
+      html+=`<div style="padding:8px 13px 5px;background:var(--tag-bg);border-bottom:1px solid var(--border);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);">${g.label} · ${lang==='kz'?'Барлығы':'Итого'}: ${total}</div>`;
+      Object.values(byId).forEach(g=>{
+        const tot=g.entries.reduce((s,e)=>s+(parseInt(e.qty)||0),0);
+        const rows=g.entries.map(e=>`<div style="display:flex;justify-content:space-between;padding:2px 0;"><span style="font-size:11px;color:var(--sub)">${e.call?'№ '+e.call:'—'} · ${e.time}</span><span style="font-size:11px;font-weight:700;color:var(--warn)">${e.qty} шт</span></div>`).join('');
+        html+=`<div class="jentry"><div class="jentry-top"><div class="jentry-name">${g.name}</div><div class="jentry-qty">${tot} шт</div></div><div class="jentry-meta">${g.dose}</div>${rows}</div>`;
+      });
+    });
+    cont.innerHTML=html;
+
+  } else if(type==='prihod'){
+    titleEl.textContent=t('jBtnP');
+    if(!prihodJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Кіріс жоқ':'Приходов нет'}</div>`;return;}
+    let html='';
+    groups.forEach(g=>{
+      const items=prihodJournal.filter(j=>g.ids.includes(j.id));
+      if(!items.length) return;
+      const byId={};
+      items.forEach(j=>{if(!byId[j.id]) byId[j.id]={name:j.name,dose:j.dose,total:0};byId[j.id].total++;});
+      const total=items.length;
+      html+=`<div style="padding:8px 13px 5px;background:var(--tag-bg);border-bottom:1px solid var(--border);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);">${g.label} · ${lang==='kz'?'Барлығы':'Итого'}: ${total}</div>`;
+      Object.values(byId).forEach(item=>{
+        html+=`<div class="ientry"><div class="ientry-top"><div class="ientry-name">${item.name}</div><div class="ientry-qty">+${item.total}</div></div><div class="ientry-meta">${item.dose}</div></div>`;
+      });
+    });
+    cont.innerHTML=html;
+
+  } else if(type==='ostatki'){
+    titleEl.textContent=lang==='kz'?'📋 Қалдық журналы':'📋 Журнал остатков';
+    if(!ostatkiJournal.length){cont.innerHTML=`<div class="empty-state">${lang==='kz'?'Қалдық жоқ':'Остатков нет'}</div>`;return;}
+    let html='';
+    groups.forEach(g=>{
+      const byId={};
+      ostatkiJournal.filter(j=>g.ids.includes(j.id)).forEach(j=>{byId[j.id]={name:j.name,dose:j.dose,qty:j.qty,time:j.time};});
+      if(!Object.keys(byId).length) return;
+      const total=Object.values(byId).reduce((s,x)=>s+x.qty,0);
+      html+=`<div style="padding:8px 13px 5px;background:var(--tag-bg);border-bottom:1px solid var(--border);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);">${g.label} · ${lang==='kz'?'Барлығы':'Итого'}: ${total}</div>`;
+      Object.values(byId).forEach(item=>{
+        html+=`<div class="ientry"><div class="ientry-top"><div class="ientry-name">${item.name}</div><div class="ientry-qty">${item.qty} шт</div></div><div class="ientry-meta">${item.dose} · ${item.time}</div></div>`;
+      });
+    });
+    cont.innerHTML=html;
+  }
+}
+
+  
+
+function closeJournal(){document.getElementById('journal-overlay').classList.remove('show');}
+function closeJournalBg(e){if(e.target===document.getElementById('journal-overlay'))closeJournal();}
+
+function confirmReset(){
+  if(!confirm(lang==='kz'?'Кезеңді жабуды растайсыз ба?':'Подтвердить закрытие смены?')) return;
+  [...LIST1,...LIST2,...LIST3,...LIST4].forEach(d=>{medsState[d.id]={r:0,p:0};});
+  rashodJournal=[];prihodJournal=[];expEntries={};
+  shiftStart=new Date().toISOString();
+  localStorage.setItem('medix_shift_v3',shiftStart);
+  saveMedsState();saveJournal('medix_rjour_v3',rashodJournal);saveJournal('medix_pjour_v3',prihodJournal);saveExpEntries();
+  updateShiftTime();renderRashodList();renderPrihodList();
+}
+
+// ================================================================
+// AI CHAT
+// ================================================================
+function aiSystemPrompt(){
+  if(lang==='kz') return `Сіз — Қазақстан жедел медициналық жәрдемінің тәжірибелі фельдшерісіз (15 жыл). ҚР ДСМ хаттамалары мен халықаралық нұсқаулықтар (WHO, ERC) бойынша нақты, практикалық жауаптар беріңіз. Жауапты нақты бөлімдерге бөліңіз. Қазақ тілінде жауап беріңіз.`;
+  return `Ты — опытный фельдшер скорой медицинской помощи Казахстана, 15 лет стажа. Давай чёткие, практические ответы по протоколам МЗ РК и международным руководствам (WHO, ERC, ILCOR). Структурируй ответ: Определение → Алгоритм → Дозировки → Тактика. ЖИРНЫМ выделяй критически важное. Отвечай на русском языке.`;
+}
+
+async function genAI(){
+  const inp=document.getElementById('ai-inp');
+  const txt=inp.value.trim();if(!txt) return;
+  document.getElementById('ai-welcome').style.display='none';
+  document.getElementById('ai-msgs').style.display='flex';
+  aiHistory.push({role:'user',content:txt});
+  appendUserMsg(txt,'ai-msgs');
+  inp.value='';inp.style.height='';
+  document.getElementById('ai-send').disabled=true;
+  const loadId=appendLoading('ai-msgs');
+  scrollMid('ai-mid');
+  try{
+    const r=await apiCall({system:aiSystemPrompt(),messages:aiHistory,max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}]});
+    let fullText='';
+    r.content.forEach(b=>{if(b.type==='text')fullText+=b.text;});
+    aiHistory.push({role:'assistant',content:r.content});
+    removeLoading(loadId);
+    appendAIMsg(fullText,'ai-msgs');
+  }catch(e){removeLoading(loadId);appendErrMsg(e.message,'ai-msgs');}
+  document.getElementById('ai-send').disabled=false;
+  scrollMid('ai-mid');
+}
+
+function appendUserMsg(txt,contId){
+  const wrap=document.getElementById(contId);
+  const div=document.createElement('div');
+  div.className='msg user';
+  div.innerHTML=`<div class="msg-avatar">👤</div><div class="msg-bubble">${esc(txt)}</div>`;
+  wrap.appendChild(div);
+}
+function appendLoading(contId){
+  const wrap=document.getElementById(contId);
+  const id='ld-'+Date.now();
+  const div=document.createElement('div');
+  div.className='msg ai';div.id=id;
+  div.innerHTML=`<div class="msg-avatar">🤖</div><div class="loading-bubble"><div class="dots"><div class="dot-anim"></div><div class="dot-anim"></div><div class="dot-anim"></div></div><div style="font-size:12px;color:var(--sub)">${t('aiLoad')}</div></div>`;
+  wrap.appendChild(div);return id;
+}
+function removeLoading(id){const el=document.getElementById(id);if(el)el.remove();}
+function appendErrMsg(msg,contId){
+  const wrap=document.getElementById(contId);
+  const div=document.createElement('div');div.className='msg ai';
+  div.innerHTML=`<div class="msg-avatar">⚠️</div><div class="msg-bubble" style="color:#f87171;border-color:rgba(248,113,113,0.3)">${msg}</div>`;
+  wrap.appendChild(div);
+}
+function appendAIMsg(rawText,contId){
+  const wrap=document.getElementById(contId);
+  const div=document.createElement('div');div.className='msg ai';
+  const formatted=formatAIText(rawText);
+  const plain=rawText;
+  div.innerHTML=`<div class="msg-avatar">🤖</div><div class="msg-bubble">${formatted}<div class="msg-footer"><button class="copy-btn" onclick="cpBtn(this,'${escA(plain)}')">${t('copy')}</button><span style="font-size:10px;color:var(--time-color)">${now()}</span></div></div>`;
+  wrap.appendChild(div);
+}
+function formatAIText(text){
+  let html=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>');
+  const parts=html.split(/\n(?=#{1,3}\s)/);
+  if(parts.length>1){
+    return parts.map(part=>{
+      const hm=part.match(/^#{1,3}\s(.+)\n?([\s\S]*)/);
+      if(hm) return `<div class="ai-section"><div class="ai-section-title">▸ ${hm[1]}</div><div class="ai-section-body">${fmtBody(hm[2]||'')}</div></div>`;
+      return `<div class="ai-section-body">${fmtBody(part)}</div>`;
+    }).join('');
+  }
+  return `<div class="ai-section-body">${fmtBody(html)}</div>`;
+}
+function fmtBody(text){
+  if(!text.trim()) return '';
+  const lines=text.split('\n');let html='';let inL=false;
+  lines.forEach(line=>{
+    const tr=line.trim();if(!tr){if(inL){html+='</ul>';inL=false;}return;}
+    if(/^[-•]\s/.test(tr)||/^\d+\.\s/.test(tr)){
+      if(!inL){html+='<ul>';inL=true;}
+      html+=`<li>${tr.replace(/^[-•]\s/,'').replace(/^\d+\.\s/,'')}</li>`;
+    } else {if(inL){html+='</ul>';inL=false;}html+=`<p>${tr}</p>`;}
+  });
+  if(inL) html+='</ul>';return html;
+}
+
+// ================================================================
+// CALC
+// ================================================================
+function calcSystemPrompt(){
+  if(lang==='kz') return `Сіз — Қазақстан жедел медициналық жәрдемінің тәжірибелі фельдшерісіз. Дозаны нақты және қарапайым есептеңіз.
+
+МАҢЫЗДЫ ЕРЕЖЕЛЕР:
+1. Нақты мл санын беріңіз — мысалы "0.4 мл" немесе "1.5 мл"
+2. Формуланы қысқаша көрсетіңіз — мысалы "0.1 мг/кг × 18 кг = 1.8 мг = 1.8 мл"
+3. Препараттың концентрациясын жазыңыз
+4. Максималды дозаны жазыңыз
+5. Енгізу жолын жазыңыз (в/м, в/в)
+6. Қысқа және нақты болыңыз — артық мәтін жазбаңыз
+
+Тек JSON форматында жауап беріңіз, markdown жоқ:
+{"weight":число,"age":число,"situation":"...","drugs":[{"name":"...","dose_per_kg":"X мг/кг","calculated_dose":"X мг","volume":"X мл","concentration":"мысалы: 5 мг/мл","max_dose":"X мг","route":"в/м немесе в/в","note":"еріту ережесі немесе ескерту"}],"warnings":["нақты ескерту"],"routes_summary":"1. ... 2. ..."}`;
+
+  return `Ты — опытный фельдшер СМП Казахстана. Рассчитывай дозы чётко и просто.
+
+ГЛАВНЫЕ ПРАВИЛА:
+1. Давай КОНКРЕТНЫЕ мл — например "0.4 мл" или "1.5 мл в/м"
+2. Показывай формулу кратко — например "0.1 мг/кг × 18 кг = 1.8 мг = 1.8 мл"
+3. Указывай концентрацию препарата
+4. Указывай максимальную дозу
+5. Указывай путь введения (в/м, в/в, per os)
+6. Будь кратким и точным — без лишнего текста
+7. Если вес не указан — напиши в warnings что нужен вес для точного расчёта, но дай ориентировочную дозу по возрасту
+
+Отвечай СТРОГО JSON без markdown:
+{"weight":число или null,"age":число или null,"situation":"...","drugs":[{"name":"МНН препарата","dose_per_kg":"X мг/кг","calculated_dose":"X мг","volume":"X мл","concentration":"например: 5 мг/мл (1 мл = 5 мг)","max_dose":"X мг","route":"в/м / в/в / per os","note":"разведение или особенности введения"}],"warnings":["предупреждение с цифрами"],"routes_summary":"Порядок: 1. ... 2. ..."}`;
+}
+
+const CLOADS={ru:['cLoad1','cLoad2','cLoad3'],kz:['cLoad1','cLoad2','cLoad3']};
+
+async function genCalc(){
+  const inp=document.getElementById('c-inp');
+  const txt=inp.value.trim();if(!txt) return;
+  document.getElementById('c-welcome').style.display='none';
+  document.getElementById('c-send').disabled=true;
+  showCalcLoad(0);
+  document.getElementById('c-mid').scrollTop=0;
+  const start=Date.now();
+  try{
+    const userMsg=(lang==='kz'?'Сұрау:\n':'Запрос:\n')+txt;
+    showCalcLoad(0);
+    const s1=await apiCall({system:calcSystemPrompt(),messages:[{role:'user',content:userMsg}],max_tokens:2000,tools:[{type:'web_search_20250305',name:'web_search'}]});
+    let msgs=[{role:'user',content:userMsg},{role:'assistant',content:s1.content}];
+    if(s1.content.some(b=>b.type==='tool_use')){
+      showCalcLoad(1);
+      const tr=s1.content.filter(b=>b.type==='tool_use').map(b=>({type:'tool_result',tool_use_id:b.id,content:'Search completed'}));
+      msgs.push({role:'user',content:tr});
+      showCalcLoad(2);
+      const s2=await apiCall({system:calcSystemPrompt(),messages:msgs,max_tokens:2000,tools:[{type:'web_search_20250305',name:'web_search'}]});
+      msgs.push({role:'assistant',content:s2.content});
+      if(s2.content.some(b=>b.type==='tool_use')){
+        const tr2=s2.content.filter(b=>b.type==='tool_use').map(b=>({type:'tool_result',tool_use_id:b.id,content:'Search completed'}));
+        msgs.push({role:'user',content:tr2});
+        const s3=await apiCall({system:calcSystemPrompt(),messages:msgs,max_tokens:2000});
+        msgs.push({role:'assistant',content:s3.content});
+      }
+    }
+    const last=msgs.filter(m=>m.role==='assistant').pop();
+    const tb=last.content.find(b=>b.type==='text');
+    if(!tb) throw new Error('No text response');
+    let raw=tb.text.replace(/```json|```/g,'').trim();
+    const jm=raw.match(/\{[\s\S]*\}/);if(jm)raw=jm[0];
+    const d=JSON.parse(raw);
+    renderCalcResult(d,((Date.now()-start)/1000).toFixed(1));
+    inp.value='';inp.style.height='';
+  }catch(e){showErr('c-results',e.message);}
+  document.getElementById('c-send').disabled=false;
+}
+
+function showCalcLoad(step){
+  const keys=CLOADS.ru;
+  document.getElementById('c-results').innerHTML=loadCard(t(keys[step]));
+}
+function renderCalcResult(d,time){
+  let html='';
+  const ageStr=d.age?(lang==='kz'?`${d.age} жас`:`${d.age} лет`):(lang==='kz'?'Жас жоқ':'Не указан');
+  html+=`<div class="rcard" style="animation-delay:0s"><div class="rcard-head"><div class="rcard-label"><span class="dot db"></span>${t('sParams')}</div></div><div class="rcard-body"><div class="params-row"><div class="param-box"><div class="param-label">${t('wLabel')}</div><div class="param-val">${d.weight||'—'} кг</div></div><div class="param-box"><div class="param-label">${t('ageLabel')}</div><div class="param-val">${ageStr}</div></div><div class="param-box" style="flex:2"><div class="param-label">${t('sitLabel')}</div><div class="param-val" style="font-size:12px;line-height:1.3">${d.situation||'—'}</div></div></div></div></div>`;
+  if(d.drugs&&d.drugs.length){
+    const dotC=['dm','dc','dy','dg','dp','dr','dgr'];
+    const drugsHtml=d.drugs.map((dr,i)=>`<div class="drug-row"><div class="drug-left"><div class="drug-name">${dr.name}</div><div class="drug-note">${dr.dose_per_kg||''} · ${dr.route||''}</div>${dr.note?`<div class="drug-note" style="color:var(--warn);margin-top:2px">⚠ ${dr.note}</div>`:''}</div><div class="drug-right"><div class="drug-dose">${dr.calculated_dose||'—'}</div><div class="drug-unit">${dr.volume||''}</div><div class="drug-conc">${dr.concentration||''}</div>${dr.max_dose?`<div class="drug-conc" style="color:var(--danger)">max ${dr.max_dose}</div>`:''}</div></div>`).join('');
+    const copyTxt=d.drugs.map(dr=>`${dr.name}: ${dr.calculated_dose}${dr.volume?' / '+dr.volume:''} (${dr.dose_per_kg}, ${dr.route})`).join('\n');
+    html+=`<div class="rcard" style="animation-delay:0.06s"><div class="rcard-head"><div class="rcard-label"><span class="dot dg"></span>${t('sDoses')}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(copyTxt)}')">${t('copy')}</button></div><div class="rcard-body">${drugsHtml}</div></div>`;
+  }
+  if(d.warnings&&d.warnings.length){
+    const wh=d.warnings.map(w=>`<div class="warn-item"><span class="warn-icon">⚠️</span><span class="warn-text">${w}</span></div>`).join('');
+    html+=`<div class="rcard" style="animation-delay:0.12s"><div class="rcard-head"><div class="rcard-label"><span class="dot dr"></span>${t('sWarn')}</div></div><div class="rcard-body">${wh}</div></div>`;
+  }
+  if(d.routes_summary){
+    html+=`<div class="rcard" style="animation-delay:0.18s"><div class="rcard-head"><div class="rcard-label"><span class="dot dy"></span>${t('sRoute')}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(d.routes_summary)}')">${t('copy')}</button></div><div class="rcard-body">${d.routes_summary}</div></div>`;
+  }
+  html+=`<div class="time-info">${time} сек · Claude Haiku + Web</div>`;
+  document.getElementById('c-results').innerHTML=html;
+}
+
+// ================================================================
+function resetCalc(){
+  document.getElementById('c-welcome').style.display='flex';
+  document.getElementById('c-results').innerHTML='';
+  document.getElementById('c-back-btn').style.display='none';
+  document.getElementById('c-inp').value='';
+  document.getElementById('c-inp').style.height='';
+  showWTab(1);
+}
+  
+
+function resetShock(){
+  document.getElementById('sh-welcome').style.display='flex';
+  document.getElementById('sh-results').innerHTML='';
+  document.getElementById('sh-back-btn').style.display='none';
+  document.getElementById('sh-hr').value='';
+  document.getElementById('sh-bp').value='';
+}
+
+
+function showWTab(n){
+  for(var i=1;i<=4;i++){
+    var tab=document.getElementById('wtab'+i);
+    var t=document.getElementById('wt'+i);
+    if(tab) tab.style.display=i===n?'block':'none';
+    if(t){
+      if(i===n){t.style.color='var(--accent)';t.style.fontWeight='700';}
+      else{t.style.color='var(--sub)';t.style.fontWeight='400';}
+    }
+  }
+}
+function pickWeight(val){
+  var inp=document.getElementById('c-inp');
+  inp.value='Ребёнок '+val+' — ';
+  ar(inp);inp.focus();
+}
+
+// CALC TABS
+  
+
+
+// ================================================================
+let calcTab='dose';
+function switchCalcTab(tab){
+  calcTab=tab;
+  document.getElementById('cpane-dose').classList.toggle('active',tab==='dose');
+  document.getElementById('cpane-shock').classList.toggle('active',tab==='shock');
+  document.getElementById('ct-dose').classList.toggle('on',tab==='dose');
+  document.getElementById('ct-shock').classList.toggle('on',tab==='shock');
+}
+function setShockEx(chipEl){
+  const txt=chipEl.querySelector('span:last-child').textContent;
+  // Парсим ЧСС и АД из текста примера: "ЧСС 110, АД 90"
+  const hrM=txt.match(/ЧСС\s*(\d+)/i)||txt.match(/ЖСЖ\s*(\d+)/i);
+  const bpM=txt.match(/АД\s*(\d+)/i);
+  if(hrM) document.getElementById('sh-hr').value=hrM[1];
+  if(bpM) document.getElementById('sh-bp').value=bpM[1];
+  document.getElementById('sh-welcome').style.display='none';
+  document.getElementById('sh-back-btn').style.display='block';
+  
+
+  calcShock();
+}
+function calcShock(){
+  const hr=parseInt(document.getElementById('sh-hr').value);
+  const bp=parseInt(document.getElementById('sh-bp').value);
+  if(!hr||!bp||bp===0){
+    showErr('sh-results',lang==='kz'?'ЖСЖ және АД енгізіңіз':'Введите ЧСС и АД');
+    document.getElementById('sh-welcome').style.display='none';
+    return;
+  }
+  document.getElementById('sh-welcome').style.display='none';
+  const idx=(hr/bp).toFixed(2);
+  let grade,color,dot,advice;
+  if(idx<0.5){
+    grade=lang==='kz'?'Норма':'Норма';
+    color='var(--success)';dot='dg';
+    advice=lang==='kz'?'Шок белгілері жоқ. Науқасты бақылауда ұстаңыз.':'Признаков шока нет. Наблюдение.';
+  } else if(idx<1.0){
+    grade=lang==='kz'?'I дәреже (жеңіл)':'I степень (лёгкий)';
+    color='var(--warn)';dot='dy';
+    advice=lang==='kz'?'Жеңіл шок. Инфузия 500 мл физ. р-р в/в. Мониторинг АД.':'Лёгкий шок. Инфузия 500 мл физ. р-р в/в. Мониторинг АД.';
+  } else if(idx<1.5){
+    grade=lang==='kz'?'II дәреже (орташа)':'II степень (средний)';
+    color='#f97316';dot='dy';
+    advice=lang==='kz'?'Орташа шок. Инфузия 1000 мл в/в струйно. Допамин 5-10 мкг/кг/мин. Госпитализация шұғыл.':'Средний шок. Инфузия 1000 мл в/в струйно. Допамин 5-10 мкг/кг/мин. Госпитализация срочно.';
+  } else {
+    grade=lang==='kz'?'III дәреже (ауыр)':'III степень (тяжёлый)';
+    color='var(--danger)';dot='dr';
+    advice=lang==='kz'?'Ауыр шок! Инфузия максималды жылдамдықпен. Адреналин 0.1-0.5 мг в/в. Реанимация бригадасы.':'Тяжёлый шок! Инфузия максимально быстро. Адреналин 0.1-0.5 мг в/в. Реанимационная бригада.';
+  }
+  const copyTxt=`Шок-индекс Альговера: ${idx}\nЧСС: ${hr}, АД: ${bp}\n${grade}\n${advice}`;
+  document.getElementById('sh-results').innerHTML=`
+    <div class="rcard" style="animation:fadeUp 0.3s both">
+      <div class="rcard-head">
+        <div class="rcard-label"><span class="dot ${dot}"></span>${lang==='kz'?'Шок-индекс нәтижесі':'Результат шок-индекса'}</div>
+        <button class="copy-btn" onclick="cpBtn(this,'${escA(copyTxt)}')">${t('copy')}</button>
+      </div>
+      <div class="rcard-body">
+        <div style="text-align:center;padding:12px 0 8px;">
+          <div style="font-size:48px;font-weight:800;color:${color};line-height:1;">${idx}</div>
+          <div style="font-size:11px;color:var(--sub);margin-top:4px;">${lang==='kz'?'Шок-индекс Альговера':'Индекс Альговера'}</div>
+        </div>
+        <div style="display:flex;gap:10px;margin:10px 0;">
+          <div class="param-box" style="flex:1;text-align:center;">
+            <div class="param-label">ЧСС</div>
+            <div class="param-val">${hr}</div>
+          </div>
+          <div class="param-box" style="flex:1;text-align:center;">
+            <div class="param-label">${lang==='kz'?'АД':'АД'}</div>
+            <div class="param-val">${bp}</div>
+          </div>
+          <div class="param-box" style="flex:2;text-align:center;">
+            <div class="param-label">${lang==='kz'?'ДӘРЕЖЕ':'СТЕПЕНЬ'}</div>
+            <div class="param-val" style="font-size:13px;color:${color};">${grade}</div>
+          </div>
+        </div>
+        <div class="warn-item" style="border-color:${color};background:transparent;margin-top:4px;">
+          <span class="warn-icon">💡</span>
+          <span class="warn-text">${advice}</span>
+        </div>
+      </div>
+    </div>`;
+}
+async function apiCall({system, messages, max_tokens=2000, tools, endpoint}){
+  if(!endpoint){
+    const hasSearch = tools && tools.some(x=>x.name==='web_search');
+    endpoint = hasSearch ? 'https://medixai-production.up.railway.app/api/ai' : 'https://medixai-production.up.railway.app/api/karta';
+  }
+  const body={system, messages, max_tokens};
+  if(tools) body.tools=tools;
+  const r=await fetch(endpoint,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+  const data=await r.json();
+  if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
+  return data;
+}
+
+// ================================================================
+// MISC HELPERS
+// ================================================================
+function filterList(section,query){
+  const q=query.toLowerCase().trim();
+  const cont=document.getElementById(section+'-list');
+  if(!cont) return;
+  const rows=cont.querySelectorAll('.item-row,.income-row');
+  rows.forEach(row=>{
+    const name=row.querySelector('.item-title,.income-title');
+    const dose=row.querySelector('.item-dose,.income-dose');
+    const text=((name?name.textContent:'')+(dose?dose.textContent:'')).toLowerCase();
+    row.style.display=(!q||text.includes(q))?'':'none';
+  });
+}
+function loadCard(txt){return `<div class="loading-card"><div class="spinner"></div><div class="loading-text">${txt}</div></div>`;}
+function showErr(contId,msg){document.getElementById(contId).innerHTML=`<div class="loading-card"><div style="color:#f87171;font-size:13px">${lang==='kz'?'Қате':'Ошибка'}: ${msg}</div></div>`;}
+function scrollMid(id){const el=document.getElementById(id);if(el)setTimeout(()=>el.scrollTop=el.scrollHeight,50);}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function now(){return new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});}
+
+// ================================================================
+// INIT
+// ================================================================
+applyTheme();
+renderAll();
+</script>
+</body>
+</html>

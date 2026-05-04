@@ -1969,25 +1969,29 @@ async function apiCall({system, messages, max_tokens=2000, tools, endpoint}){
     endpoint = 'https://medixai-production.up.railway.app/api/karta';
   }
   let userId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
-if (!userId) {
-  userId = localStorage.getItem('medix_uid');
   if (!userId) {
-    userId = 'u_' + Math.random().toString(36).slice(2);
-    localStorage.setItem('medix_uid', userId);
+    userId = localStorage.getItem('medix_uid');
+    if (!userId) {
+      userId = 'u_' + Math.random().toString(36).slice(2);
+      localStorage.setItem('medix_uid', userId);
+    }
   }
-}
-  const body={system, messages, max_tokens, user_id: userId};
-  if(tools) body.tools=tools;
-  const r=await fetch(endpoint,{
-
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(body)
+  const initData = window.Telegram?.WebApp?.initData || '';
+  const body = {system, messages, max_tokens, user_id: userId};
+  if(tools) body.tools = tools;
+  const r = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Telegram-Init-Data': initData
+    },
+    body: JSON.stringify(body)
   });
-  const data=await r.json();
-  if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
+  const data = await r.json();
+  if(data.error) throw new Error(data.error.message || JSON.stringify(data.error));
   return data;
 }
+  
 
 // ================================================================
 // MISC HELPERS
