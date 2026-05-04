@@ -674,19 +674,8 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div class="mid" id="preg-mid" style="padding:10px 14px 10px;">
         <div style="font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ex-label);margin-bottom:10px;" id="preg-title-lbl"></div>
         <div style="margin-bottom:12px;">
-          <div style="display:flex;gap:6px;margin-bottom:10px;">
-            <div id="preg-mode-date" onclick="setPregMode('date')" style="flex:1;padding:8px;border-radius:10px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;background:linear-gradient(135deg,rgba(0,200,167,0.15),rgba(0,136,238,0.15));border:1px solid rgba(0,200,167,0.4);color:var(--accent);">📅 Дата ПМ</div>
-            <div id="preg-mode-weeks" onclick="setPregMode('weeks')" style="flex:1;padding:8px;border-radius:10px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;background:var(--card);border:1px solid var(--border);color:var(--sub);">🗓 Срок</div>
-          </div>
-          <div id="preg-input-date">
-            <div style="font-size:11px;font-weight:600;color:var(--text1);margin-bottom:6px;" id="preg-lmp-label"></div>
-            <input type="date" id="preg-lmp-input" style="width:100%;padding:10px 14px;border-radius:11px;background:var(--inp);border:1.5px solid var(--border2);color:var(--text1);font-size:13px;font-family:'Inter',sans-serif;outline:none;" oninput="calcPreg()">
-          </div>
-          <div id="preg-input-weeks" style="display:none;">
-            <div style="font-size:11px;font-weight:600;color:var(--text1);margin-bottom:6px;">Срок беременности (недель):</div>
-            <input type="number" id="preg-weeks-direct" min="4" max="42" placeholder="Например: 34" style="width:100%;padding:10px 14px;border-radius:11px;background:var(--inp);border:1.5px solid var(--border2);color:var(--text1);font-size:13px;font-family:'Inter',sans-serif;outline:none;" oninput="calcPregByWeeks()">
-            <div style="font-size:10px;color:var(--sub);margin-top:4px;">недель (от 4 до 42)</div>
-          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text1);margin-bottom:6px;" id="preg-lmp-label"></div>
+          <input type="date" id="preg-lmp-input" style="width:100%;padding:10px 14px;border-radius:11px;background:var(--inp);border:1.5px solid var(--border2);color:var(--text1);font-size:13px;font-family:'Inter',sans-serif;outline:none;" oninput="calcPreg()">
         </div>
         <div id="preg-results" style="display:none;">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
@@ -2153,63 +2142,7 @@ function renderPregPanel(){
   if(inp && inp.value) calcPreg();
 }
 
-function setPregMode(mode) {
-  const on = 'linear-gradient(135deg,rgba(0,200,167,0.15),rgba(0,136,238,0.15))';
-  const dateBtn = document.getElementById('preg-mode-date');
-  const weeksBtn = document.getElementById('preg-mode-weeks');
-  const dateInp = document.getElementById('preg-input-date');
-  const weeksInp = document.getElementById('preg-input-weeks');
-  if (mode === 'date') {
-    dateBtn.style.background = on; dateBtn.style.borderColor = 'rgba(0,200,167,0.4)'; dateBtn.style.color = 'var(--accent)';
-    weeksBtn.style.background = 'var(--card)'; weeksBtn.style.borderColor = 'var(--border)'; weeksBtn.style.color = 'var(--sub)';
-    dateInp.style.display = 'block'; weeksInp.style.display = 'none';
-  } else {
-    weeksBtn.style.background = on; weeksBtn.style.borderColor = 'rgba(0,200,167,0.4)'; weeksBtn.style.color = 'var(--accent)';
-    dateBtn.style.background = 'var(--card)'; dateBtn.style.borderColor = 'var(--border)'; dateBtn.style.color = 'var(--sub)';
-    weeksInp.style.display = 'block'; dateInp.style.display = 'none';
-  }
-  document.getElementById('preg-results').style.display = 'none';
-  document.getElementById('preg-empty').style.display = 'none';
-}
-
-function calcPregByWeeks() {
-  const inp = document.getElementById('preg-weeks-direct');
-  if (!inp || !inp.value) return;
-  const weeks = parseInt(inp.value);
-  if (isNaN(weeks) || weeks < 4 || weeks > 42) return;
-  const isKz = lang === 'kz';
-  const today = new Date();
-  const lmp = new Date(today.getTime() - weeks * 7 * 86400000);
-  const resultsEl = document.getElementById('preg-results');
-  const emptyEl = document.getElementById('preg-empty');
-  if (emptyEl) emptyEl.style.display = 'none';
-  if (resultsEl) resultsEl.style.display = 'block';
-  const weeksEl = document.getElementById('preg-weeks');
-  const monthsEl = document.getElementById('preg-months');
-  if (weeksEl) weeksEl.textContent = weeks;
-  if (monthsEl) monthsEl.textContent = (weeks / 4.33).toFixed(1);
-  const pdr = new Date(lmp.getTime() + 280 * 86400000);
-  const pdrEl = document.getElementById('preg-pdr');
-  if (pdrEl) pdrEl.textContent = pdr.toLocaleDateString(isKz ? 'kk-KZ' : 'ru-RU', {day:'numeric',month:'long',year:'numeric'});
-  const normsEl = document.getElementById('preg-norms-rows');
-  if (normsEl) {
-    let vdm = '—', okr = '—';
-    if (weeks >= 16 && weeks <= 40) { vdm = `${weeks-2}–${weeks+2} см`; okr = `${weeks*2+50}–${weeks*2+60} см`; }
-    const nd = [
-      {lbl: isKz?'ЖСЖ ұрықта':'ЧСС плода', val:'120–160 уд/мин', color:'var(--danger)'},
-      {lbl: isKz?'Жатыр дүнінің биіктігі (ЖДБ)':'Высота дна матки (ВДМ)', val:vdm, color:'var(--accent)'},
-      {lbl: isKz?'Іш айналымы':'Окружность живота', val:okr, color:'var(--warn)'},
-    ];
-    normsEl.innerHTML = nd.map(n=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);"><div style="font-size:12px;color:var(--text2);">${n.lbl}</div><div style="font-size:13px;font-weight:700;color:${n.color};">${n.val}</div></div>`).join('');
-  }
-  const warnEl = document.getElementById('preg-warn');
-  const warnText = document.getElementById('preg-warn-text');
-  if (warnEl && warnText) {
-    if (weeks >= 37) { warnEl.style.display='flex'; warnText.textContent = isKz?'Мерзімді жүктілік. Туу кез-келген уақытта басталуы мүмкін.':'Доношенная беременность. Роды могут начаться в любой момент.'; }
-    else if (weeks < 22) { warnEl.style.display='flex'; warnText.textContent = isKz?'Ерте мерзімдегі жүктілік.':'Ранний срок. Необходима консультация акушера-гинеколога.'; }
-    else { warnEl.style.display='none'; }
-  }
-}
+function calcPreg(){
   const inp = document.getElementById('preg-lmp-input');
   if(!inp||!inp.value) return;
   const lmp = new Date(inp.value);
