@@ -1474,8 +1474,8 @@ function openJournal(type){
       const items=prihodJournal.filter(j=>g.ids.includes(j.id));
       if(!items.length) return;
       const byId={};
-      items.forEach(j=>{if(!byId[j.id]) byId[j.id]={name:j.name,dose:j.dose,total:0};byId[j.id].total++;});
-      const total=items.length;
+      items.forEach(j=>{if(!byId[j.id]) byId[j.id]={name:j.name,dose:j.dose,total:0};byId[j.id].total+=(parseInt(j.qty)||1);});
+      const total=items.reduce((s,j)=>s+(parseInt(j.qty)||1),0);
       html+=`<div style="padding:8px 13px 5px;background:var(--tag-bg);border-bottom:1px solid var(--border);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);">${g.label} · ${lang==='kz'?'Барлығы':'Итого'}: ${total}</div>`;
       Object.values(byId).forEach(item=>{
         html+=`<div class="ientry"><div class="ientry-top"><div class="ientry-name">${item.name}</div><div class="ientry-qty">+${item.total}</div></div><div class="ientry-meta">${item.dose}</div></div>`;
