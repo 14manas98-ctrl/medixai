@@ -499,14 +499,14 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="prihod-search" type="text" placeholder="Поиск..." oninput="filterList('prihod',this.value)"><span class="search-clear" id="prihod-clear" onclick="clearSearch('prihod')" style="display:none">✕</span></div></div>
         <div class="list-scroll" id="prihod-list"></div>
         <div class="journal-btn" onclick="openJournal('prihod')" id="m-jbtn-p"></div>
-        <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0">🗑️ Кірісті тазалау</div>
+        <div class="reset-btn" onclick="confirmResetPrihod()" id="m-reset-p" style="margin-top:0" id="m-reset-p"></div>
       </div>
       <div class="pane" id="pane-ostatki">
         <div class="sub-tabs-wrap"><div class="sub-tabs" id="ostatki-stabs"></div></div>
         <div class="search-wrap"><div class="search-box"><span class="search-icon">🔍</span><input class="search-inp" id="ostatki-search" type="text" placeholder="Поиск..." oninput="filterList('ostatki',this.value)"><span class="search-clear" id="ostatki-clear" onclick="clearSearch('ostatki')" style="display:none">✕</span></div></div>
         <div class="list-scroll" id="ostatki-list"></div>
-        <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o">📋 Қалдық журналы</div>
-        <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o">🗑️ Қалдықты тазалау</div>
+        <div class="journal-btn" onclick="openJournal('ostatki')" id="m-jbtn-o"></div>
+        <div class="reset-btn" onclick="confirmResetOstatki()" id="m-reset-o"></div>
       </div>
     </div>
   </div>
@@ -982,7 +982,9 @@ function renderAll(){
   setText('m-title',t('mTitle'));setText('m-sub',t('mSub'));
   setText('mt-rashod',t('tabRashod'));setText('mt-prihod',t('tabPrihod'));setText('mt-ostatki',t('tabOstatki'));
   setText('m-jbtn-r',t('jBtnR'));setText('m-jbtn-p',t('jBtnP'));
-  setText('m-reset',t('resetBtn'));
+  setText('m-reset-p','🗑️ '+(lang==='kz'?'Кірісті тазалау':'Очистить приход'));
+setText('m-jbtn-o','📋 '+(lang==='kz'?'Қалдық журналы':'Журнал остатков'));
+setText('m-reset-o','🗑️ '+(lang==='kz'?'Қалдықты тазалау':'Очистить остатки'));
   renderMedSubTabs();renderRashodList();renderPrihodList();updateShiftTime();
   // AI
   setText('ai-title',t('aiTitle'));setText('ai-sub',t('aiSub'));
