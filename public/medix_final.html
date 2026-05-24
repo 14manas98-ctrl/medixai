@@ -1359,12 +1359,6 @@ function renderOstatkiList(){
   saveMedsState();
   const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
   if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
-
- if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
- medsState[id].o=num;
- saveMedsState();
- const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
- if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
 }function changeO(id,delta){
   if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
   medsState[id].o=Math.max(0,(medsState[id].o||0)+delta);
