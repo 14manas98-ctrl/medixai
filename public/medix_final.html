@@ -1361,14 +1361,6 @@ function renderOstatkiList(){
   if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
 }
  function setO(id,val){
-  const num=Math.max(0,parseInt(val)||0);
-  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
-  medsState[id].o=num;
-  saveMedsState();
-  const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
-  if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
-}
- function setO(id,val){
  const num=Math.max(0,parseInt(val)||0);
  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
  medsState[id].o=num;
@@ -1767,7 +1759,7 @@ async function genCalc(){
   try{
     const userMsg=(lang==='kz'?'Сұрау:\n':'Запрос:\n')+txt;
     showCalcLoad(0);
-    const s1=await apiCall({system:calcSystemPrompt(),messages:[{role:'user',content:userMsg}],max_tokens:2000,tools:[{type:'web_search_20250305',name:'web_search'}]});
+    const s1=await apiCall({system:calcSystemPrompt(),messages:[{role:'user',content:userMsg}],max_tokens:2000,tools:[{type:'web_search_20250305',name:'web_search'}],endpoint:'https://medixai-production.up.railway.app/api/calc'});
     let msgs=[{role:'user',content:userMsg},{role:'assistant',content:s1.content}];
     if(s1.content.some(b=>b.type==='tool_use')){
       showCalcLoad(1);
@@ -2220,7 +2212,7 @@ function calcPreg(){
       warnText.textContent = isKz?'Мерзімді жүктілік. Туу кез-келген уақытта басталуы мүмкін.':'Доношенная беременность. Роды могут начаться в любой момент.';
     } else if(weeks < 22){
       warnEl.style.display='flex';
-      warnText.textContent = isKaz?'Ерте мерзімдегі жүктілік. Акушер-гинеколог консультациясы қажет.':'Ранний срок. Необходима консультация акушера-гинеколога.';
+      warnText.textContent = isKz?'Ерте мерзімдегі жүктілік. Акушер-гинеколог консультациясы қажет.':'Ранний срок. Необходима консультация акушера-гинеколога.';
     } else {
       warnEl.style.display='none';
     }
