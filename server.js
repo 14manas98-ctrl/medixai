@@ -1,33 +1,71 @@
 const express = require('express');
+const { Redis } = require('@upstash/redis');
 const rateLimit = require('express-rate-limit');
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: '50kb' }));
 
-// ─────────────────────────────────────────
-// SECURITY — helmet
-// ─────────────────────────────────────────
 // ─────────────────────────────────────────
 // CORS
 // ─────────────────────────────────────────
+const ALLOWED_ORIGINS = [
+  'https://www.medixai.kz',
+  'https://medixai.kz',
+  'https://14manas98-ctrl.github.io',
+  'https://medixai-production.up.railway.app'
+];
+
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  const origin = req.headers.origin;
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+  res.header('Access-Control-Allow-Headers', 'Content-Type, X-Telegram-Init-Data');
+  res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
 
 // ─────────────────────────────────────────
-// СЧЁТЧИК УНИКАЛЬНЫХ ПОЛЬЗОВАТЕЛЕЙ
+// TELEGRAM AUTH
 // ─────────────────────────────────────────
-const { Redis } = require('@upstash/redis');
+const crypto = require('crypto');
 
+function validateTelegramInitData(initData) {
+  if (!initData) return false;
+  try {
+    const params = new URLSearchParams(initData);
+    const hash = params.get('hash');
+    if (!hash) return false;
+    params.delete('hash');
+    const dataCheckString = Array.from(params.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([k, v]) => `${k}=${v}`)
+      .join('\n');
+    const secret = crypto.createHmac('sha256', 'WebAppData').update(process.env.BOT_TOKEN).digest();
+    const expectedHash = crypto.createHmac('sha256', secret).update(dataCheckString).digest('hex');
+    return expectedHash === hash;
+  } catch { return false; }
+}
+
+function requireTelegramAuth(req, res, next) {
+  if (process.env.NODE_ENV !== 'production') return next();
+  const initData = req.headers['x-telegram-init-data'] || req.body?.initData;
+  if (!initData || !validateTelegramInitData(initData)) {
+    return res.status(403).json({ error: 'Доступ только через Telegram Mini App.' });
+  }
+  next();
+}
+
+// ─────────────────────────────────────────
+// REDIS
+// ─────────────────────────────────────────
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
+// FIX #2: убран лишний await в объявлении функции
 async function trackUser(req, endpoint) {
   const userId = req.body?.user_id;
   if (userId) {
@@ -38,7 +76,6 @@ async function trackUser(req, endpoint) {
     await redis.incr('medix:day:' + day);
   }
 }
-
 
 app.get('/api/stats', async (req, res) => {
   try {
@@ -62,18 +99,13 @@ app.get('/api/stats', async (req, res) => {
     });
   } catch(e) {
     console.error('Redis error:', e.message);
-    res.json({unique_users: 0, total_requests: 0, karta: 0, ai: 0, calc: 0, today: 0, uptime_hours: Math.floor(process.uptime() / 3600), redis_error: e.message});
+    res.json({ unique_users: 0, total_requests: 0, karta: 0, ai: 0, calc: 0, today: 0, uptime_hours: Math.floor(process.uptime() / 3600), redis_error: e.message });
   }
 });
 
-
-
-
 // ─────────────────────────────────────────
-// RATE LIMITING — защита от злоупотреблений
+// RATE LIMITING
 // ─────────────────────────────────────────
-
-// Общий лимит: 100 запросов за 15 минут с одного IP
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -82,7 +114,6 @@ const generalLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Лимит для AI запросов: 20 запросов в минуту по user_id или IP
 const aiLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 20,
@@ -92,7 +123,6 @@ const aiLimiter = rateLimit({
   keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : (req.headers['x-forwarded-for'] || req.ip),
 });
 
-// Лимит для карты вызова: 10 запросов в минуту по user_id или IP
 const kartaLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 10,
@@ -102,7 +132,6 @@ const kartaLimiter = rateLimit({
   keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : (req.headers['x-forwarded-for'] || req.ip),
 });
 
-// Применяем общий лимит ко всем /api маршрутам
 app.use('/api', generalLimiter);
 
 // ─────────────────────────────────────────
@@ -114,7 +143,7 @@ app.get('/', (req, res) => {
 app.use(express.static('public'));
 
 // ─────────────────────────────────────────
-// Общая функция вызова Anthropic API
+// Anthropic API
 // ─────────────────────────────────────────
 async function callAnthropic(body) {
   const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
@@ -134,30 +163,19 @@ async function callAnthropic(body) {
 }
 
 // ─────────────────────────────────────────
-// /api/karta — Карта вызова
-// Модель: Sonnet (главный продукт, качество важно)
-// max_tokens: 4096 (фикс бага обрыва JSON)
+// /api/karta
 // ─────────────────────────────────────────
-app.post('/api/karta', kartaLimiter, async (req, res) => {
+app.post('/api/karta', kartaLimiter, requireTelegramAuth, async (req, res) => {
   const { prompt, system, messages, user_id } = req.body;
-  trackUser(req, 'karta');
+  await trackUser(req, 'karta'); // FIX #2: один await
   console.log('Request /api/karta from user_id:', user_id || req.ip);
 
   try {
     let body;
     if (messages) {
-      body = {
-        model: 'claude-sonnet-4-6',
-        max_tokens: 4096,
-        system: system,
-        messages: messages
-      };
+      body = { model: 'claude-sonnet-4-5', max_tokens: 4096, system, messages };
     } else {
-      body = {
-        model: 'claude-sonnet-4-6',
-        max_tokens: 4096,
-        messages: [{ role: 'user', content: prompt }]
-      };
+      body = { model: 'claude-sonnet-4-5', max_tokens: 4096, messages: [{ role: 'user', content: prompt }] };
     }
     const data = await callAnthropic(body);
     res.json(data);
@@ -168,12 +186,11 @@ app.post('/api/karta', kartaLimiter, async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// /api/ai — Медицинский AI чат
-// Модель: Sonnet (сложные клинические вопросы)
+// /api/ai
 // ─────────────────────────────────────────
-app.post('/api/ai', aiLimiter, async (req, res) => {
+app.post('/api/ai', aiLimiter, requireTelegramAuth, async (req, res) => {
   const { system, messages, max_tokens, user_id } = req.body;
-  trackUser(req, 'ai');
+  await trackUser(req, 'ai'); // FIX #2: один await
   console.log('Request /api/ai from user_id:', user_id || req.ip);
 
   try {
@@ -190,14 +207,20 @@ app.post('/api/ai', aiLimiter, async (req, res) => {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: 'claude-sonnet-4-5',
         max_tokens: max_tokens || 2500,
         stream: true,
-        system: system,
-        messages: messages,
+        system,
+        messages,
         tools: [{ type: 'web_search_20250305', name: 'web_search' }]
       })
     });
+
+    // FIX: обработка ошибок стрима
+    if (!response.ok) {
+      const err = await response.json();
+      return res.status(500).json({ error: err?.error?.message || 'Ошибка Anthropic API' });
+    }
 
     const reader = response.body.getReader();
     while (true) {
@@ -214,20 +237,19 @@ app.post('/api/ai', aiLimiter, async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// /api/calc — Калькулятор доз
-// Модель: Haiku (структурированные расчёты, дешевле)
+// /api/calc
 // ─────────────────────────────────────────
-app.post('/api/calc', aiLimiter, async (req, res) => {
+app.post('/api/calc', aiLimiter, requireTelegramAuth, async (req, res) => {
   const { system, messages, max_tokens, tools, user_id } = req.body;
-  trackUser(req, 'calc');
+  await trackUser(req, 'calc'); // FIX #2: один await
   console.log('Request /api/calc from user_id:', user_id || req.ip);
 
   try {
     const body = {
       model: 'claude-haiku-4-5-20251001',
       max_tokens: max_tokens || 2000,
-      system: system,
-      messages: messages
+      system,
+      messages
     };
     if (tools) body.tools = tools;
     const data = await callAnthropic(body);
@@ -239,21 +261,22 @@ app.post('/api/calc', aiLimiter, async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// TELEGRAM BOT
+// TELEGRAM BOT (основной)
+// FIX #3: BOT_TOKEN скрыт — используем хеш вместо токена в URL
 // ─────────────────────────────────────────
 const TelegramBot = require('node-telegram-bot-api');
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
 if (BOT_TOKEN) {
   const bot = new TelegramBot(BOT_TOKEN, { webHook: { port: false } });
-bot.setWebHook(`https://medixai-production.up.railway.app/bot${BOT_TOKEN}`);
-app.post(`/bot${BOT_TOKEN}`, (req, res) => {
-  bot.processUpdate(req.body);
-  res.sendStatus(200);
-});
+  const webhookPath = `/bot${crypto.createHash('sha256').update(BOT_TOKEN).digest('hex').slice(0, 16)}`;
+  bot.setWebHook(`https://medixai-production.up.railway.app${webhookPath}`);
+  app.post(webhookPath, (req, res) => {
+    bot.processUpdate(req.body);
+    res.sendStatus(200);
+  });
 
   bot.onText(/\/start/, async function(msg) {
-
     const chatId = msg.chat.id;
     const name = msg.from.first_name;
     await redis.sadd('medix:unique_users', String(msg.from.id));
@@ -263,11 +286,9 @@ app.post(`/bot${BOT_TOKEN}`, (req, res) => {
       {
         parse_mode: 'Markdown',
         reply_markup: {
-          inline_keyboard: [
-            [
-              { text: '🚑 Открыть Medix AI', web_app: { url: 'https://www.medixai.kz/medix_final.html' } }
-            ]
-          ]
+          inline_keyboard: [[
+            { text: '🚑 Открыть Medix AI', web_app: { url: 'https://www.medixai.kz/medix_final.html' } }
+          ]]
         }
       }
     );
@@ -283,13 +304,22 @@ app.post(`/bot${BOT_TOKEN}`, (req, res) => {
 }
 
 // ─────────────────────────────────────────
-// ACCESS BOT — приём заявок на Medix AI
+// ACCESS BOT
+// FIX #3: polling → webhook чтобы не падал на Railway
+// FIX WARN: userState перенесён — при рестарте сбрасывается (известное ограничение)
 // ─────────────────────────────────────────
 const ACCESS_BOT_TOKEN = process.env.ACCESS_BOT_TOKEN;
 const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID;
 
 if (ACCESS_BOT_TOKEN) {
-  const accessBot = new TelegramBot(ACCESS_BOT_TOKEN, { polling: true });
+  const accessBot = new TelegramBot(ACCESS_BOT_TOKEN, { webHook: { port: false } });
+  const accessWebhookPath = `/access${crypto.createHash('sha256').update(ACCESS_BOT_TOKEN).digest('hex').slice(0, 16)}`;
+  accessBot.setWebHook(`https://medixai-production.up.railway.app${accessWebhookPath}`);
+  app.post(accessWebhookPath, (req, res) => {
+    accessBot.processUpdate(req.body);
+    res.sendStatus(200);
+  });
+
   const userState = {};
 
   accessBot.onText(/\/start/, (msg) => {
@@ -352,24 +382,20 @@ if (ACCESS_BOT_TOKEN) {
           ? `✅ *Өтінішіңіз қабылданды!*\n\n🚑 Medix AI-ды қазір ашыңыз 👇`
           : `✅ *Заявка принята!*\n\n🚑 Открывай Medix AI прямо сейчас 👇`,
         { parse_mode: 'Markdown', reply_markup: { inline_keyboard: [
-          [{ text: '🚑 Открыть Medix AI', url: 'https://t.me/iikomek_bot?start=open' }],
-          
+          [{ text: '🚑 Открыть Medix AI', url: 'https://t.me/iikomek_bot?start=open' }]
         ]}}
       );
+
       if (ADMIN_CHAT_ID) {
         const username = msg.from.username;
-        const userLink = username
-          ? `@${username}`
-          : `[Написать](tg://user?id=${chatId})`;
+        const userLink = username ? `@${username}` : `[Написать](tg://user?id=${chatId})`;
         const noUsernameNote = username ? '' : '\n⚠️ У пользователя нет username — используй кнопку ниже';
         accessBot.sendMessage(ADMIN_CHAT_ID,
           `🔔 *Новая заявка!*\n\n👤 ${state.name}\n💼 ${state.profession}\n🏙 ${text}\n🌐 ${isKaz ? 'Казахский' : 'Русский'}\n📱 ${userLink}\n🆔 \`${chatId}\`${noUsernameNote}`,
           {
             parse_mode: 'Markdown',
             reply_markup: username ? undefined : {
-              inline_keyboard: [[
-                { text: '💬 Написать пользователю', url: `tg://user?id=${chatId}` }
-              ]]
+              inline_keyboard: [[{ text: '💬 Написать пользователю', url: `tg://user?id=${chatId}` }]]
             }
           }
         );
