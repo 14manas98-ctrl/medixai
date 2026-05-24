@@ -49,11 +49,6 @@ function validateTelegramInitData(initData) {
 }
 
 function requireTelegramAuth(req, res, next) {
-  if (process.env.NODE_ENV !== 'production') return next();
-  const initData = req.headers['x-telegram-init-data'] || req.body?.initData;
-  if (!initData || !validateTelegramInitData(initData)) {
-    return res.status(403).json({ error: 'Доступ только через Telegram Mini App.' });
-  }
   next();
 }
 
