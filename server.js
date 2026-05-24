@@ -120,7 +120,7 @@ const aiLimiter = rateLimit({
   message: { error: 'Слишком много AI запросов. Подождите 1 минуту.' },
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : (req.headers['x-forwarded-for'] || req.ip),
+  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : (req.headers['x-forwarded-for'] || req.ip || '').split(',')[0].trim(),
 });
 
 const kartaLimiter = rateLimit({
@@ -268,7 +268,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
 if (BOT_TOKEN) {
-  const bot = new TelegramBot(BOT_TOKEN, { webHook: { port: false } });
+  const bot = new TelegramBot(BOT_TOKEN, { polling: false });
   const webhookPath = `/bot${crypto.createHash('sha256').update(BOT_TOKEN).digest('hex').slice(0, 16)}`;
   bot.setWebHook(`https://medixai-production.up.railway.app${webhookPath}`);
   app.post(webhookPath, (req, res) => {
