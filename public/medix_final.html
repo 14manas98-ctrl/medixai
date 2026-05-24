@@ -560,7 +560,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
     <!-- Вкладки калькулятора -->
     <div class="tabs-wrap" style="padding-top:10px;position:relative;z-index:0;">
       <div class="tabs" style="display:flex;overflow-x:auto;gap:5px;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;">
-        <div class="mtab on" id="ct-dose" onclick="switchCalcTab('dose')" id="ct-dose"><span id="ct-dose-lbl"></span></div>
+        <div class="mtab on" id="ct-dose" onclick="switchCalcTab('dose')"><span id="ct-dose-lbl"></span></div>
         <div class="mtab" id="ct-shock" onclick="switchCalcTab('shock')"><span id="ct-shock-lbl"></span></div>
         <div class="mtab" id="ct-norms" onclick="switchCalcTab('norms')"><span id="ct-norms-lbl"></span></div>
         <div class="mtab" id="ct-preg" onclick="switchCalcTab('preg')"><span id="ct-preg-lbl"></span></div>
@@ -1359,9 +1359,7 @@ function renderOstatkiList(){
   saveMedsState();
   const item=[...LIST1,...LIST2,...LIST3,...LIST4].find(x=>x.id===id);
   if(item){ostatkiJournal.push({id,name:item.name,dose:item.dose,qty:num,time:now()});saveJournal('medix_ojour_v3',ostatkiJournal);}
-}
- function setO(id,val){
- const num=Math.max(0,parseInt(val)||0);
+
  if(!medsState[id]) medsState[id]={r:0,p:0,o:0};
  medsState[id].o=num;
  saveMedsState();
