@@ -62,6 +62,11 @@
       <div class="bar-bg"><div class="bar-fill" id="bar-calc" style="width:0%"></div></div>
       <div class="bar-count" id="cnt-calc">—</div>
     </div>
+    <div class="bar-row">
+      <div class="bar-label">🫀 ЭКГ</div>
+      <div class="bar-bg"><div class="bar-fill" id="bar-ecg" style="width:0%"></div></div>
+      <div class="bar-count" id="cnt-ecg">—</div>
+    </div>
   </div>
 
   <div class="refresh" id="refreshed"></div>
@@ -79,14 +84,17 @@
       const karta = d.karta || 0;
       const ai = d.ai || 0;
       const calc = d.calc || 0;
-      const max = Math.max(karta, ai, calc, 1);
+      const ecg = d.ecg || 0;
+      const max = Math.max(karta, ai, calc, ecg, 1);
 
       document.getElementById('cnt-karta').textContent = karta;
       document.getElementById('cnt-ai').textContent = ai;
       document.getElementById('cnt-calc').textContent = calc;
+      document.getElementById('cnt-ecg').textContent = ecg;
       document.getElementById('bar-karta').style.width = (karta/max*100) + '%';
       document.getElementById('bar-ai').style.width = (ai/max*100) + '%';
       document.getElementById('bar-calc').style.width = (calc/max*100) + '%';
+      document.getElementById('bar-ecg').style.width = (ecg/max*100) + '%';
 
       document.getElementById('refreshed').textContent = 'Обновлено: ' + new Date().toLocaleTimeString();
     }
