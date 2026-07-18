@@ -810,11 +810,11 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
     </div>
     <div class="mid" id="ecg-mid" style="padding:14px;">
       <div id="ecg-upload-hint" style="font-size:12px;color:var(--sub);margin-bottom:10px;text-align:center;"></div>
-      <div class="ecg-upload-area" id="ecg-drop-zone" onclick="document.getElementById('ecg-file-input').click()" ondragover="ecgDragOver(event)" ondrop="ecgDrop(event)" ondragleave="ecgDragLeave(event)">
+      <label for="ecg-file-input" class="ecg-upload-area" id="ecg-drop-zone" ondragover="ecgDragOver(event)" ondrop="ecgDrop(event)" ondragleave="ecgDragLeave(event)" style="cursor:pointer;display:block;">
         <div style="font-size:32px;margin-bottom:6px;">📷</div>
         <div id="ecg-upload-label" style="font-weight:600;font-size:13px;"></div>
-      </div>
-      <input type="file" id="ecg-file-input" accept="image/*" multiple style="display:none" onchange="ecgFilesSelected(this.files)">
+      </label>
+      <input type="file" id="ecg-file-input" accept="image/*" multiple style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;" onchange="ecgFilesSelected(this.files)">
       <div class="ecg-previews" id="ecg-previews" style="display:none;"></div>
       <button class="send-btn" id="ecg-analyze-btn" onclick="analyzeEcg()" style="display:none;width:100%;padding:13px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#0088ee);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;margin-bottom:12px;"></button>
       <div id="ecg-loading" style="display:none;text-align:center;padding:20px;color:var(--sub);font-size:13px;"></div>
