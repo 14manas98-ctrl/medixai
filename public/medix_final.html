@@ -2366,9 +2366,9 @@ async function analyzeEcg(){
       return {type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}};
     }));
 
-    const systemText = 'Ты — кардиолог-консультант для бригад СМП Казахстана. Анализируй ЭКГ по фотографии. Отвечай СТРОГО JSON без markdown, без пояснений вне JSON. Поля: {"quality":"хорошее/среднее/плохое","rhythm":"...","rate":число или null,"axis":"...","intervals":{"pq":"...","qrs":"...","qt":"..."},"arrhythmia_present":true/false,"arrhythmia_type":"...","st_t":"...","acs_verdict":"present/absent/uncertain","acs_signs":"...","acs_reasoning":"...","mi_risk":"низкий/умеренный/высокий","mi_risk_reasoning":"...","conclusion":"конкретное клиническое заключение 2-4 предложения","critical":true/false,"critical_reason":"...","warnings":["..."]}';
+    const systemText = 'Ты — кардиолог-консультант для бригад СМП Казахстана. Анализируй ЭКГ по фотографии. Отвечай СТРОГО JSON без markdown, без пояснений вне JSON. Поля: {"acs_verdict":"present/absent/uncertain","acs_signs":"...","acs_reasoning":"...","conclusion":"конкретное клиническое заключение 2-4 предложения","ecg_line":"одна строка для карты вызова: ритм + ЧСС + ключевые изменения ST/Q + итоговый вывод, например: Синусовый ритм. ЧСС 92 уд/мин. Элевация ST в II,III,aVF. Признаки острого ИМ нижней стенки ЛЖ.","critical":true/false,"critical_reason":"...","warnings":["..."]}';
 
-    const promptText = 'Проанализируй данную ЭКГ. Опиши ритм, ЧСС, ось сердца, интервалы PR/QRS/QT, изменения ST/T, патологические зубцы Q. Оцени наличие признаков ОКС. Дай клиническое заключение.';
+    const promptText = 'Проанализируй данную ЭКГ. Оцени наличие признаков ОКС. Дай клиническое заключение и краткую строку для карты вызова.';
 
     const userContent = [...imageContents, {type:'text', text:promptText}];
 
@@ -2418,22 +2418,13 @@ function renderEcgResult(d){
 
   html += `<div class="rcard" style="animation-delay:0s"><div class="rcard-head"><div class="rcard-label"><span class="dot ${acsDot}"></span>${t('ecgConclusion')}</div><button class="copy-btn" onclick="cpBtn(this,'${escA(d.conclusion||'')}')">${t('copy')}</button></div><div class="rcard-body"><div style="font-weight:700;font-size:13px;margin-bottom:8px;color:${acsColor}">${acsLabel}</div>${d.acs_signs?`<div style="font-size:12px;color:var(--sub);margin-bottom:6px;">${d.acs_signs}</div>`:''}<div>${d.conclusion||''}</div></div></div>`;
 
-  const rateStr = d.rate ? ` · ${d.rate} уд/мин` : '';
-  html += `<div class="rcard" style="animation-delay:0.04s"><div class="rcard-head"><div class="rcard-label"><span class="dot dg"></span>${t('ecgRhythm')}</div></div><div class="rcard-body">${d.rhythm||''}${rateStr}${d.axis?`<br><span style="font-size:12px;color:var(--sub);">Ось: ${d.axis}</span>`:''}</div></div>`;
-
-  const iv = d.intervals || {};
-  html += `<div class="rcard" style="animation-delay:0.08s"><div class="rcard-head"><div class="rcard-label"><span class="dot dp"></span>${t('ecgIntervals')}</div></div><div class="rcard-body"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center;">${['pq','qrs','qt'].map(k=>`<div style="background:var(--tag-bg);border-radius:8px;padding:7px 4px;"><div style="font-size:10px;color:var(--sub);font-weight:600;text-transform:uppercase;">${k.toUpperCase()}</div><div style="font-size:13px;color:var(--text1);font-weight:600;margin-top:2px;">${iv[k]||'—'}</div></div>`).join('')}</div></div></div>`;
-
-  if(d.st_t){
-    html += `<div class="rcard" style="animation-delay:0.12s"><div class="rcard-head"><div class="rcard-label"><span class="dot dy"></span>${t('ecgST')}</div></div><div class="rcard-body">${d.st_t}</div></div>`;
+  if(d.ecg_line){
+    html += `<div class="rcard" style="animation-delay:0.04s"><div class="rcard-head"><div class="rcard-label"><span class="dot dp"></span>Для карты вызова</div><button class="copy-btn" onclick="cpBtn(this,'${escA(d.ecg_line||'')}')">${t('copy')}</button></div><div class="rcard-body" style="font-size:13px;line-height:1.6;">${d.ecg_line}</div></div>`;
   }
-
-  const riskDot = d.mi_risk==='высокий' ? 'dr' : d.mi_risk==='умеренный' ? 'dy' : 'dm';
-  html += `<div class="rcard" style="animation-delay:0.16s"><div class="rcard-head"><div class="rcard-label"><span class="dot ${riskDot}"></span>${t('ecgMiRisk')}</div></div><div class="rcard-body"><span style="font-weight:700;">${d.mi_risk||'—'}</span>${d.mi_risk_reasoning?`<br><span style="font-size:12px;color:var(--sub);">${d.mi_risk_reasoning}</span>`:''}</div></div>`;
 
   if(d.warnings && d.warnings.filter(w=>w).length){
     const wh = d.warnings.filter(w=>w).map(w=>`<div class="warn-item"><span class="warn-icon">⚠️</span><span class="warn-text">${w}</span></div>`).join('');
-    html += `<div class="rcard" style="animation-delay:0.2s"><div class="rcard-head"><div class="rcard-label"><span class="dot dr"></span>${t('ecgWarnings')}</div></div><div class="rcard-body">${wh}</div></div>`;
+    html += `<div class="rcard" style="animation-delay:0.08s"><div class="rcard-head"><div class="rcard-label"><span class="dot dr"></span>${t('ecgWarnings')}</div></div><div class="rcard-body">${wh}</div></div>`;
   }
 
   html += `<div class="ecg-disclaimer">${t('ecgDisclaimer')}</div>`;
