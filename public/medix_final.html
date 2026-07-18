@@ -389,6 +389,14 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 .save-tmpl-btn{display:flex;align-items:center;justify-content:center;gap:7px;margin:8px 0 0;padding:11px;border-radius:13px;border:1px solid rgba(0,200,167,0.25);background:rgba(0,200,167,0.07);color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;}
 .save-tmpl-btn:hover{background:rgba(0,200,167,0.13);}
 .ci5{background:linear-gradient(135deg,#f0f4f8,#e2e8f0);}
+.ci6{background:linear-gradient(135deg,#ffe4e4,#ffc9c9);}
+.ecg-upload-area{border:2px dashed var(--border);border-radius:14px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.2s;color:var(--sub);font-size:13px;margin-bottom:12px;}
+.ecg-upload-area:hover,.ecg-upload-area.drag{border-color:var(--accent);color:var(--accent);background:rgba(0,200,167,0.05);}
+.ecg-previews{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
+.ecg-preview-item{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/9;}
+.ecg-preview-item img{width:100%;height:100%;object-fit:cover;}
+.ecg-preview-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.6);color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.ecg-result-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;font-size:13px;line-height:1.75;color:var(--text2);white-space:pre-wrap;}
 </style>
 </head>
 <body>
@@ -423,6 +431,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div class="hcard" onclick="goTo('ai')"><div class="ci ci3">🤖</div><div class="cinfo"><div class="ctit" id="h-t3"></div><div class="cdsc" id="h-d3"></div></div><div class="carr">›</div></div>
       <div class="hcard" onclick="goTo('calc')"><div class="ci ci4">🧮</div><div class="cinfo"><div class="ctit" id="h-t4"></div><div class="cdsc" id="h-d4"></div></div><div class="carr">›</div></div>
       <div class="hcard" onclick="goTo('templates')"><div class="ci ci5">📁</div><div class="cinfo"><div class="ctit" id="h-t5"></div><div class="cdsc" id="h-d5"></div></div><div class="carr">›</div></div>
+      <div class="hcard" onclick="goTo('ecg')"><div class="ci ci6">🫀</div><div class="cinfo"><div class="ctit" id="h-t6"></div><div class="cdsc" id="h-d6"></div></div><div class="carr">›</div></div>
     </div>
     <div class="hfoot" id="h-foot"></div>
   </div>
@@ -788,6 +797,34 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 </div>
 
 <!-- ================================================================
+     SCREEN: ECG
+================================================================ -->
+<div class="screen" id="s-ecg">
+  <div class="blob b1"></div>
+  <div class="inner">
+    <div class="hdr">
+      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="hdr-info"><div class="hdr-title" id="ecg-title"></div><div class="hdr-sub" id="ecg-sub"></div></div>
+    </div>
+    <div class="mid" id="ecg-mid" style="padding:14px;">
+      <div id="ecg-upload-hint" style="font-size:12px;color:var(--sub);margin-bottom:10px;text-align:center;"></div>
+      <div class="ecg-upload-area" id="ecg-drop-zone" onclick="document.getElementById('ecg-file-input').click()" ondragover="ecgDragOver(event)" ondrop="ecgDrop(event)" ondragleave="ecgDragLeave(event)">
+        <div style="font-size:32px;margin-bottom:6px;">📷</div>
+        <div id="ecg-upload-label" style="font-weight:600;font-size:13px;"></div>
+      </div>
+      <input type="file" id="ecg-file-input" accept="image/*" multiple style="display:none" onchange="ecgFilesSelected(this.files)">
+      <div class="ecg-previews" id="ecg-previews" style="display:none;"></div>
+      <button class="send-btn" id="ecg-analyze-btn" onclick="analyzeEcg()" style="display:none;width:100%;padding:13px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#0088ee);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;margin-bottom:12px;"></button>
+      <div id="ecg-loading" style="display:none;text-align:center;padding:20px;color:var(--sub);font-size:13px;"></div>
+      <div id="ecg-result" style="display:none;">
+        <div class="ecg-result-box" id="ecg-result-text"></div>
+        <button onclick="ecgClear()" style="margin-top:10px;width:100%;padding:11px;border-radius:12px;background:var(--card);color:var(--sub);font-size:13px;font-weight:600;border:1px solid var(--border);cursor:pointer;" id="ecg-clear-btn"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
      JOURNAL MODAL
 ================================================================ -->
 <div class="overlay" id="journal-overlay" onclick="closeJournalBg(event)">
@@ -825,6 +862,11 @@ const T = {
     t4:'Калькулятор',d4:'Балалар дозасы · Шок-индекс',
     hFoot:'MEDIX AI · ЖМЖ Қазақстан',
     t5:'Үлгілер',d5:'Сақталған шақыру карталары',
+    t6:'ЭКГ талдауы',d6:'Фотосурет арқылы ЭКГ сараптамасы',
+    ecgTitle:'ЭКГ талдауы',ecgSub:'AI арқылы ЭКГ сараптамасы',
+    ecgUploadHint:'ЭКГ лентасын суретке түсіріп жіберіңіз (1–4 фото)',
+    ecgAnalyzeBtn:'ЭКГ талдау',ecgClearBtn:'Тазалау',
+    ecgLoading:'ЭКГ сараптамасы жүруде...',
     saveTmpl:'Үлгі ретінде сақтау',
     tmplTitle:'Үлгілер',tmplSub:'Сақталған карталар · Оффлайн',
     tmplEmpty:'Үлгілер жоқ. Карта жасап, үлгі ретінде сақтаңыз.',
@@ -880,6 +922,11 @@ kChipsChild:[{i:'🌡️',t:'Маған карта жаз: ұл бала 4 жа�
     t4:'Калькулятор',d4:'Дозы детям · Шок-индекс Альговера',
     hFoot:'MEDIX AI · СМП Казахстан',
     t5:'Шаблоны',d5:'Сохранённые карты вызова',
+    t6:'ЭКГ анализ',d6:'Анализ ЭКГ по фотографии',
+    ecgTitle:'ЭКГ анализ',ecgSub:'AI-анализ плёнки ЭКГ',
+    ecgUploadHint:'Сфотографируйте ленту ЭКГ и загрузите (1–4 фото)',
+    ecgAnalyzeBtn:'Анализировать ЭКГ',ecgClearBtn:'Очистить',
+    ecgLoading:'Анализируем ЭКГ...',
     saveTmpl:'Сохранить как шаблон',
     tmplTitle:'Шаблоны',tmplSub:'Сохранённые карты · Оффлайн',
     tmplEmpty:'Шаблонов нет. Создайте карту и сохраните как шаблон.',
@@ -965,7 +1012,14 @@ function renderAll(){
   setText('h-t3',t('t3'));setText('h-d3',t('d3'));
   setText('h-t4',t('t4'));setText('h-d4',t('d4'));
   setText('h-t5',t('t5'));setText('h-d5',t('d5'));
+  setText('h-t6',t('t6'));setText('h-d6',t('d6'));
   setText('h-foot',t('hFoot'));
+  // ECG screen
+  setText('ecg-title',t('ecgTitle'));setText('ecg-sub',t('ecgSub'));
+  setText('ecg-upload-hint',t('ecgUploadHint'));
+  setText('ecg-upload-label',t('ecgUploadHint'));
+  setText('ecg-analyze-btn',t('ecgAnalyzeBtn'));
+  setText('ecg-clear-btn',t('ecgClearBtn'));
   setText('tmpl-title',t('tmplTitle'));setText('tmpl-sub',t('tmplSub'));
   const cb=document.getElementById('tmpl-clear-btn');if(cb)cb.textContent='🗑️ '+t('tmplClear');
   renderTemplatesList();
@@ -2210,6 +2264,134 @@ function calcPreg(){
     } else {
       warnEl.style.display='none';
     }
+  }
+}
+
+// ================================================================
+// ECG ANALYSIS
+// ================================================================
+let ecgFiles = [];
+const ECG_MAX = 4;
+
+function ecgDragOver(e){e.preventDefault();document.getElementById('ecg-drop-zone').classList.add('drag');}
+function ecgDragLeave(){document.getElementById('ecg-drop-zone').classList.remove('drag');}
+function ecgDrop(e){
+  e.preventDefault();
+  ecgDragLeave();
+  ecgAddFiles(Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/')));
+}
+function ecgFilesSelected(files){ecgAddFiles(Array.from(files));}
+
+function ecgAddFiles(newFiles){
+  const remaining = ECG_MAX - ecgFiles.length;
+  if(remaining <= 0) return;
+  ecgFiles = ecgFiles.concat(newFiles.slice(0, remaining));
+  ecgRenderPreviews();
+  document.getElementById('ecg-file-input').value='';
+}
+
+function ecgRenderPreviews(){
+  const cont = document.getElementById('ecg-previews');
+  const btn = document.getElementById('ecg-analyze-btn');
+  const zone = document.getElementById('ecg-drop-zone');
+  if(ecgFiles.length === 0){
+    cont.style.display='none'; btn.style.display='none'; zone.style.display='block'; return;
+  }
+  zone.style.display = ecgFiles.length < ECG_MAX ? 'block' : 'none';
+  cont.style.display='grid';
+  cont.innerHTML = ecgFiles.map((f,i)=>{
+    const url = URL.createObjectURL(f);
+    return `<div class="ecg-preview-item"><img src="${url}"><button class="ecg-preview-del" onclick="ecgRemove(${i})">✕</button></div>`;
+  }).join('');
+  btn.style.display='block';
+}
+
+function ecgRemove(i){
+  ecgFiles.splice(i,1);
+  ecgRenderPreviews();
+}
+
+function ecgClear(){
+  ecgFiles=[];
+  ecgRenderPreviews();
+  document.getElementById('ecg-result').style.display='none';
+  document.getElementById('ecg-drop-zone').style.display='block';
+}
+
+async function imgToBase64(file){
+  return new Promise(resolve=>{
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = ()=>{
+        const MAX = 1600;
+        let w=img.width, h=img.height;
+        if(w>MAX||h>MAX){const r=Math.min(MAX/w,MAX/h);w=Math.round(w*r);h=Math.round(h*r);}
+        const canvas = document.createElement('canvas');
+        canvas.width=w; canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        const b64 = canvas.toDataURL('image/jpeg',0.82).split(',')[1];
+        resolve(b64);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function analyzeEcg(){
+  if(ecgFiles.length===0) return;
+  const loadEl = document.getElementById('ecg-loading');
+  const resultEl = document.getElementById('ecg-result');
+  const resultText = document.getElementById('ecg-result-text');
+  const analyzeBtn = document.getElementById('ecg-analyze-btn');
+
+  loadEl.style.display='block';
+  resultEl.style.display='none';
+  analyzeBtn.style.display='none';
+  loadEl.textContent = t('ecgLoading');
+
+  try {
+    const imageContents = await Promise.all(ecgFiles.map(async f=>{
+      const b64 = await imgToBase64(f);
+      return {type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}};
+    }));
+
+    const promptText = lang==='kz'
+      ? 'Берілген ЭКГ фотосуреттерін талдаңыз. Ырғақ, ЖЖЖ, жүрек осі, аралықтар (PR, QRS, QT), ST/T өзгерістері, патологиялық Q тістері туралы сипаттаңыз. ЖМЖ бригадасы үшін қорытынды және тактика жасаңыз.'
+      : 'Проанализируй ЭКГ на фото. Опиши ритм, ЧСС, ось сердца, интервалы (PR, QRS, QT), изменения ST/T, патологические зубцы Q. Дай заключение и тактику для бригады СМП.';
+
+    const systemText = lang==='kz'
+      ? 'Сіз — ЖМЖ бригадалары үшін кардиолог-консультантсыз. ЭКГ-ні нақты және кәсіби талдаңыз. Соңында міндетті түрде ЖМЖ тактикасын жазыңыз.'
+      : 'Ты — кардиолог-консультант для бригад СМП. Анализируй ЭКГ чётко и профессионально. В конце обязательно укажи тактику для СМП.';
+
+    const userContent = [...imageContents, {type:'text', text:promptText}];
+
+    let userId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+    if(!userId){userId=localStorage.getItem('medix_uid');if(!userId){userId='u_'+Math.random().toString(36).slice(2);localStorage.setItem('medix_uid',userId);}}
+
+    const resp = await fetch('https://medixai-production.up.railway.app/api/ecg',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        system: systemText,
+        messages:[{role:'user',content:userContent}],
+        max_tokens:1500,
+        user_id:userId
+      })
+    });
+
+    const data = await resp.json();
+    if(data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+    const text = data.content?.[0]?.text || '';
+
+    loadEl.style.display='none';
+    resultEl.style.display='block';
+    resultText.textContent = text;
+  } catch(e){
+    loadEl.style.display='none';
+    analyzeBtn.style.display='block';
+    alert('Ошибка: ' + e.message);
   }
 }
 

@@ -3,10 +3,11 @@ const { Redis } = require('@upstash/redis');
 const rateLimit = require('express-rate-limit');
 const app = express();
 
-app.use(express.json({ limit: '50kb' }));
-
 // ─────────────────────────────────────────
-// CORS
+// CORS (ВАЖНО: должен идти ДО express.json, иначе при ошибке
+// парсинга/превышении лимита тела запроса браузер получит ответ
+// без CORS-заголовков и покажет "Failed to fetch" вместо реальной
+// ошибки, например 413 Payload Too Large)
 // ─────────────────────────────────────────
 const ALLOWED_ORIGINS = [
   'https://www.medixai.kz',
@@ -24,6 +25,18 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
+});
+
+// Лимит увеличен под фото ЭКГ в base64: до 4 фото, каждое сжимается
+// на клиенте до ~1600px/JPEG q0.82, но с запасом на разные телефоны
+app.use(express.json({ limit: '25mb' }));
+
+// Понятная ошибка вместо обрыва соединения, если тело всё же больше лимита
+app.use((err, req, res, next) => {
+  if (err && err.type === 'entity.too.large') {
+    return res.status(413).json({ error: { message: 'Файл(ы) слишком большие. Попробуйте меньше фото или более сжатые снимки.' } });
+  }
+  next(err);
 });
 
 // ─────────────────────────────────────────
@@ -60,7 +73,6 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-// FIX #2: убран лишний await в объявлении функции
 async function trackUser(req, endpoint) {
   const userId = req.body?.user_id;
   if (userId) {
@@ -75,12 +87,13 @@ async function trackUser(req, endpoint) {
 app.get('/api/stats', async (req, res) => {
   try {
     const day = new Date().toISOString().slice(0, 10);
-    const [users, total, karta, ai, calc, today] = await Promise.all([
+    const [users, total, karta, ai, calc, ecg, today] = await Promise.all([
       redis.scard('medix:unique_users'),
       redis.get('medix:total_requests'),
       redis.get('medix:endpoint:karta'),
       redis.get('medix:endpoint:ai'),
       redis.get('medix:endpoint:calc'),
+      redis.get('medix:endpoint:ecg'),
       redis.get('medix:day:' + day),
     ]);
     res.json({
@@ -89,12 +102,13 @@ app.get('/api/stats', async (req, res) => {
       karta: karta || 0,
       ai: ai || 0,
       calc: calc || 0,
+      ecg: ecg || 0,
       today: today || 0,
       uptime_hours: Math.floor(process.uptime() / 3600)
     });
   } catch(e) {
     console.error('Redis error:', e.message);
-    res.json({ unique_users: 0, total_requests: 0, karta: 0, ai: 0, calc: 0, today: 0, uptime_hours: Math.floor(process.uptime() / 3600), redis_error: e.message });
+    res.json({ unique_users: 0, total_requests: 0, karta: 0, ai: 0, calc: 0, ecg: 0, today: 0, uptime_hours: Math.floor(process.uptime() / 3600), redis_error: e.message });
   }
 });
 
@@ -162,7 +176,7 @@ async function callAnthropic(body) {
 // ─────────────────────────────────────────
 app.post('/api/karta', kartaLimiter, requireTelegramAuth, async (req, res) => {
   const { prompt, system, messages, user_id } = req.body;
-  await trackUser(req, 'karta'); // FIX #2: один await
+  await trackUser(req, 'karta');
   console.log('Request /api/karta from user_id:', user_id || req.ip);
 
   try {
@@ -181,11 +195,34 @@ app.post('/api/karta', kartaLimiter, requireTelegramAuth, async (req, res) => {
 });
 
 // ─────────────────────────────────────────
+// /api/ecg
+// ─────────────────────────────────────────
+app.post('/api/ecg', kartaLimiter, requireTelegramAuth, async (req, res) => {
+  const { system, messages, max_tokens, user_id } = req.body;
+  await trackUser(req, 'ecg');
+  console.log('Request /api/ecg from user_id:', user_id || req.ip);
+
+  try {
+    const body = {
+      model: 'claude-sonnet-4-5',
+      max_tokens: max_tokens || 1500,
+      system,
+      messages
+    };
+    const data = await callAnthropic(body);
+    res.json(data);
+  } catch (e) {
+    console.error('Error /api/ecg:', e.message);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ─────────────────────────────────────────
 // /api/ai
 // ─────────────────────────────────────────
 app.post('/api/ai', aiLimiter, requireTelegramAuth, async (req, res) => {
   const { system, messages, max_tokens, user_id } = req.body;
-  await trackUser(req, 'ai'); // FIX #2: один await
+  await trackUser(req, 'ai');
   console.log('Request /api/ai from user_id:', user_id || req.ip);
 
   try {
@@ -211,7 +248,6 @@ app.post('/api/ai', aiLimiter, requireTelegramAuth, async (req, res) => {
       })
     });
 
-    // FIX: обработка ошибок стрима
     if (!response.ok) {
       const err = await response.json();
       return res.status(500).json({ error: err?.error?.message || 'Ошибка Anthropic API' });
@@ -236,7 +272,7 @@ app.post('/api/ai', aiLimiter, requireTelegramAuth, async (req, res) => {
 // ─────────────────────────────────────────
 app.post('/api/calc', aiLimiter, requireTelegramAuth, async (req, res) => {
   const { system, messages, max_tokens, tools, user_id } = req.body;
-  await trackUser(req, 'calc'); // FIX #2: один await
+  await trackUser(req, 'calc');
   console.log('Request /api/calc from user_id:', user_id || req.ip);
 
   try {
