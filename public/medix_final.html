@@ -202,6 +202,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 .send{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all 0.2s;border:1.5px solid var(--send-border);background:var(--inp);}
 .send:hover{opacity:0.8;}.send:active{transform:scale(0.93);}.send:disabled{opacity:0.3;cursor:not-allowed;}
 .send svg{width:26px;height:26px;fill:var(--text1);}
+.scan-doc-btn{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1.5px solid var(--border2);background:var(--inp);font-size:21px;pointer-events:none;transition:all 0.2s;}
 
 /* ============================================================
    SCREEN HOME
@@ -472,6 +473,10 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
     </div>
     <div class="bottom">
       <div class="inp-row">
+        <div style="position:relative;flex-shrink:0;">
+          <div class="scan-doc-btn" id="k-scan-btn">📎</div>
+          <input type="file" id="k-scan-input" accept="image/*" capture="environment" onchange="kartaScanDoc(this.files);this.value=''" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;">
+        </div>
         <textarea class="inp" id="k-inp" rows="1" oninput="ar(this)" onkeydown="kKey(event,'k')"></textarea>
         <button class="send" id="k-send" onclick="genKarta()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
       </div>
@@ -1161,6 +1166,37 @@ function kartaSystemPrompt(){
   if(isChild) return `Ты — опытный фельдшер СМП Казахстана, 15 лет стажа. Заполни карту вызова для ребёнка.\nАнамнез жизни: "Со слов матери ребёнок на диспансерном учёте не состоит. Болезнь Боткина отрицает. Аллергоанамнез не отягощён. Инфекционный контакт отрицает. В течение последней недели за пределы города не выезжала. Травм и оперативных вмешательств не переносила. Из перенесённых заболеваний ОРВИ, ОРЗ."\nStatus Localis: БЕЗ АД/пульса/сатурации. Если грудной — упомяни большой родничок: "ровный, не выбухает, не западает, размер соответствует возрастной норме."\nОтвечай СТРОГО JSON без markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия","Пальпация","Перкуссия","Термометрия","Аускультация","ЧСС","ЧДД"],"ecg":"синусовый ритм, ЧСС соответствует возрасту","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
   if(ptype==='preg') return `Ты — опытный фельдшер СМП Казахстана, 15 лет стажа. Заполни карту вызова для беременной пациентки.\nАнамнез жизни: "Со слов пациента хронические заболевания отрицает. Состоит на диспансерном учете у гинеколога по беременности. Гинекологический анамнез: менархе с 12 лет, цикл 28 дней. Акушерский анамнез: заполни по ситуации. ТБЦ, болезнь Боткина отрицает. Аллергии отрицает. Эпидемиологический анамнез: за пределы города не выезжала, контактов с инфекционными больными не было."\nStatus Localis: опиши локальный статус. Обязательно: состояние живота, шевеление плода, сердцебиение плода (уд/мин), тонус матки, схватки (если есть — частота и длительность), ВДМ, окружность живота, выделения из половых путей. БЕЗ АД/ЧСС/ЧДД — они в инструментальных.\nОтвечай СТРОГО JSON без markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия: SpO2 ...%","АД ... мм рт.ст.","ЧСС ... уд/мин","ЧДД ... в мин","Термометрия: t ...°C","КТГ плода"],"ecg":"синусовый ритм. ЧСС 80 уд/мин","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"X00.0","name":"..."}]}`;
   return `Ты — опытный фельдшер СМП Казахстана, 15 лет стажа. Пиши карту вызова профессионально и КОМПАКТНО.\nАнамнез жизни: "Со слов пациента хронические заболевания отрицает. Туберкулёз, вирусный гепатит, ББ отрицает. Аллергические реакции отрицает. Эпидемиологический анамнез: в течение последнего месяца за пределы города не выезжал(а). Контактов с инфекционными больными не было."\nStatus Localis: СТРОГО по шаблону — 2-3 предложения. Шаблон: "Общее состояние [лёгкой/средней/тяжёлой] степени тяжести. Сознание ясное/оглушение/сопор. Положение [активное/вынужденное]. Кожные покровы [бледные/обычной окраски], [влажные/сухие]. [Только патологические находки по системам — если норма, не описывать подробно]. Живот мягкий, [болезненный/безболезненный] при пальпации [в области...]. Симптомы раздражения брюшины отрицательные."\nБЕЗ АД, ЧСС, ЧДД, SpO2 — они в инструментальных. БЕЗ длинных описаний нормы.\nМКБ-10: давай ТОЧНЫЙ код по диагнозу — например I21.9 для ОКС, I63.9 для инсульта, T78.2 для анафилаксии, J45.9 для астмы, R55 для обморока. НЕ используй X00.0.\nОтвечай СТРОГО JSON без markdown:\n{"complaints":"...","anamnesis_morbi":"...","anamnesis_vitae":"...","status_localis":"...","instruments":["Пульсоксиметрия","Пальпация","Аускультация","АД","ЧСС","ЧДД","Термометрия","Запись ЭКГ"],"ecg":"синусовый ритм. ЧСС 80 уд/мин, данных за ОКС нет","diagnosis":"...","treatment":"...","tactics":"...","mkb":[{"code":"ТОЧНЫЙ КОД","name":"ТОЧНОЕ НАЗВАНИЕ"}]}`;
+}
+
+async function kartaScanDoc(files){
+  if(!files || !files[0]) return;
+  const btn = document.getElementById('k-scan-btn');
+  btn.textContent = '⏳';
+  try {
+    const b64 = await imgToBase64(files[0]);
+    const imgContent = {type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}};
+    const sysOcr = 'Ты — система распознавания текста с медицинских документов для бригад СМП Казахстана. Перепиши ВЕСЬ текст с документа точно и дословно, сохраняя структуру: заголовки, разделы, абзацы. Если это выписка — сохрани блоки (диагноз, анамнез жизни, анамнез заболевания, проведённое лечение, рекомендации). Отвечай ТОЛЬКО текстом документа без своих комментариев и пояснений.';
+    let uid = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+    if(!uid){uid=localStorage.getItem('medix_uid');if(!uid){uid='u_'+Math.random().toString(36).slice(2);localStorage.setItem('medix_uid',uid);}}
+    const resp = await fetch('https://medixai-production.up.railway.app/api/ecg',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system:sysOcr,messages:[{role:'user',content:[imgContent,{type:'text',text:'Перепиши весь текст с этого медицинского документа.'}]}],max_tokens:2000,user_id:uid})
+    });
+    const data = await resp.json();
+    if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
+    const text = (data.content?.[0]?.text||'').trim();
+    if(text){
+      const inp = document.getElementById('k-inp');
+      inp.value = (inp.value.trim() ? inp.value.trim()+'\n\n' : '') + text;
+      ar(inp);
+      inp.focus();
+    }
+  } catch(e){
+    alert('Ошибка сканирования: '+e.message);
+  } finally {
+    btn.textContent = '📎';
+  }
 }
 
 async function genKarta(){
