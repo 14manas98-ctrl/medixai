@@ -551,7 +551,16 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div class="msg-wrap" id="ai-msgs" style="display:none;"></div>
     </div>
     <div class="bottom">
+      <div id="ai-photo-bar" style="display:none;align-items:center;gap:8px;padding-bottom:8px;">
+        <img id="ai-photo-thumb" src="" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border2);flex-shrink:0;">
+        <div style="font-size:12px;color:var(--sub);flex:1;">📷 Фото прикреплено</div>
+        <button onclick="aiClearPhoto()" style="border:none;background:none;color:var(--sub);font-size:18px;cursor:pointer;padding:4px 8px;line-height:1;">✕</button>
+      </div>
       <div class="inp-row">
+        <div style="position:relative;flex-shrink:0;">
+          <div class="scan-doc-btn" id="ai-scan-btn">📎</div>
+          <input type="file" id="ai-photo-input" accept="image/*" capture="environment" onchange="aiAttachPhoto(this.files);this.value=''" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;">
+        </div>
         <textarea class="inp" id="ai-inp" rows="1" oninput="ar(this)" onkeydown="kKey(event,'ai')"></textarea>
         <button class="send" id="ai-send" onclick="genAI()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
       </div>
@@ -855,6 +864,7 @@ let lang = localStorage.getItem('medix_lang') || 'kz';
 let dark = localStorage.getItem('medix_theme') !== 'light';
 let ptype = 'adult';
 let aiHistory = [];
+let aiPendingPhoto = null;
 let medsRashodTab = 1;
 let medsIncomeTab = 1;
 let medsOstatkiTab = 1;
@@ -1696,12 +1706,27 @@ function aiSystemPrompt(){
 
 async function genAI(){
   const inp=document.getElementById('ai-inp');
-  const txt=inp.value.trim();if(!txt) return;
+  const txt=inp.value.trim();
+  if(!txt && !aiPendingPhoto) return;
   document.getElementById('ai-welcome').style.display='none';
   document.getElementById('ai-msgs').style.display='flex';
   document.getElementById('ai-back-btn').style.display='block';
-  aiHistory.push({role:'user',content:txt});
-  appendUserMsg(txt,'ai-msgs');
+
+  let userContent;
+  if(aiPendingPhoto){
+    const question=txt||'Проведи медицинский анализ этого фото. Определи что изображено (вид высыпания, раны, ожога, отёка и т.д.), дай дифференциальную диагностику по внешнему виду, назови наиболее вероятный диагноз и протокол действий СМП.';
+    userContent=[
+      {type:'image',source:{type:'base64',media_type:'image/jpeg',data:aiPendingPhoto.b64}},
+      {type:'text',text:'[ВИЗУАЛЬНЫЙ МЕДИЦИНСКИЙ АНАЛИЗ]\n'+question}
+    ];
+    appendUserMsgWithPhoto(aiPendingPhoto.dataUrl,txt,'ai-msgs');
+    aiClearPhoto();
+  } else {
+    userContent=txt;
+    appendUserMsg(txt,'ai-msgs');
+  }
+
+  aiHistory.push({role:'user',content:userContent});
   inp.value='';inp.style.height='';
   document.getElementById('ai-send').disabled=true;
   const loadId=appendLoading('ai-msgs');
@@ -1922,6 +1947,35 @@ function kartaShowResult(){
   document.getElementById('k-results').style.display='block';
 }
 
+async function aiAttachPhoto(files){
+  if(!files||!files[0]) return;
+  const btn=document.getElementById('ai-scan-btn');
+  btn.textContent='⏳';
+  try{
+    const b64=await imgToBase64(files[0]);
+    aiPendingPhoto={b64,dataUrl:'data:image/jpeg;base64,'+b64};
+    document.getElementById('ai-photo-thumb').src=aiPendingPhoto.dataUrl;
+    document.getElementById('ai-photo-bar').style.display='flex';
+    document.getElementById('ai-inp').focus();
+  }catch(e){alert('Ошибка: '+e.message);}
+  btn.textContent='📎';
+}
+
+function aiClearPhoto(){
+  aiPendingPhoto=null;
+  document.getElementById('ai-photo-bar').style.display='none';
+  document.getElementById('ai-photo-thumb').src='';
+}
+
+function appendUserMsgWithPhoto(dataUrl,txt,contId){
+  const cont=document.getElementById(contId);
+  const div=document.createElement('div');
+  div.className='msg user';
+  div.innerHTML=`<div class="msg-avatar">👤</div><div class="msg-bubble"><img src="${dataUrl}" style="max-width:100%;border-radius:8px;margin-bottom:${txt?'6':'0'}px;display:block;">${txt?'<div>'+esc(txt)+'</div>':''}</div>`;
+  cont.appendChild(div);
+  scrollMid('ai-mid');
+}
+
 function resetAI(){
   document.getElementById('ai-welcome').style.display='flex';
   document.getElementById('ai-msgs').style.display='none';
@@ -1930,6 +1984,7 @@ function resetAI(){
   document.getElementById('ai-inp').value='';
   document.getElementById('ai-inp').style.height='';
   aiHistory=[];
+  aiClearPhoto();
 }
 function resetCalc(){
   document.getElementById('c-welcome').style.display='flex';
