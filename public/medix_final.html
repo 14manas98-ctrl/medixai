@@ -391,6 +391,18 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 .save-tmpl-btn:hover{background:rgba(0,200,167,0.13);}
 .ci5{background:linear-gradient(135deg,#f0f4f8,#e2e8f0);}
 .ci6{background:linear-gradient(135deg,#ffe4e4,#ffc9c9);}
+.ci7{background:linear-gradient(135deg,#e8f4ff,#cce8ff);}
+.guide-block{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 15px;margin-bottom:10px;}
+.guide-tag{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.guide-title{font-size:14px;font-weight:700;color:var(--text1);margin-bottom:6px;}
+.guide-body{font-size:12.5px;line-height:1.75;color:var(--text2);}
+.guide-body strong{color:var(--text1);font-weight:700;}
+.guide-step{display:flex;gap:10px;margin-bottom:7px;align-items:flex-start;}
+.guide-step-num{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#0088ee);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.guide-step-text{font-size:12.5px;line-height:1.65;color:var(--text2);}
+.guide-step-text strong{color:var(--text1);font-weight:700;}
+.guide-tip{background:var(--shift-bg);border:1px solid var(--shift-border);border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.6;color:var(--text2);margin-top:8px;}
+.guide-warn{background:var(--warn-box);border:1px solid var(--warn-box-border);border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.65;color:#f87171;margin-top:8px;}
 .ecg-upload-area{border:2px dashed var(--border);border-radius:14px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.2s;color:var(--sub);font-size:13px;margin-bottom:12px;}
 .ecg-upload-area:hover,.ecg-upload-area.drag{border-color:var(--accent);color:var(--accent);background:rgba(0,200,167,0.05);}
 .ecg-previews{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
@@ -435,6 +447,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div class="hcard" onclick="goTo('calc')"><div class="ci ci4">🧮</div><div class="cinfo"><div class="ctit" id="h-t4"></div><div class="cdsc" id="h-d4"></div></div><div class="carr">›</div></div>
       <div class="hcard" onclick="goTo('ecg')"><div class="ci ci6">🫀</div><div class="cinfo"><div class="ctit" id="h-t6"></div><div class="cdsc" id="h-d6"></div></div><div class="carr">›</div></div>
       <div class="hcard" onclick="goTo('templates')"><div class="ci ci5">📁</div><div class="cinfo"><div class="ctit" id="h-t5"></div><div class="cdsc" id="h-d5"></div></div><div class="carr">›</div></div>
+      <div class="hcard" onclick="goTo('guide')"><div class="ci ci7">📖</div><div class="cinfo"><div class="ctit">Как пользоваться</div><div class="cdsc">Инструкция по всем разделам</div></div><div class="carr">›</div></div>
     </div>
     <div class="hfoot" id="h-foot"></div>
   </div>
@@ -809,6 +822,91 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div id="tmpl-list"></div>
     </div>
     <div class="reset-btn" onclick="confirmClearTemplates()" id="tmpl-clear-btn" style="margin:0 14px 18px;display:none;"></div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN: GUIDE
+================================================================ -->
+<div class="screen" id="s-guide">
+  <div class="blob b1"></div>
+  <div class="inner">
+    <div class="hdr">
+      <div class="back-btn" onclick="goTo('home')">←</div>
+      <div class="hdr-info"><div class="hdr-title">Как пользоваться</div><div class="hdr-sub">Инструкция по разделам</div></div>
+    </div>
+    <div class="mid" id="guide-mid" style="padding:14px 14px 24px;">
+
+      <!-- КАРТА ВЫЗОВА -->
+      <div class="guide-block">
+        <div class="guide-tag">📋 Карта вызова</div>
+        <div class="guide-title">Как заполнять карту быстро</div>
+        <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Выберите тип пациента — <strong>взрослый / ребёнок / беременная</strong></div></div>
+        <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Нажмите <strong>📎</strong> — сфотографируйте выписку или обменную карту. Текст автоматически вставится в поле ввода</div></div>
+        <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Добавьте жалобы, симптомы, время начала. Можно просто дополнить то что вставилось</div></div>
+        <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">Нажмите <strong>→</strong> — AI составит карту по протоколам МЗ РК</div></div>
+        <div class="guide-tip">💡 <strong>Пример — роды:</strong> фотографируете обменную карту (раздел с родами), текст вставляется, добавляете жалобы пациентки — карта готова за 30 секунд</div>
+      </div>
+
+      <!-- МЕДИЦИНСКИЙ AI -->
+      <div class="guide-block">
+        <div class="guide-tag">🤖 Медицинский AI</div>
+        <div class="guide-title">Консультации и визуальный анализ</div>
+        <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Напишите вопрос по протоколу, дозе, тактике — AI ответит по стандартам МЗ РК</div></div>
+        <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Нажмите <strong>📎</strong> чтобы прикрепить фото (рана, сыпь, ожог, отёк) — можно отправить только фото или фото + вопрос</div></div>
+        <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Если ответ короткий — задавайте уточняющие вопросы: <em>«уточни по дозам»</em>, <em>«какие противопоказания?»</em>, <em>«это точно петехии?»</em></div></div>
+        <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">AI помнит весь контекст разговора — можно продолжать диалог по одному случаю</div></div>
+        <div class="guide-tip">💡 <strong>Пример — сыпь:</strong> фотографируете → пишете «это петехии или крапивница?» → AI даёт диффдиагноз и протокол действий СМП</div>
+      </div>
+
+      <!-- ЭКГ -->
+      <div class="guide-block">
+        <div class="guide-tag">🫀 Анализ ЭКГ</div>
+        <div class="guide-title">Расшифровка ленты</div>
+        <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Нажмите <strong>📷 Камера</strong> — сфотографируйте ЭКГ-ленту. Можно несколько фото за раз</div></div>
+        <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Нажмите <strong>Анализировать</strong> — AI проводит 5-шаговый разбор: ритм, проводимость, ОКС, другие патологии, итоговое заключение</div></div>
+        <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Результат покажет: ОКС есть/нет/под вопросом, признаки, ТЭЛА, блокады, аритмии, электролитные нарушения, синдромы</div></div>
+        <div class="guide-tip">💡 Фотографируйте ленту под хорошим светом, держите прямо. Если зубцы нечёткие — AI укажет на это</div>
+      </div>
+
+      <!-- КАЛЬКУЛЯТОР -->
+      <div class="guide-block">
+        <div class="guide-tag">🧮 Калькулятор доз</div>
+        <div class="guide-title">Расчёт препаратов и процедур</div>
+        <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Выберите ситуацию из списка — <strong>дефибрилляция, адреналин, инфузия</strong> и другие</div></div>
+        <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Введите вес пациента и другие параметры</div></div>
+        <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Получите точный расчёт с дозой, объёмом, скоростью введения</div></div>
+      </div>
+
+      <!-- ШАБЛОНЫ -->
+      <div class="guide-block">
+        <div class="guide-tag">📁 Шаблоны</div>
+        <div class="guide-title">Готовые тексты для типичных вызовов</div>
+        <div class="guide-body">Здесь хранятся карты вызовов которые вы сохранили через кнопку <strong>«В шаблоны»</strong>. Сохраняйте удачные карты — потом можно быстро вставить в новый вызов и подкорректировать.</div>
+      </div>
+
+      <!-- УЧЁТ МЕДИКАМЕНТОВ -->
+      <div class="guide-block">
+        <div class="guide-tag">💊 Учёт медикаментов</div>
+        <div class="guide-title">Журнал смены</div>
+        <div class="guide-body">Списывайте и приходуйте препараты прямо в приложении — без бумажного журнала. Расход фиксируется за смену. При закрытии смены данные сбрасываются.</div>
+      </div>
+
+      <!-- ДИСКЛЕЙМЕР -->
+      <div class="guide-warn">
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;">⚠️ Важно знать</div>
+        <div style="font-size:12px;line-height:1.7;">Medix AI — это <strong style="color:#f87171;">вспомогательный инструмент</strong> для облегчения работы бригады СМП. Приложение автоматизирует рутину и помогает с протоколами, но:</div>
+        <ul style="font-size:12px;line-height:1.8;padding-left:16px;margin-top:6px;">
+          <li>Всегда <strong style="color:#f87171;">проверяйте и корректируйте</strong> результат перед использованием</li>
+          <li>AI может ошибаться — особенно при нечётких фото или неполных данных</li>
+          <li><strong style="color:#f87171;">Юридическую ответственность</strong> за карту вызова и все медицинские решения <strong style="color:#f87171;">несёте вы</strong></li>
+          <li>Не полагайтесь на ЭКГ-анализ как на единственное основание для диагноза</li>
+        </ul>
+      </div>
+
+      <div style="text-align:center;padding:10px 0 4px;font-size:12px;color:var(--sub);font-style:italic;">Меньше рутины — больше внимания пациенту 🚑</div>
+
+    </div>
   </div>
 </div>
 
