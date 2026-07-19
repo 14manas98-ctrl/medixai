@@ -815,7 +815,7 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
         <div id="ecg-upload-label" style="font-weight:600;font-size:13px;margin-bottom:14px;"></div>
         <div style="position:relative;">
           <div style="background:linear-gradient(135deg,var(--accent),#0088ee);color:#fff;border-radius:11px;padding:12px 8px;font-size:13px;font-weight:700;text-align:center;pointer-events:none;">📷 Камера</div>
-          <input type="file" id="ecg-file-input" accept="image/*" capture="environment" onchange="ecgFilesSelected(this.files);this.value=''" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;">
+          <input type="file" id="ecg-file-input" accept="image/*" capture="environment" multiple onchange="ecgFilesSelected(this.files);this.value=''" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;">
         </div>
       </div>
       <div class="ecg-previews" id="ecg-previews" style="display:none;"></div>
