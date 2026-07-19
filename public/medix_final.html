@@ -240,6 +240,26 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
 .hfoot{text-align:center;padding:20px;font-size:9.5px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:var(--foot);flex-shrink:0;}
 
 /* ============================================================
+   HOME — FEATURED CARD & GRID
+============================================================ */
+.hcard-feat .ci{width:52px;height:52px;border-radius:16px;font-size:24px;}
+.hcard-feat .ctit{font-size:15px;font-weight:700;}
+.feat-arr{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--accent);color:#0a1628;transition:transform 0.3s,box-shadow 0.3s;}
+.hcard-feat:hover .feat-arr{transform:scale(1.1);box-shadow:0 0 16px rgba(52,211,153,0.5);}
+body.lt .feat-arr{color:#fff;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.hcard-g{display:flex;flex-direction:column;gap:9px;padding:14px 13px 12px;border-radius:18px;cursor:pointer;opacity:0;animation:cin 0.5s cubic-bezier(.22,1,.36,1) forwards;transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;background:var(--card);border:1px solid var(--border);}
+.hcard-g:nth-child(1){animation-delay:0.15s}.hcard-g:nth-child(2){animation-delay:0.21s}.hcard-g:nth-child(3){animation-delay:0.27s}.hcard-g:nth-child(4){animation-delay:0.33s}
+.hcard-g:hover{border-color:var(--card-hover-border);box-shadow:0 6px 20px var(--card-hover-shadow);}
+.hcard-g:active{transform:scale(0.95)!important;transition:transform 0.1s!important;}
+.hcard-g-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.hcard-g .ci{width:40px;height:40px;border-radius:12px;font-size:18px;}
+.hcard-g .carr{font-size:15px;color:var(--carr);line-height:1;margin-top:2px;}
+.hcard-g .ctit{font-size:13px;font-weight:700;color:var(--text1);margin-bottom:2px;}
+.hcard-g .cdsc{font-size:10.5px;color:var(--sub);line-height:1.35;}
+.hcard:nth-child(4){animation-delay:0.39s}.hcard:nth-child(5){animation-delay:0.45s}
+
+/* ============================================================
    SCREEN KARTA — patient type toggle
 ============================================================ */
 .ptype{display:flex;gap:8px;padding:10px 14px 0;flex-shrink:0;position:relative;z-index:1;}
@@ -442,14 +462,35 @@ body.lt .lb:not(.on):hover{color:rgba(50,80,120,0.9);}
       <div class="badge"><span class="bdot"></span><span id="h-st"></span></div>
       <div class="hcap" id="h-cap"></div>
     </div>
-    <div class="dv"></div>
-    <div class="slbl" id="h-mod"></div>
     <div class="home-cards">
-      <div class="hcard" onclick="goTo('karta')"><div class="ci ci1">📋</div><div class="cinfo"><div class="ctit" id="h-t1"></div><div class="cdsc" id="h-d1"></div></div><div class="carr">›</div></div>
-      <div class="hcard" onclick="goTo('meds')"><div class="ci ci2">💊</div><div class="cinfo"><div class="ctit" id="h-t2"></div><div class="cdsc" id="h-d2"></div></div><div class="carr">›</div></div>
-      <div class="hcard" onclick="goTo('ai')"><div class="ci ci3">🤖</div><div class="cinfo"><div class="ctit" id="h-t3"></div><div class="cdsc" id="h-d3"></div></div><div class="carr">›</div></div>
-      <div class="hcard" onclick="goTo('calc')"><div class="ci ci4">🧮</div><div class="cinfo"><div class="ctit" id="h-t4"></div><div class="cdsc" id="h-d4"></div></div><div class="carr">›</div></div>
-      <div class="hcard" onclick="goTo('ecg')"><div class="ci ci6">🫀</div><div class="cinfo"><div class="ctit" id="h-t6"></div><div class="cdsc" id="h-d6"></div></div><div class="carr">›</div></div>
+      <!-- Featured: Карта вызова -->
+      <div class="hcard hcard-feat" onclick="goTo('karta')">
+        <div class="ci ci1">📋</div>
+        <div class="cinfo"><div class="ctit" id="h-t1"></div><div class="cdsc" id="h-d1"></div></div>
+        <div class="feat-arr">›</div>
+      </div>
+      <!-- Секция: инструменты -->
+      <div class="slbl" id="h-mod" style="padding:8px 2px 4px;"></div>
+      <!-- 2×2 сетка -->
+      <div class="grid-2">
+        <div class="hcard-g" onclick="goTo('meds')">
+          <div class="hcard-g-top"><div class="ci ci2">💊</div><div class="carr">›</div></div>
+          <div><div class="ctit" id="h-t2"></div><div class="cdsc" id="h-d2"></div></div>
+        </div>
+        <div class="hcard-g" onclick="goTo('ai')">
+          <div class="hcard-g-top"><div class="ci ci3">🤖</div><div class="carr">›</div></div>
+          <div><div class="ctit" id="h-t3"></div><div class="cdsc" id="h-d3"></div></div>
+        </div>
+        <div class="hcard-g" onclick="goTo('calc')">
+          <div class="hcard-g-top"><div class="ci ci4">🧮</div><div class="carr">›</div></div>
+          <div><div class="ctit" id="h-t4"></div><div class="cdsc" id="h-d4"></div></div>
+        </div>
+        <div class="hcard-g" onclick="goTo('ecg')">
+          <div class="hcard-g-top"><div class="ci ci6">🫀</div><div class="carr">›</div></div>
+          <div><div class="ctit" id="h-t6"></div><div class="cdsc" id="h-d6"></div></div>
+        </div>
+      </div>
+      <!-- Список: Шаблоны + Как пользоваться -->
       <div class="hcard" onclick="goTo('templates')"><div class="ci ci5">📁</div><div class="cinfo"><div class="ctit" id="h-t5"></div><div class="cdsc" id="h-d5"></div></div><div class="carr">›</div></div>
       <div class="hcard" onclick="goTo('guide')"><div class="ci ci7">📖</div><div class="cinfo"><div class="ctit">Как пользоваться</div><div class="cdsc">Инструкция по всем разделам</div></div><div class="carr">›</div></div>
     </div>
