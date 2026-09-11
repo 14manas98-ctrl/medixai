@@ -1,7 +1,22 @@
 const express = require('express');
 const { Redis } = require('@upstash/redis');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const app = express();
+
+// ─────────────────────────────────────────
+// SECURITY — helmet
+// CSP/frameguard/cross-origin-isolation отключены: Telegram открывает
+// Mini App в кросс-доменном webview, и эти заголовки его ломают
+// (см. коммит "fix: remove helmet - breaks Telegram Mini App")
+// ─────────────────────────────────────────
+app.use(helmet({
+  contentSecurityPolicy: false,
+  frameguard: false,
+  crossOriginEmbedderPolicy: false,
+  crossOriginOpenerPolicy: false,
+  crossOriginResourcePolicy: false,
+}));
 
 // ─────────────────────────────────────────
 // CORS (ВАЖНО: должен идти ДО express.json, иначе при ошибке
@@ -44,12 +59,15 @@ app.use((err, req, res, next) => {
 // ─────────────────────────────────────────
 const crypto = require('crypto');
 
-function validateTelegramInitData(initData) {
-  if (!initData) return false;
+// Проверяет подпись initData и возвращает ПРОВЕРЕННЫЙ id пользователя
+// (id из тела запроса клиент может подделать, а этот — нет, он зашит
+// в подписанные Telegram данные). null — подписи нет или она невалидна.
+function verifyTelegramInitData(initData) {
+  if (!initData) return null;
   try {
     const params = new URLSearchParams(initData);
     const hash = params.get('hash');
-    if (!hash) return false;
+    if (!hash) return null;
     params.delete('hash');
     const dataCheckString = Array.from(params.entries())
       .sort(([a], [b]) => a.localeCompare(b))
@@ -57,11 +75,29 @@ function validateTelegramInitData(initData) {
       .join('\n');
     const secret = crypto.createHmac('sha256', 'WebAppData').update(process.env.BOT_TOKEN).digest();
     const expectedHash = crypto.createHmac('sha256', secret).update(dataCheckString).digest('hex');
-    return expectedHash === hash;
-  } catch { return false; }
+    if (expectedHash !== hash) return null;
+    const userJson = params.get('user');
+    const userId = userJson ? JSON.parse(userJson)?.id : null;
+    return userId ? String(userId) : true;
+  } catch { return null; }
 }
 
+// Не требуем initData (приложение также работает как обычный сайт вне
+// Telegram — см. коммит "fix: add browser fallback for iPhone users"),
+// но если initData передан, он должен быть подлинным — иначе это
+// подделанная подпись, а не легитимный браузерный fallback.
+// Проверенный id пользователя кладём в req.telegramUserId, чтобы лимитер
+// считал по нему, а не по IP (важно из-за CGNAT у мобильных операторов —
+// иначе несколько реальных пользователей за одним IP делят один лимит).
 function requireTelegramAuth(req, res, next) {
+  const initData = req.headers['x-telegram-init-data'] || req.body?.initData;
+  if (initData) {
+    const verified = verifyTelegramInitData(initData);
+    if (!verified) {
+      return res.status(403).json({ error: 'Недействительные данные авторизации Telegram.' });
+    }
+    if (typeof verified === 'string') req.telegramUserId = verified;
+  }
   next();
 }
 
@@ -123,13 +159,23 @@ const generalLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+// Ключ лимита — проверенный Telegram id (req.telegramUserId, выставляется
+// requireTelegramAuth ДО лимитера), а не id из тела запроса — тот клиент
+// может подделать. Если initData нет (браузерный fallback), считаем по IP
+// через ipKeyGenerator — он же нужен, чтобы разные пользователи за одним
+// IP операторского CGNAT не делили лимит с чужими запросами (у прямого
+// req.ip тоже была бы эта проблема, но и не только: без initData у нас
+// вообще нет надёжного per-user идентификатора, IP — единственный вариант).
+const { ipKeyGenerator } = rateLimit;
+const rateLimitKey = (req) => req.telegramUserId || ipKeyGenerator(req.ip);
+
 const aiLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 20,
   message: { error: 'Слишком много AI запросов. Подождите 1 минуту.' },
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : (req.headers['x-forwarded-for'] || req.ip || '').split(',')[0].trim(),
+  keyGenerator: rateLimitKey,
 });
 
 const kartaLimiter = rateLimit({
@@ -138,7 +184,7 @@ const kartaLimiter = rateLimit({
   message: { error: 'Слишком много запросов карты. Подождите 1 минуту.' },
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.body?.user_id ? String(req.body.user_id) : (req.headers['x-forwarded-for'] || req.ip),
+  keyGenerator: rateLimitKey,
 });
 
 app.use('/api', generalLimiter);
@@ -174,7 +220,7 @@ async function callAnthropic(body) {
 // ─────────────────────────────────────────
 // /api/karta
 // ─────────────────────────────────────────
-app.post('/api/karta', kartaLimiter, requireTelegramAuth, async (req, res) => {
+app.post('/api/karta', requireTelegramAuth, kartaLimiter, async (req, res) => {
   const { prompt, system, messages, user_id } = req.body;
   await trackUser(req, 'karta');
   console.log('Request /api/karta from user_id:', user_id || req.ip);
@@ -197,7 +243,7 @@ app.post('/api/karta', kartaLimiter, requireTelegramAuth, async (req, res) => {
 // ─────────────────────────────────────────
 // /api/ecg
 // ─────────────────────────────────────────
-app.post('/api/ecg', kartaLimiter, requireTelegramAuth, async (req, res) => {
+app.post('/api/ecg', requireTelegramAuth, kartaLimiter, async (req, res) => {
   const { system, messages, max_tokens, user_id } = req.body;
   await trackUser(req, 'ecg');
   console.log('Request /api/ecg from user_id:', user_id || req.ip);
@@ -220,7 +266,7 @@ app.post('/api/ecg', kartaLimiter, requireTelegramAuth, async (req, res) => {
 // ─────────────────────────────────────────
 // /api/ai
 // ─────────────────────────────────────────
-app.post('/api/ai', aiLimiter, requireTelegramAuth, async (req, res) => {
+app.post('/api/ai', requireTelegramAuth, aiLimiter, async (req, res) => {
   const { system, messages, max_tokens, user_id } = req.body;
   await trackUser(req, 'ai');
   console.log('Request /api/ai from user_id:', user_id || req.ip);
@@ -270,7 +316,7 @@ app.post('/api/ai', aiLimiter, requireTelegramAuth, async (req, res) => {
 // ─────────────────────────────────────────
 // /api/calc
 // ─────────────────────────────────────────
-app.post('/api/calc', aiLimiter, requireTelegramAuth, async (req, res) => {
+app.post('/api/calc', requireTelegramAuth, aiLimiter, async (req, res) => {
   const { system, messages, max_tokens, tools, user_id } = req.body;
   await trackUser(req, 'calc');
   console.log('Request /api/calc from user_id:', user_id || req.ip);
@@ -445,6 +491,6 @@ if (ACCESS_BOT_TOKEN) {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`MedixAI server running on port ${PORT}`);
-  console.log('Rate limiting: ENABLED (by user_id + IP)');
+  console.log('Rate limiting: ENABLED (by IP)');
   console.log('Security: ACTIVE');
 });
