@@ -120,10 +120,36 @@ async function trackUser(req, endpoint) {
   }
 }
 
+// Трекинг "открытий приложения" — отдельно от AI-запросов. Нужен, потому что
+// раздел "Шаблоны" работает полностью на localStorage и никогда не бьёт по
+// /api/karta|ecg|ai|calc — без этого счётчика реальная активность (кто просто
+// открыл и пользуется сохранёнными картами) невидима в статистике.
+async function trackSession(req) {
+  const userId = req.body?.user_id;
+  if (userId) {
+    const day = new Date().toISOString().slice(0, 10);
+    await redis.sadd('medix:unique_users', String(userId));
+    await redis.incr('medix:sessions_total');
+    await redis.incr('medix:session_day:' + day);
+    await redis.sadd('medix:active_users:' + day, String(userId));
+    await redis.expire('medix:active_users:' + day, 60 * 60 * 24 * 3); // 3 дня — только для "сегодня/вчера" в дашборде
+  }
+}
+
+app.post('/api/session', async (req, res) => {
+  try {
+    await trackSession(req);
+    res.json({ ok: true });
+  } catch (e) {
+    console.error('Error /api/session:', e.message);
+    res.json({ ok: false }); // не роняем клиента из-за пинга статистики
+  }
+});
+
 app.get('/api/stats', async (req, res) => {
   try {
     const day = new Date().toISOString().slice(0, 10);
-    const [users, total, karta, ai, calc, ecg, today] = await Promise.all([
+    const [users, total, karta, ai, calc, ecg, today, sessionsTotal, sessionsToday, activeToday] = await Promise.all([
       redis.scard('medix:unique_users'),
       redis.get('medix:total_requests'),
       redis.get('medix:endpoint:karta'),
@@ -131,6 +157,9 @@ app.get('/api/stats', async (req, res) => {
       redis.get('medix:endpoint:calc'),
       redis.get('medix:endpoint:ecg'),
       redis.get('medix:day:' + day),
+      redis.get('medix:sessions_total'),
+      redis.get('medix:session_day:' + day),
+      redis.scard('medix:active_users:' + day),
     ]);
     res.json({
       unique_users: users || 0,
@@ -140,11 +169,14 @@ app.get('/api/stats', async (req, res) => {
       calc: calc || 0,
       ecg: ecg || 0,
       today: today || 0,
+      sessions_total: sessionsTotal || 0,
+      sessions_today: sessionsToday || 0,
+      active_today: activeToday || 0,
       uptime_hours: Math.floor(process.uptime() / 3600)
     });
   } catch(e) {
     console.error('Redis error:', e.message);
-    res.json({ unique_users: 0, total_requests: 0, karta: 0, ai: 0, calc: 0, ecg: 0, today: 0, uptime_hours: Math.floor(process.uptime() / 3600), redis_error: e.message });
+    res.json({ unique_users: 0, total_requests: 0, karta: 0, ai: 0, calc: 0, ecg: 0, today: 0, sessions_total: 0, sessions_today: 0, active_today: 0, uptime_hours: Math.floor(process.uptime() / 3600), redis_error: e.message });
   }
 });
 

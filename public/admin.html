@@ -43,6 +43,15 @@
       <div class="label">📅 Сегодня запросов</div>
       <div class="value" id="today">—</div>
     </div>
+    <div class="card">
+      <div class="label">🟢 Активных сегодня</div>
+      <div class="value" id="active-today">—</div>
+      <div class="sub">по открытиям приложения, вкл. шаблоны</div>
+    </div>
+    <div class="card">
+      <div class="label">📂 Открытий сегодня</div>
+      <div class="value" id="sessions-today">—</div>
+    </div>
   </div>
 
   <h2>Использование по разделам</h2>
@@ -80,6 +89,8 @@
       document.getElementById('total').textContent = d.total_requests ?? '—';
       document.getElementById('uptime').textContent = d.uptime_hours ?? '—';
       document.getElementById('today').textContent = d.today ?? '—';
+      document.getElementById('active-today').textContent = d.active_today ?? '—';
+      document.getElementById('sessions-today').textContent = d.sessions_today ?? '—';
 
       const karta = d.karta || 0;
       const ai = d.ai || 0;

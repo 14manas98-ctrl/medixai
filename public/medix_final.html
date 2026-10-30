@@ -2700,6 +2700,21 @@ renderAll();
 if(!localStorage.getItem('medix_onboard_done')){
   setTimeout(()=>openOnboard(false),800);
 }
+
+// Пинг открытия приложения — отдельно от AI-запросов, чтобы видеть
+// реальную активность (в т.ч. тех, кто пользуется только офлайн-шаблонами
+// и не бьёт по /api/karta|ecg|ai|calc).
+(function trackSessionOpen(){
+  try{
+    let userId=window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+    if(!userId){userId=localStorage.getItem('medix_uid');if(!userId){userId='u_'+Math.random().toString(36).slice(2);localStorage.setItem('medix_uid',userId);}}
+    fetch('https://medixai-production.up.railway.app/api/session',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({user_id:userId})
+    }).catch(()=>{});
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
