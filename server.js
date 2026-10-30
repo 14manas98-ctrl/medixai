@@ -228,9 +228,9 @@ app.post('/api/karta', requireTelegramAuth, kartaLimiter, async (req, res) => {
   try {
     let body;
     if (messages) {
-      body = { model: 'claude-sonnet-4-5', max_tokens: 4096, system, messages };
+      body = { model: 'claude-sonnet-5', max_tokens: 4096, system, messages };
     } else {
-      body = { model: 'claude-sonnet-4-5', max_tokens: 4096, messages: [{ role: 'user', content: prompt }] };
+      body = { model: 'claude-sonnet-5', max_tokens: 4096, messages: [{ role: 'user', content: prompt }] };
     }
     const data = await callAnthropic(body);
     res.json(data);
@@ -250,7 +250,7 @@ app.post('/api/ecg', requireTelegramAuth, kartaLimiter, async (req, res) => {
 
   try {
     const body = {
-      model: 'claude-sonnet-4-5',
+      model: 'claude-sonnet-5',
       max_tokens: max_tokens || 1500,
       system,
       messages
@@ -285,7 +285,7 @@ app.post('/api/ai', requireTelegramAuth, aiLimiter, async (req, res) => {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
+        model: 'claude-sonnet-5',
         max_tokens: max_tokens || 2500,
         stream: true,
         system,
