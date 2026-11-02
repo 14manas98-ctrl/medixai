@@ -1355,7 +1355,8 @@ async function kartaScanDoc(files){
     });
     const data = await resp.json();
     if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
-    const text = (data.content?.[0]?.text||'').trim();
+    const ocrTb = (data.content || []).find(b=>b.type==='text');
+    const text = (ocrTb?.text||'').trim();
     if(text){
       const inp = document.getElementById('k-inp');
       inp.value = (inp.value.trim() ? inp.value.trim()+'\n\n' : '') + text;
@@ -1381,7 +1382,9 @@ async function genKarta(){
   const start=Date.now();
   try{
     const r=await apiCall({system:kartaSystemPrompt(),messages:[{role:'user',content:(lang==='kz'?'Шақыру:\n':'Вызов:\n')+txt}],max_tokens:2000});
-    let raw=r.content[0].text.replace(/```json|```/g,'').trim();
+    const tb=r.content.find(b=>b.type==='text');
+    if(!tb) throw new Error('No text response');
+    let raw=tb.text.replace(/```json|```/g,'').trim();
     const jm=raw.match(/\{[\s\S]*\}/);if(jm)raw=jm[0];
     const d=JSON.parse(raw);
     renderKartaResult(d,((Date.now()-start)/1000).toFixed(1));
@@ -2643,7 +2646,9 @@ async function analyzeEcg(){
 
     const data = await resp.json();
     if(data.error) throw new Error(data.error.message || JSON.stringify(data.error));
-    let raw = (data.content?.[0]?.text || '').replace(/```json|```/g,'').trim();
+    const ecgTb = (data.content || []).find(b=>b.type==='text');
+    if(!ecgTb) throw new Error('No text response');
+    let raw = ecgTb.text.replace(/```json|```/g,'').trim();
     const jm = raw.match(/\{[\s\S]*\}/);
     if(jm) raw = jm[0];
     const d = JSON.parse(raw);
